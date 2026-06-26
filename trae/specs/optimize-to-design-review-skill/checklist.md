@@ -1,0 +1,22 @@
+- [x] SKILL.md 的 description 和触发词已更新为设计审查定位
+- [x] SKILL.md 核心身份从"用 HTML 工作的设计师"变为"设计审查专家"
+- [x] SKILL.md 保留了核心原则：事实验证先于假设、反 AI slop、品牌资产协议
+- [x] SKILL.md 保留了设计哲学（20 种风格库）和设计方向顾问能力
+- [x] SKILL.md 新增了设计审查工作流（理解审查对象→提取设计上下文→执行审查→输出报告）
+- [x] SKILL.md 新增了硬编码值检测规则（颜色/字体/间距）
+- [x] SKILL.md 新增了设计系统合规性检查规则
+- [x] SKILL.md 新增了 SwiftLint 规则建议章节
+- [x] SKILL.md 已移除所有创作性内容（原型制作/幻灯片/动画/视频/SFX/Tweaks/Starter Components/技术红线）
+- [x] SKILL.md 的 References 路由表仅保留审查相关引用
+- [x] 创作性 assets 文件已全部删除（animations.jsx/ios_frame.jsx/android_frame.jsx/macos_window.jsx/browser_window.jsx/deck_stage.js/deck_index.html/design_canvas.jsx/sfx/bgm-*.mp3/personal-asset-index.example.json）
+- [x] 创作性 scripts 文件已全部删除（render-video.js/convert-formats.sh/add-music.sh/export_deck_pdf.mjs/export_deck_pptx.mjs/export_deck_stage_pdf.mjs/html2pptx.js/verify.py）
+- [x] 创作性 references 文件已全部删除（animation-pitfalls.md/animations.md/react-setup.md/slide-decks.md/editable-pptx.md/video-export.md/sfx-library.md/audio-design-rules.md/tweaks-system.md/scene-templates.md/apple-gallery-showcase.md/hero-animation-case-study.md/animation-best-practices.md/cinematic-patterns.md）
+- [x] references/workflow.md 已精简为审查工作流
+- [x] references/verification.md 已精简为设计审查验证
+- [x] 保留的 references 文件完整（critique-guide.md/design-styles.md/design-context.md/content-guidelines.md）
+- [x] demos/ 目录已删除
+- [x] assets/showcases/ 目录已删除
+- [x] README.md 已更新为设计审查技能定位
+- [x] README.md 能力列表仅包含审查相关能力
+- [x] README.md 仓库结构说明与实际文件一致
+- [x] 项目中不存在任何创作性残留文件（原型/幻灯片/动画/视频/音频相关）

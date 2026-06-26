@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Score Improvement — Landing Page</title>
+<style>
+  :root {
+    --color-canvas: #000000;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #a9a9a9;
+    --surface-muted: rgba(255, 255, 255, .12);
+    --surface-subtle: rgba(255, 255, 255, .06);
+    --border-color: rgba(255, 255, 255, .2);
+    --serif: ui-serif, Georgia, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+    --space-4: 4px;
+    --space-8: 8px;
+    --space-12: 12px;
+    --space-16: 16px;
+    --space-24: 24px;
+    --space-32: 32px;
+    --space-48: 48px;
+    --space-64: 64px;
+    --page-max-width: 860px;
+    --border-width: 1px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; min-width: 320px; background: var(--color-canvas); color: var(--color-text-primary); font-family: var(--sans); font-size: 15px; line-height: 1.6; font-weight: 400; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; padding: var(--space-48) var(--space-24) 120px; }
+  .page { max-width: var(--page-max-width); margin: 0 auto; }
+  header { margin-bottom: var(--space-48); }
+  .header-top { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--space-12); margin-bottom: var(--space-8); }
+  h1 { font-family: var(--sans); font-size: 48px; line-height: 1; font-weight: 400; }
+  .auto-pill { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--color-text-secondary); border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-8) var(--space-8); }
+  .score-transition { display: flex; align-items: center; gap: var(--space-12); margin-top: var(--space-12); }
+  .score-num { font-family: var(--sans); font-size: 48px; line-height: 1; font-weight: 400; }
+  .score-current { color: var(--color-text-secondary); }
+  .score-target { color: var(--color-text-primary); }
+  .score-arrow { font-size: 24px; color: var(--color-text-secondary); }
+  section { margin-bottom: var(--space-48); }
+  h2 { margin: 0 0 var(--space-8); font-family: var(--serif); font-size: 36px; line-height: 1.2; font-weight: 400; }
+  hr.rule { border: none; border-top: var(--border-width) solid var(--color-text-primary); margin: 0 0 var(--space-24); }
+  .overview-grid { display: grid; gap: var(--space-8); }
+  .overview-row { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-12); }
+  .overview-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-8); }
+  .overview-name { font-weight: 400; font-size: 18px; }
+  .overview-scores { display: flex; align-items: center; gap: var(--space-8); font-family: var(--mono); font-size: 16px; }
+  .overview-current { color: var(--color-text-secondary); }
+  .overview-target { color: var(--color-text-primary); }
+  .overview-gap { font-size: 13px; color: var(--color-text-secondary); }
+  .tag { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 11px; font-weight: 400; text-transform: uppercase; letter-spacing: .04em; border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: 3px var(--space-8); }
+  .bar-pair { display: grid; gap: 4px; }
+  .bar-label { font-size: 11px; color: var(--color-text-secondary); display: flex; justify-content: space-between; font-family: var(--mono); }
+  .bar-track { height: 6px; background: var(--surface-muted); overflow: hidden; }
+  .bar-fill { height: 100%; }
+  .bar-fill.current { background: var(--color-text-secondary); }
+  .bar-fill.target { background: var(--color-text-primary); }
+  .path-card { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-12); margin-bottom: var(--space-8); }
+  .path-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-8); }
+  .path-title { font-weight: 400; font-size: 18px; }
+  .path-gap { color: var(--color-text-secondary); font-size: 16px; margin-bottom: var(--space-12); }
+  .step-list { list-style: none; display: grid; gap: var(--space-8); }
+  .step-item { display: flex; gap: var(--space-12); align-items: flex-start; }
+  .step-num { font-family: var(--mono); font-size: 13px; color: var(--color-text-secondary); min-width: 20px; padding-top: 2px; }
+  .step-body { flex: 1; }
+  .step-title { font-weight: 400; font-size: 16px; margin-bottom: 2px; }
+  .step-meta { font-size: 14px; color: var(--color-text-secondary); line-height: 1.4; }
+  .step-meta code { font-family: var(--mono); font-size: 13px; }
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content: ""; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 1px; background: var(--color-text-primary); }
+  .tl-item { position: relative; padding-bottom: var(--space-24); }
+  .tl-item::before { content: ""; position: absolute; left: -22px; top: 6px; width: 8px; height: 8px; border: var(--border-width) solid var(--color-text-primary); border-radius: 50%; background: var(--color-canvas); }
+  .tl-num { font-family: var(--mono); font-size: 11px; color: var(--color-text-secondary); margin-bottom: 2px; }
+  .tl-body { font-size: 16px; }
+  .tl-dim { font-weight: 400; }
+  .tl-action { color: var(--color-text-secondary); }
+  .tl-meta { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; font-family: var(--mono); }
+  .maintain-card { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-12); }
+  .maintain-card h3 { font-size: 18px; font-weight: 400; margin-bottom: var(--space-8); }
+  .maintain-card ul { list-style: none; }
+  .maintain-card li { position: relative; padding-left: var(--space-24); font-size: 16px; color: var(--color-text-secondary); margin-bottom: 4px; }
+  .maintain-card li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border: var(--border-width) solid var(--color-text-primary); border-radius: 50%; }
+  .total-bar { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-12); font-size: 18px; margin-top: var(--space-24); }
+  .total-bar strong { font-weight: 400; }
+  footer { margin-top: var(--space-48); border-top: var(--border-width) solid var(--color-text-primary); padding-top: var(--space-24); font-family: var(--mono); font-size: 13px; color: var(--color-text-secondary); }
+  @media (max-width: 720px) { h1 { font-size: 36px; } h2 { font-size: 28px; } .score-num { font-size: 36px; } }
+  @media (max-width: 560px) { body { padding: var(--space-32) var(--space-12) 80px; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-top">
+      <h1>Score Improvement</h1>
+      <span class="auto-pill">monkren-design</span>
+    </div>
+    <div style="color:var(--color-text-secondary);font-size:18px">Landing Page &nbsp;·&nbsp; 2026-05-08</div>
+    <div class="score-transition">
+      <span class="score-num score-current">6.6</span>
+      <span class="score-arrow">→</span>
+      <span class="score-num score-target">8.2</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Overview</h2>
+    <hr class="rule">
+    <div class="overview-grid">
+      <div class="overview-row">
+        <div class="overview-header">
+          <span class="overview-name">哲学一致性</span>
+          <div class="overview-scores"><span class="overview-current">7</span><span style="color:var(--color-text-secondary)">→</span><span class="overview-target">8</span><span class="overview-gap">+1</span><span class="tag">中</span></div>
+        </div>
+        <div class="bar-pair">
+          <div class="bar-label"><span>当前</span><span>7/10</span></div>
+          <div class="bar-track"><div class="bar-fill current" style="width:70%"></div></div>
+          <div class="bar-label"><span>目标</span><span>8/10</span></div>
+          <div class="bar-track"><div class="bar-fill target" style="width:80%"></div></div>
+        </div>
+      </div>
+      <div class="overview-row">
+        <div class="overview-header">
+          <span class="overview-name">视觉层级</span>
+          <span class="tag">✓ 维持</span>
+        </div>
+        <div class="bar-pair">
+          <div class="bar-label"><span>当前</span><span>8/10</span></div>
+          <div class="bar-track"><div class="bar-fill target" style="width:80%"></div></div>
+        </div>
+      </div>
+      <div class="overview-row">
+        <div class="overview-header">
+          <span class="overview-name">细节执行</span>
+          <div class="overview-scores"><span class="overview-current">5</span><span style="color:var(--color-text-secondary)">→</span><span class="overview-target">8</span><span class="overview-gap">+3</span><span class="tag">高</span></div>
+        </div>
+        <div class="bar-pair">
+          <div class="bar-label"><span>当前</span><span>5/10</span></div>
+          <div class="bar-track"><div class="bar-fill current" style="width:50%"></div></div>
+          <div class="bar-label"><span>目标</span><span>8/10</span></div>
+          <div class="bar-track"><div class="bar-fill target" style="width:80%"></div></div>
+        </div>
+      </div>
+      <div class="overview-row">
+        <div class="overview-header">
+          <span class="overview-name">功能性</span>
+          <div class="overview-scores"><span class="overview-current">7</span><span style="color:var(--color-text-secondary)">→</span><span class="overview-target">8</span><span class="overview-gap">+1</span><span class="tag">低</span></div>
+        </div>
+        <div class="bar-pair">
+          <div class="bar-label"><span>当前</span><span>7/10</span></div>
+          <div class="bar-track"><div class="bar-fill current" style="width:70%"></div></div>
+          <div class="bar-label"><span>目标</span><span>8/10</span></div>
+          <div class="bar-track"><div class="bar-fill target" style="width:80%"></div></div>
+        </div>
+      </div>
+      <div class="overview-row">
+        <div class="overview-header">
+          <span class="overview-name">创新性</span>
+          <div class="overview-scores"><span class="overview-current">6</span><span style="color:var(--color-text-secondary)">→</span><span class="overview-target">7.5</span><span class="overview-gap">+1.5</span><span class="tag">中</span></div>
+        </div>
+        <div class="bar-pair">
+          <div class="bar-label"><span>当前</span><span>6/10</span></div>
+          <div class="bar-track"><div class="bar-fill current" style="width:60%"></div></div>
+          <div class="bar-label"><span>目标</span><span>7.5/10</span></div>
+          <div class="bar-track"><div class="bar-fill target" style="width:75%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Paths</h2>
+    <hr class="rule">
+
+    <details open>
+      <summary style="font-size:18px;cursor:pointer;margin-bottom:var(--space-8);display:list-item;">哲学一致性：7 → 8</summary>
+      <div class="path-card">
+        <div class="path-gap">核心差距：Feature 卡片混入未定义的紫色渐变，与品牌温暖色系矛盾</div>
+        <ol class="step-list">
+          <li class="step-item"><span class="step-num">1.</span><div class="step-body"><div class="step-title">移除未定义的紫色渐变 <span class="tag">Quick Win</span></div><div class="step-meta">操作：将 <code>.feature-card</code> 紫色渐变替换为品牌色渐变 · 预期提升：+0.5 · 详见 review-report.md Fix #2</div></div></li>
+          <li class="step-item"><span class="step-num">2.</span><div class="step-body"><div class="step-title">审查所有渐变使用 <span class="tag">小修</span></div><div class="step-meta">操作：全局搜索 <code>gradient</code>，确认每个渐变都使用品牌色系 · 预期提升：+0.5 · 依赖：步骤 1</div></div></li>
+        </ol>
+      </div>
+    </details>
+
+    <details open>
+      <summary style="font-size:18px;cursor:pointer;margin-bottom:var(--space-8);display:list-item;">细节执行：5 → 8</summary>
+      <div class="path-card">
+        <div class="path-gap">核心差距：间距系统混乱，多处偏离 8pt 网格</div>
+        <ol class="step-list">
+          <li class="step-item"><span class="step-num">1.</span><div class="step-body"><div class="step-title">修复 .card-title margin-bottom <span class="tag">Quick Win</span></div><div class="step-meta">操作：将 <code>margin-bottom: 13px</code> 改为 <code>var(--space-3)</code> · 预期提升：+0.5 · 详见 review-report.md Quick Win #1</div></div></li>
+          <li class="step-item"><span class="step-num">2.</span><div class="step-body"><div class="step-title">统一 footer 间距 <span class="tag">小修</span></div><div class="step-meta">操作：将 footer 的 12/16/18px 统一为 token 值 · 预期提升：+1.0 · 详见 review-report.md Fix #1</div></div></li>
+          <li class="step-item"><span class="step-num">3.</span><div class="step-body"><div class="step-title">全局间距审计 <span class="tag">中修</span></div><div class="step-meta">操作：扫描所有 CSS 间距值，将非 8pt 倍数替换为 token · 预期提升：+1.5 · 依赖：步骤 1、2</div></div></li>
+        </ol>
+      </div>
+    </details>
+
+    <details open>
+      <summary style="font-size:18px;cursor:pointer;margin-bottom:var(--space-8);display:list-item;">功能性：7 → 8</summary>
+      <div class="path-card">
+        <div class="path-gap">核心差距：装饰性数据无实际支撑，分散注意力</div>
+        <ol class="step-list">
+          <li class="step-item"><span class="step-num">1.</span><div class="step-body"><div class="step-title">移除或替换装饰性数据 <span class="tag">小修</span></div><div class="step-meta">操作：将 <code>.stats-section</code> 的无支撑数字替换为真实数据或移除 · 预期提升：+1.0 · 详见 review-report.md Fix #3</div></div></li>
+        </ol>
+      </div>
+    </details>
+
+    <details open>
+      <summary style="font-size:18px;cursor:pointer;margin-bottom:var(--space-8);display:list-item;">创新性：6 → 7.5</summary>
+      <div class="path-card">
+        <div class="path-gap">核心差距：整体采用成熟卡片布局，缺乏品牌独特签名</div>
+        <ol class="step-list">
+          <li class="step-item"><span class="step-num">1.</span><div class="step-body"><div class="step-title">为 Hero 增加品牌签名元素 <span class="tag">中修</span></div><div class="step-meta">操作：在 Hero 背景或 CTA 区域引入品牌视觉签名 · 预期提升：+1.0 · 详见 review-report.md Fix #4</div></div></li>
+          <li class="step-item"><span class="step-num">2.</span><div class="step-body"><div class="step-title">Feature 卡片差异化处理 <span class="tag">小修</span></div><div class="step-meta">操作：为 Feature 卡片增加品牌特有交互或视觉细节 · 预期提升：+0.5 · 依赖：步骤 1</div></div></li>
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2>Roadmap</h2>
+    <hr class="rule">
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-num">#1</div><div class="tl-body"><span class="tl-dim">细节执行</span> · 修复 .card-title margin-bottom <span class="tag" style="font-size:10px;padding:2px 6px;">Quick Win</span></div><div class="tl-meta">+0.5 · 无依赖</div></div>
+      <div class="tl-item"><div class="tl-num">#2</div><div class="tl-body"><span class="tl-dim">哲学一致性</span> · 移除未定义的紫色渐变 <span class="tag" style="font-size:10px;padding:2px 6px;">Quick Win</span></div><div class="tl-meta">+0.5 · 无依赖</div></div>
+      <div class="tl-item"><div class="tl-num">#3</div><div class="tl-body"><span class="tl-dim">功能性</span> · 移除或替换装饰性数据 <span class="tag" style="font-size:10px;padding:2px 6px;">小修</span></div><div class="tl-meta">+1.0 · 无依赖</div></div>
+      <div class="tl-item"><div class="tl-num">#4</div><div class="tl-body"><span class="tl-dim">细节执行</span> · 统一 footer 间距 <span class="tag" style="font-size:10px;padding:2px 6px;">小修</span></div><div class="tl-meta">+1.0 · 依赖 #1</div></div>
+      <div class="tl-item"><div class="tl-num">#5</div><div class="tl-body"><span class="tl-dim">哲学一致性</span> · 审查所有渐变使用 <span class="tag" style="font-size:10px;padding:2px 6px;">小修</span></div><div class="tl-meta">+0.5 · 依赖 #2</div></div>
+      <div class="tl-item"><div class="tl-num">#6</div><div class="tl-body"><span class="tl-dim">创新性</span> · Feature 卡片差异化处理 <span class="tag" style="font-size:10px;padding:2px 6px;">小修</span></div><div class="tl-meta">+0.5 · 依赖 #7</div></div>
+      <div class="tl-item"><div class="tl-num">#7</div><div class="tl-body"><span class="tl-dim">创新性</span> · 为 Hero 增加品牌签名元素 <span class="tag" style="font-size:10px;padding:2px 6px;">中修</span></div><div class="tl-meta">+1.0 · 无依赖</div></div>
+      <div class="tl-item"><div class="tl-num">#8</div><div class="tl-body"><span class="tl-dim">细节执行</span> · 全局间距审计 <span class="tag" style="font-size:10px;padding:2px 6px;">中修</span></div><div class="tl-meta">+1.5 · 依赖 #1, #4</div></div>
+    </div>
+    <div class="total-bar">
+      <strong>预计总提升</strong>：当前 <span style="color:var(--color-text-secondary)">6.6/10</span> → 完成全部后 <span style="color:var(--color-text-primary)">8.2/10</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Maintain</h2>
+    <hr class="rule">
+    <div class="maintain-card">
+      <h3>视觉层级：8/10</h3>
+      <ul>
+        <li>保持 Hero 标题 64px vs 正文 18px 的 3.5 倍对比</li>
+        <li>注意 .subtitle 28px 与 h2 32px 的差距，避免进一步缩小</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Generated by monkren-design &nbsp;·&nbsp; 2026-05-08 &nbsp;·&nbsp; .monkren/reviews/landing-page-2026-05-08/score-improvement.html
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+- [x] SKILL.md 审查报告模板包含 SVG 雷达图规格说明
+- [x] SKILL.md 报告输出结构已更新为可视化格式（Header → 雷达图 → 5 维度卡片 → 行动清单 → 检测结果）
+- [x] SKILL.md 5 维度卡片包含证据段落要求（30-80 字，引用具体元素/类名/行号）
+- [x] SKILL.md 新增"评分纪律"章节，包含 4 条铁律
+- [x] SKILL.md 工作流已升级为 6 步（审查前发现 → 提取上下文 → 品牌资产提取 → 执行审查 → 输出报告 → 自检迭代）
+- [x] SKILL.md 新增"品牌资产提取协议"章节（5 步流程 + 提取失败处理）
+- [x] SKILL.md 执行审查步骤包含"Artifact 结构检查"子项（HTML 完整性/CSS token 一致性/可访问性基线）
+- [x] SKILL.md 可访问性检查项完整（对比度 ≥ 4.5:1、可点击元素 ≥ 44×44px、图片 alt、语义化标签）
+- [x] SKILL.md Fix 条目格式包含 P0/P1/P2 分类（与 ⚠️/⚡/💡 对应）
+- [x] SKILL.md 新增"自审迭代"步骤，包含自检清单和迭代修正规则
+- [x] SKILL.md 新增"设计系统参考基线"章节，引入 DESIGN.md 9 段框架
+- [x] references/critique-guide.md 包含评分纪律章节
+- [x] references/critique-guide.md 评审输出模板包含 SVG 雷达图和 5 维度卡片格式
+- [x] references/critique-guide.md 每个维度评审要点包含证据引用要求
+- [x] references/design-styles.md 20 种设计哲学各包含 OKLch 确定性色板
+- [x] references/design-styles.md 20 种设计哲学各包含确定性字体栈
+- [x] references/design-styles.md 20 种设计哲学各包含布局姿态关键词
+- [x] references/design-context.md 包含品牌资产提取协议章节
+- [x] references/verification.md 包含 Artifact 结构检查验证项
+- [x] references/verification.md 包含自审迭代验证项
+- [x] references/workflow.md 工作流已升级为 6 步
+- [x] references/design-systems-baseline.md 已创建，包含 DESIGN.md 9 段框架和审查检查项
+- [x] SKILL.md References 路由表包含 design-systems-baseline.md 条目

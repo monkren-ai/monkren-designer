@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Suggestion — Landing Page</title>
+<style>
+  :root {
+    --color-canvas: #000000;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #a9a9a9;
+    --surface-muted: rgba(255, 255, 255, .12);
+    --surface-subtle: rgba(255, 255, 255, .06);
+    --border-color: rgba(255, 255, 255, .2);
+    --serif: ui-serif, Georgia, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+    --space-4: 4px;
+    --space-8: 8px;
+    --space-12: 12px;
+    --space-16: 16px;
+    --space-24: 24px;
+    --space-32: 32px;
+    --space-48: 48px;
+    --space-64: 64px;
+    --page-max-width: 860px;
+    --border-width: 1px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; min-width: 320px; background: var(--color-canvas); color: var(--color-text-primary); font-family: var(--sans); font-size: 15px; line-height: 1.6; font-weight: 400; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; padding: var(--space-48) var(--space-24) 120px; }
+  .page { max-width: var(--page-max-width); margin: 0 auto; }
+  header { margin-bottom: var(--space-48); }
+  .header-top { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--space-12); margin-bottom: var(--space-8); }
+  h1 { font-family: var(--sans); font-size: 48px; line-height: 1; font-weight: 400; }
+  .auto-pill { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--color-text-secondary); border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-8) var(--space-8); }
+  section { margin-bottom: var(--space-48); }
+  h2 { margin: 0 0 var(--space-8); font-family: var(--serif); font-size: 36px; line-height: 1.2; font-weight: 400; }
+  hr.rule { border: none; border-top: var(--border-width) solid var(--color-text-primary); margin: 0 0 var(--space-24); }
+  .current-state { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-24); color: var(--color-text-secondary); font-size: 18px; line-height: 1.3; }
+  .dir-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-12); }
+  .dir-card { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-24); display: flex; flex-direction: column; }
+  .dir-card.recommended { border-width: 2px; }
+  .dir-badge { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 11px; font-weight: 400; text-transform: uppercase; letter-spacing: .04em; border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: 3px var(--space-8); margin-bottom: var(--space-12); align-self: flex-start; }
+  .dir-name { font-family: var(--serif); font-size: 24px; line-height: 1.2; font-weight: 400; margin-bottom: 2px; }
+  .dir-style { font-size: 14px; color: var(--color-text-secondary); margin-bottom: var(--space-12); font-family: var(--mono); }
+  .swatch-row { display: flex; gap: var(--space-8); margin-bottom: var(--space-12); }
+  .swatch { width: 28px; height: 28px; border: var(--border-width) solid var(--color-text-secondary); }
+  .dir-changes { list-style: none; margin-bottom: var(--space-12); flex: 1; }
+  .dir-changes li { position: relative; padding-left: var(--space-24); font-size: 16px; color: var(--color-text-secondary); margin-bottom: var(--space-8); line-height: 1.3; }
+  .dir-changes li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border: var(--border-width) solid var(--color-text-primary); border-radius: 50%; }
+  .dir-qw { font-size: 14px; color: var(--color-text-secondary); padding-top: var(--space-12); border-top: var(--border-width) solid var(--surface-muted); font-family: var(--mono); }
+  .rec-section { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-24); }
+  .rec-section h3 { font-family: var(--serif); font-size: 24px; font-weight: 400; margin-bottom: var(--space-8); }
+  .rec-section p { color: var(--color-text-secondary); font-size: 18px; line-height: 1.3; }
+  footer { margin-top: var(--space-48); border-top: var(--border-width) solid var(--color-text-primary); padding-top: var(--space-24); font-family: var(--mono); font-size: 13px; color: var(--color-text-secondary); }
+  @media (max-width: 720px) { .dir-grid { grid-template-columns: 1fr; } h1 { font-size: 36px; } h2 { font-size: 28px; } }
+  @media (max-width: 560px) { body { padding: var(--space-32) var(--space-12) 80px; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-top">
+      <h1>Design Suggestion</h1>
+      <span class="auto-pill">monkren-design</span>
+    </div>
+    <div style="color:var(--color-text-secondary);font-size:18px">Landing Page &nbsp;·&nbsp; 2026-05-08</div>
+  </header>
+
+  <section>
+    <h2>Current State</h2>
+    <hr class="rule">
+    <div class="current-state">
+      当前落地页采用通用卡片布局，使用暖色系（clay/ivory/slate）作为品牌色。Hero 区域品牌感良好，但 Feature 区域混入未定义的紫色渐变，与品牌哲学冲突。整体缺乏品牌独特签名，视觉上与竞品难以区分。间距系统存在多处不一致，8 处硬编码颜色值。
+    </div>
+  </section>
+
+  <section>
+    <h2>Directions</h2>
+    <hr class="rule">
+    <div class="dir-grid">
+
+      <div class="dir-card recommended">
+        <span class="dir-badge">★ Recommended</span>
+        <div class="dir-name">Warm Minimalist</div>
+        <div class="dir-style">Scandinavian Design</div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#D97757"></div>
+          <div class="swatch" style="background:#FAF9F5"></div>
+          <div class="swatch" style="background:#141413"></div>
+        </div>
+        <ul class="dir-changes">
+          <li>精简至 2 种字号（Display + Body），强化对比</li>
+          <li>增加大量留白，让内容呼吸</li>
+          <li>clay 作为唯一强调色，去除所有其他彩色</li>
+        </ul>
+        <div class="dir-qw">Quick Win：移除渐变背景 → 5 min</div>
+      </div>
+
+      <div class="dir-card">
+        <span class="dir-badge">#2 Alternative</span>
+        <div class="dir-name">Bold Editorial</div>
+        <div class="dir-style">Swiss Design</div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#141413"></div>
+          <div class="swatch" style="background:#FFFFFF"></div>
+          <div class="swatch" style="background:#D97757"></div>
+        </div>
+        <ul class="dir-changes">
+          <li>引入严格网格系统，12 列布局</li>
+          <li>使用超大字号标题（72px+），强排版驱动</li>
+          <li>高对比黑白为主，clay 仅用于 CTA</li>
+        </ul>
+        <div class="dir-qw">Quick Win：Hero 标题增至 72px → 5 min</div>
+      </div>
+
+      <div class="dir-card">
+        <span class="dir-badge">#3 Bold Choice</span>
+        <div class="dir-name">Playful Warmth</div>
+        <div class="dir-style">Neo-Brutalist</div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#D97757"></div>
+          <div class="swatch" style="background:#E3DACC"></div>
+          <div class="swatch" style="background:#788C5D"></div>
+          <div class="swatch" style="background:#141413"></div>
+        </div>
+        <ul class="dir-changes">
+          <li>加入有机形状和圆角元素</li>
+          <li>混排衬线 + 无衬线字体</li>
+          <li>用插画替代照片，增加亲和力</li>
+        </ul>
+        <div class="dir-qw">Quick Win：所有卡片加 16px 圆角 → 5 min</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Recommendation</h2>
+    <hr class="rule">
+    <div class="rec-section">
+      <h3>→ Warm Minimalist</h3>
+      <p>当前设计已有暖色系基础和良好的 Hero 品牌感，Warm Minimalist 方向改动最小、风险最低。只需精简视觉元素、增加留白、统一为 clay 单一强调色，即可在保持品牌一致性的同时显著提升品质感。适合快速迭代，且与现有设计系统 token 完全兼容。</p>
+    </div>
+  </section>
+
+  <footer>
+    Generated by monkren-design &nbsp;·&nbsp; 2026-05-08 &nbsp;·&nbsp; .monkren/reviews/landing-page-2026-05-08/design-suggestion.html
+  </footer>
+
+</div>
+</body>
+</html>

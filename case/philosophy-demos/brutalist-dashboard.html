@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neo-Brutalist Dashboard — Michele Mazzini Style</title>
+<style>
+  :root {
+    --border: 3px solid #111111;
+    --border-thick: 4px solid #111111;
+    --shadow: 6px 6px 0px #111111;
+    --shadow-sm: 4px 4px 0px #111111;
+    --shadow-lg: 8px 8px 0px #111111;
+    --color-primary: #111111;
+    --color-blue: #2040d0;
+    --color-yellow: #e8e030;
+    --color-red: #ff3333;
+    --color-green: #22aa44;
+    --color-bg: #f0ece4;
+    --color-surface: #ffffff;
+    --color-text: #111111;
+    --color-text-muted: #555555;
+    --font-sans: -apple-system, "Inter", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "SF Mono", "Courier New", Courier, monospace;
+    --radius: 0px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--color-yellow); color: var(--color-primary); }
+
+  .demo-note {
+    background: var(--color-yellow);
+    border-bottom: var(--border-thick);
+    padding: 8px 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 33px);
+  }
+
+  .sidebar {
+    background: var(--color-primary);
+    color: #ffffff;
+    border-right: var(--border-thick);
+    padding: 24px 0;
+    position: relative;
+  }
+  .sidebar-logo {
+    padding: 0 20px 24px;
+    border-bottom: 2px solid #333;
+    margin-bottom: 16px;
+  }
+  .sidebar-logo h1 {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .sidebar-logo span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .nav-section {
+    padding: 12px 20px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.1s;
+    border-left: 4px solid transparent;
+    text-decoration: none;
+    color: #ccc;
+  }
+  .nav-item:hover { background: #222; color: #fff; }
+  .nav-item.active {
+    background: var(--color-blue);
+    color: #fff;
+    border-left-color: var(--color-yellow);
+  }
+  .nav-item-icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-family: var(--font-mono);
+  }
+  .sidebar-badge {
+    margin-left: auto;
+    background: var(--color-yellow);
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border: 2px solid var(--color-primary);
+  }
+
+  .main {
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: var(--border);
+  }
+  .topbar-title h2 {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .topbar-title p {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .topbar-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 16px;
+    cursor: pointer;
+    border: var(--border);
+    background: var(--color-surface);
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: var(--shadow-sm);
+  }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px var(--color-primary); }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--color-primary); }
+  .btn-primary {
+    background: var(--color-primary);
+    color: #fff;
+  }
+  .btn-accent {
+    background: var(--color-yellow);
+  }
+  .search-box {
+    display: flex;
+    align-items: center;
+    border: var(--border);
+    background: var(--color-surface);
+    padding: 8px 12px;
+    box-shadow: var(--shadow-sm);
+    gap: 8px;
+  }
+  .search-box input {
+    border: none;
+    background: transparent;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    outline: none;
+    width: 200px;
+    font-weight: 500;
+  }
+  .search-box span { font-family: var(--font-mono); font-size: 12px; color: var(--color-text-muted); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--color-surface);
+    border: var(--border);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card.blue { background: var(--color-blue); color: #fff; border-color: var(--color-primary); }
+  .stat-card.yellow { background: var(--color-yellow); }
+  .stat-card.red { background: var(--color-red); color: #fff; border-color: var(--color-primary); }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 8px;
+    opacity: 0.8;
+  }
+  .stat-value {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .stat-change {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-change.up { color: var(--color-green); }
+  .stat-change.down { color: var(--color-red); }
+  .blue .stat-change.up, .red .stat-change.up { color: var(--color-yellow); }
+  .stat-corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    border-left: var(--border);
+    border-bottom: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .card {
+    background: var(--color-surface);
+    border: var(--border);
+    box-shadow: var(--shadow);
+  }
+  .card-header {
+    padding: 16px 20px;
+    border-bottom: var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .card-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border: 2px solid var(--color-primary);
+    background: var(--color-yellow);
+  }
+  .card-body { padding: 20px; }
+
+  .chart-placeholder {
+    height: 200px;
+    border: var(--border);
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+    gap: 12px;
+  }
+  .chart-bar {
+    flex: 1;
+    background: var(--color-blue);
+    border: 2px solid var(--color-primary);
+    position: relative;
+    transition: background 0.2s;
+    cursor: pointer;
+    min-width: 20px;
+  }
+  .chart-bar:hover { background: var(--color-yellow); }
+  .chart-bar:nth-child(even) { background: var(--color-primary); }
+  .chart-bar:nth-child(even):hover { background: var(--color-red); }
+  .chart-bar-label {
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+  }
+  .chart-line-y {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 0;
+    border-top: 1px dashed #aaa;
+  }
+  .chart-y-label {
+    position: absolute;
+    left: 4px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-text-muted);
+    transform: translateY(-50%);
+  }
+
+  .activity-list { list-style: none; }
+  .activity-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 2px solid var(--color-bg);
+    align-items: flex-start;
+  }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-dot {
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--color-primary);
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .activity-dot.blue { background: var(--color-blue); }
+  .activity-dot.yellow { background: var(--color-yellow); }
+  .activity-dot.red { background: var(--color-red); }
+  .activity-dot.green { background: var(--color-green); }
+  .activity-text { font-weight: 600; font-size: 13px; flex: 1; }
+  .activity-text strong { font-weight: 900; }
+  .activity-time {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-text-muted);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .table-card { grid-column: 1 / -1; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th {
+    text-align: left;
+    padding: 12px 20px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    border-bottom: var(--border);
+    background: var(--color-bg);
+  }
+  td {
+    padding: 14px 20px;
+    border-bottom: 2px solid var(--color-bg);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  tr:hover td { background: #faf8f2; }
+  .status-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border: 2px solid var(--color-primary);
+  }
+  .status-tag.done { background: var(--color-green); color: #fff; }
+  .status-tag.progress { background: var(--color-yellow); }
+  .status-tag.blocked { background: var(--color-red); color: #fff; }
+  .table-action {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-blue);
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+  .table-action:hover { color: var(--color-red); }
+
+  .footer-note {
+    margin-top: 24px;
+    padding: 16px;
+    border: var(--border);
+    background: var(--color-surface);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+  }
+  .footer-note strong { color: var(--color-red); }
+
+  @media (max-width: 1024px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .content-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .topbar { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .main { padding: 12px; }
+    td, th { padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-note">
+  <span><strong>Michele Mazzini</strong> — 新野蛮 UI Dashboard Demo</span>
+  <span>粗边框 · 硬阴影 · 原色色块 · ZERO 圆角</span>
+</div>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <h1>BRUTAL</h1>
+      <span>Dashboard v2.0</span>
+    </div>
+    <div class="nav-section">Main</div>
+    <a href="#" class="nav-item active">
+      <span class="nav-item-icon">◈</span>
+      Overview
+    </a>
+    <a href="#" class="nav-item">
+      <span class="nav-item-icon">▤</span>
+      Projects
+      <span class="sidebar-badge">12</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="nav-item-icon">◉</span>
+      Analytics
+    </a>
+    <a href="#" class="nav-item">
+      <span class="nav-item-icon">✎</span>
+      Messages
+      <span class="sidebar-badge">3</span>
+    </a>
+    <div class="nav-section">System</div>
+    <a href="#" class="nav-item">
+      <span class="nav-item-icon">⚙</span>
+      Settings
+    </a>
+    <a href="#" class="nav-item">
+      <span class="nav-item-icon">?</span>
+      Help
+    </a>
+  </aside>
+
+  <main class="main">
+
+    <div class="topbar">
+      <div class="topbar-title">
+        <h2>Dashboard</h2>
+        <p>Welcome back. Here's what's happening today.</p>
+      </div>
+      <div class="topbar-actions">
+        <div class="search-box">
+          <span>⌘K</span>
+          <input type="text" placeholder="SEARCH..." />
+        </div>
+        <button class="btn btn-accent">+ NEW</button>
+        <button class="btn btn-primary">EXPORT</button>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card blue">
+        <div class="stat-corner">↗</div>
+        <div class="stat-label">Total Users</div>
+        <div class="stat-value">24,891</div>
+        <div class="stat-change up">▲ 12.5% this week</div>
+      </div>
+      <div class="stat-card yellow">
+        <div class="stat-corner">$</div>
+        <div class="stat-label">Revenue</div>
+        <div class="stat-value">$89.2K</div>
+        <div class="stat-change up">▲ 8.3% this month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-corner">◎</div>
+        <div class="stat-label">Active Now</div>
+        <div class="stat-value">1,247</div>
+        <div class="stat-change down">▼ 2.1% vs yesterday</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-corner">!</div>
+        <div class="stat-label">Issues</div>
+        <div class="stat-value">7</div>
+        <div class="stat-change up">▲ 3 new today</div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Weekly Traffic</span>
+          <span class="card-badge">LIVE</span>
+        </div>
+        <div class="card-body">
+          <div class="chart-placeholder">
+            <div class="chart-line-y" style="bottom: 75%;"><span class="chart-y-label">10K</span></div>
+            <div class="chart-line-y" style="bottom: 50%;"><span class="chart-y-label">7K</span></div>
+            <div class="chart-line-y" style="bottom: 25%;"><span class="chart-y-label">3K</span></div>
+            <div class="chart-bar" style="height: 45%;"><span class="chart-bar-label">MON</span></div>
+            <div class="chart-bar" style="height: 62%;"><span class="chart-bar-label">TUE</span></div>
+            <div class="chart-bar" style="height: 78%;"><span class="chart-bar-label">WED</span></div>
+            <div class="chart-bar" style="height: 55%;"><span class="chart-bar-label">THU</span></div>
+            <div class="chart-bar" style="height: 90%;"><span class="chart-bar-label">FRI</span></div>
+            <div class="chart-bar" style="height: 38%;"><span class="chart-bar-label">SAT</span></div>
+            <div class="chart-bar" style="height: 30%;"><span class="chart-bar-label">SUN</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Activity</span>
+        </div>
+        <div class="card-body">
+          <ul class="activity-list">
+            <li class="activity-item">
+              <span class="activity-dot green"></span>
+              <div class="activity-text"><strong>张小明</strong> 部署了新版本 v2.4.1</div>
+              <span class="activity-time">2m ago</span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot blue"></span>
+              <div class="activity-text"><strong>李华</strong> 创建了新项目「Phoenix」</div>
+              <span class="activity-time">15m ago</span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot yellow"></span>
+              <div class="activity-text"><strong>王芳</strong> 提交了 3 个 PR 等待审核</div>
+              <span class="activity-time">1h ago</span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot red"></span>
+              <div class="activity-text">服务器 <strong>api-03</strong> 响应异常</div>
+              <span class="activity-time">2h ago</span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot green"></span>
+              <div class="activity-text"><strong>赵伟</strong> 完成了 12 个任务</div>
+              <span class="activity-time">3h ago</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card table-card">
+      <div class="card-header">
+        <span class="card-title">Recent Projects</span>
+        <button class="btn" style="padding: 6px 12px; font-size: 11px;">VIEW ALL →</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Owner</th>
+            <th>Status</th>
+            <th>Progress</th>
+            <th>Updated</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Phoenix Redesign</strong></td>
+            <td>李华</td>
+            <td><span class="status-tag progress">IN PROGRESS</span></td>
+            <td>███████░░░ 72%</td>
+            <td>Today</td>
+            <td><span class="table-action">OPEN →</span></td>
+          </tr>
+          <tr>
+            <td><strong>Mobile App v3</strong></td>
+            <td>张小明</td>
+            <td><span class="status-tag done">DONE</span></td>
+            <td>██████████ 100%</td>
+            <td>Yesterday</td>
+            <td><span class="table-action">OPEN →</span></td>
+          </tr>
+          <tr>
+            <td><strong>Payment Integration</strong></td>
+            <td>王芳</td>
+            <td><span class="status-tag blocked">BLOCKED</span></td>
+            <td>███░░░░░░░ 34%</td>
+            <td>2 days ago</td>
+            <td><span class="table-action">OPEN →</span></td>
+          </tr>
+          <tr>
+            <td><strong>Analytics Dashboard</strong></td>
+            <td>赵伟</td>
+            <td><span class="status-tag progress">IN PROGRESS</span></td>
+            <td>█████░░░░░ 56%</td>
+            <td>3 days ago</td>
+            <td><span class="table-action">OPEN →</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">
+      <span>Neo-Brutalist UI Demo — monkren-design philosophy demo</span>
+      <span>Style: <strong>22 Michele Mazzini / Neo-Brutalism</strong></span>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

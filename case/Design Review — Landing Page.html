@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Review — Landing Page</title>
+<style>
+  :root {
+    --color-canvas: #000000;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #a9a9a9;
+    --surface-muted: rgba(255, 255, 255, .12);
+    --surface-subtle: rgba(255, 255, 255, .06);
+    --border-color: rgba(255, 255, 255, .2);
+    --serif: ui-serif, Georgia, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+    --space-4: 4px;
+    --space-8: 8px;
+    --space-12: 12px;
+    --space-16: 16px;
+    --space-24: 24px;
+    --space-32: 32px;
+    --space-48: 48px;
+    --space-64: 64px;
+    --page-max-width: 860px;
+    --border-width: 1px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    min-width: 320px;
+    background: var(--color-canvas);
+    color: var(--color-text-primary);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    padding: var(--space-48) var(--space-24) 120px;
+  }
+  a { color: inherit; text-decoration: none; }
+  .page { max-width: var(--page-max-width); margin: 0 auto; }
+
+  header { margin-bottom: var(--space-48); }
+  .header-top { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--space-12); margin-bottom: var(--space-8); }
+  h1 { font-family: var(--sans); font-size: 48px; line-height: 1; font-weight: 400; }
+  .auto-pill { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--color-text-secondary); border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-8) var(--space-8); }
+  .date-line { color: var(--color-text-secondary); font-size: 18px; }
+  .date-line .file { font-family: var(--mono); font-size: 16px; color: var(--color-text-primary); }
+
+  section { margin-bottom: var(--space-48); }
+  h2 { margin: 0 0 var(--space-8); font-family: var(--serif); font-size: 36px; line-height: 1.2; font-weight: 400; }
+  hr.rule { border: none; border-top: var(--border-width) solid var(--color-text-primary); margin: 0 0 var(--space-24); }
+
+  .score-hero { display: flex; align-items: center; gap: var(--space-32); margin-bottom: var(--space-32); }
+  .score-big { font-family: var(--sans); font-size: 72px; line-height: 1; font-weight: 400; color: var(--color-text-secondary); }
+  .score-meta { flex: 1; }
+  .score-rating { font-size: 24px; font-weight: 400; margin-bottom: var(--space-8); }
+  .score-conclusion { color: var(--color-text-secondary); font-size: 18px; line-height: 1.3; }
+
+  .summary-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-8); }
+  .stat-card { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-12); }
+  .stat-num { font-family: var(--sans); font-size: 36px; line-height: 1; font-weight: 400; margin-bottom: var(--space-8); }
+  .stat-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--color-text-secondary); }
+
+  .radar-wrap { display: flex; justify-content: center; margin-bottom: var(--space-24); }
+  .radar-wrap svg { width: 200px; height: 200px; }
+
+  .score-bars { display: grid; gap: var(--space-8); }
+  .score-bar-row { display: grid; grid-template-columns: 90px minmax(0, 1fr) 32px; gap: var(--space-8); align-items: center; font-size: 18px; }
+  .score-bar-label { color: var(--color-text-secondary); }
+  .score-bar-track { height: 6px; background: var(--surface-muted); overflow: hidden; }
+  .score-bar-fill { height: 100%; background: var(--color-text-primary); }
+  .score-bar-fill.muted { background: var(--color-text-secondary); }
+  .score-bar-value { font-family: var(--mono); text-align: right; }
+
+  .dim-list { display: grid; gap: var(--space-8); }
+  .dim-row { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-12); }
+  .dim-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-8); }
+  .dim-name { font-weight: 400; font-size: 18px; }
+  .dim-score { font-family: var(--mono); font-size: 18px; font-weight: 400; }
+  .dim-bar { height: 6px; background: var(--surface-muted); overflow: hidden; margin-bottom: var(--space-8); }
+  .dim-bar-fill { height: 100%; background: var(--color-text-primary); }
+  .dim-bar-fill.muted { background: var(--color-text-secondary); }
+  .dim-evidence { color: var(--color-text-secondary); font-size: 16px; line-height: 1.3; }
+  details { margin-top: var(--space-8); }
+  summary { font-family: var(--mono); font-size: 13px; color: var(--color-text-secondary); cursor: pointer; text-transform: uppercase; letter-spacing: .04em; }
+  details[open] summary { margin-bottom: var(--space-8); }
+
+  .detect-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-8); }
+  .detect-card { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-8) var(--space-12); display: flex; align-items: center; gap: var(--space-8); font-size: 18px; }
+  .detect-name { font-weight: 400; }
+  .detect-issue { font-family: var(--mono); font-size: 13px; color: var(--color-text-secondary); }
+
+  .fix-list { display: grid; gap: var(--space-8); }
+  .fix-item { border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-12); }
+  .fix-header { display: flex; align-items: center; gap: var(--space-8); margin-bottom: var(--space-8); flex-wrap: wrap; }
+  .fix-title { font-weight: 400; font-size: 18px; }
+  .tag { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 13px; font-weight: 400; text-transform: uppercase; letter-spacing: .04em; border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: 3px var(--space-8); }
+  .fix-body { color: var(--color-text-secondary); font-size: 16px; line-height: 1.4; }
+  .fix-body strong { color: var(--color-text-primary); font-weight: 400; }
+  .fix-body code { font-family: var(--mono); font-size: 14px; }
+
+  .swatch-row { display: flex; gap: var(--space-8); flex-wrap: wrap; margin-top: var(--space-8); }
+  .swatch { display: flex; align-items: center; gap: var(--space-8); border: var(--border-width) solid var(--color-text-primary); border-radius: 0; padding: var(--space-8) var(--space-8); }
+  .swatch-color { width: 24px; height: 24px; border: var(--border-width) solid var(--color-text-secondary); flex-shrink: 0; }
+  .swatch-info { font-family: var(--mono); font-size: 13px; }
+  .swatch-token { font-size: 12px; color: var(--color-text-secondary); }
+
+  .keep-list { list-style: none; }
+  .keep-list li { position: relative; padding: 0 0 var(--space-8) var(--space-24); color: var(--color-text-secondary); font-size: 16px; line-height: 1.3; }
+  .keep-list li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border: var(--border-width) solid var(--color-text-primary); border-radius: 50%; }
+
+  footer { margin-top: var(--space-48); border-top: var(--border-width) solid var(--color-text-primary); padding-top: var(--space-24); font-family: var(--mono); font-size: 13px; color: var(--color-text-secondary); }
+
+  @media (max-width: 720px) {
+    .summary-band { grid-template-columns: repeat(2, 1fr); }
+    .detect-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 36px; }
+    h2 { font-size: 28px; }
+    .score-big { font-size: 48px; }
+  }
+  @media (max-width: 560px) {
+    body { padding: var(--space-32) var(--space-12) 80px; }
+    .summary-band { grid-template-columns: 1fr 1fr; }
+    .score-hero { flex-direction: column; align-items: flex-start; gap: var(--space-12); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-top">
+      <h1>Design Review</h1>
+      <span class="auto-pill">monkren-design</span>
+    </div>
+    <div class="date-line">
+      Landing Page &nbsp;·&nbsp; 2026-05-08 &nbsp;·&nbsp;
+      <span class="file">index.html</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="score-hero">
+      <div class="score-big">6.6</div>
+      <div class="score-meta">
+        <div class="score-rating">Needs Work</div>
+        <div class="score-conclusion">Warm color scheme with good visual hierarchy, but detail execution suffers from inconsistent spacing and hardcoded values. Lacks brand signature moments.</div>
+      </div>
+    </div>
+    <div class="summary-band">
+      <div class="stat-card">
+        <div class="stat-num">0</div>
+        <div class="stat-label">P0 ⚠️</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">P1 ⚡</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Hardcoded</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Quick Win</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Radar</h2>
+    <hr class="rule">
+    <div class="radar-wrap">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="5维度雷达图">
+        <g fill="none" stroke="var(--color-text-primary)" stroke-opacity=".1" stroke-width=".5">
+          <polygon points="100,20 169.3,60 169.3,140 100,180 30.7,140 30.7,60"/>
+          <polygon points="100,36 156.2,68 156.2,132 100,164 43.8,132 43.8,68"/>
+          <polygon points="100,52 143.1,76 143.1,124 100,148 56.9,124 56.9,76"/>
+          <polygon points="100,68 130,84 130,116 100,132 70,116 70,84"/>
+          <polygon points="100,84 116.9,92 116.9,108 100,116 83.1,108 83.1,92"/>
+        </g>
+        <g stroke="var(--color-text-primary)" stroke-opacity=".06" stroke-width=".5">
+          <line x1="100" y1="20" x2="100" y2="180"/>
+          <line x1="30.7" y1="60" x2="169.3" y2="140"/>
+          <line x1="30.7" y1="140" x2="169.3" y2="60"/>
+        </g>
+        <polygon points="100,52 143.1,76 130,124 100,164 56.9,108" fill="var(--color-text-primary)" fill-opacity=".12" stroke="var(--color-text-primary)" stroke-opacity=".6" stroke-width="1.5"/>
+        <g fill="var(--color-text-primary)">
+          <circle cx="100" cy="52" r="3"/>
+          <circle cx="143.1" cy="76" r="3"/>
+          <circle cx="130" cy="124" r="3"/>
+          <circle cx="100" cy="164" r="3"/>
+          <circle cx="56.9" cy="108" r="3"/>
+        </g>
+        <g font-family="var(--sans)" font-size="9" fill="var(--color-text-secondary)" font-weight="400" text-anchor="middle">
+          <text x="100" y="14">7</text>
+          <text x="180" y="60">8</text>
+          <text x="180" y="144">5</text>
+          <text x="100" y="196">7</text>
+          <text x="20" y="132">6</text>
+        </g>
+      </svg>
+    </div>
+    <div class="score-bars">
+      <div class="score-bar-row">
+        <span class="score-bar-label">哲学一致性</span>
+        <div class="score-bar-track"><div class="score-bar-fill" style="width:70%"></div></div>
+        <span class="score-bar-value">7</span>
+      </div>
+      <div class="score-bar-row">
+        <span class="score-bar-label">视觉层级</span>
+        <div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+        <span class="score-bar-value">8</span>
+      </div>
+      <div class="score-bar-row">
+        <span class="score-bar-label">细节执行</span>
+        <div class="score-bar-track"><div class="score-bar-fill muted" style="width:50%"></div></div>
+        <span class="score-bar-value">5</span>
+      </div>
+      <div class="score-bar-row">
+        <span class="score-bar-label">功能性</span>
+        <div class="score-bar-track"><div class="score-bar-fill" style="width:70%"></div></div>
+        <span class="score-bar-value">7</span>
+      </div>
+      <div class="score-bar-row">
+        <span class="score-bar-label">创新性</span>
+        <div class="score-bar-track"><div class="score-bar-fill muted" style="width:60%"></div></div>
+        <span class="score-bar-value">6</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Diagnosis</h2>
+    <hr class="rule">
+    <div class="dim-list">
+      <div class="dim-row" id="dimension-philosophy">
+        <div class="dim-header">
+          <span class="dim-name">哲学一致性</span>
+          <span class="dim-score">7/10</span>
+        </div>
+        <div class="dim-bar"><div class="dim-bar-fill" style="width:70%"></div></div>
+        <div class="dim-evidence">Feature 卡片混入未定义的紫色渐变，与品牌温暖色系矛盾。Hero 区域品牌感良好但 Feature 区偏离。</div>
+        <details><summary>查看详情</summary><div class="dim-evidence">品牌色系为 clay/ivory/slate 暖色系，但 <code>.feature-card</code> 使用了 <code>linear-gradient(135deg, #7c3aed, #a855f7)</code> 紫色渐变，与品牌哲学冲突。Hero 区域的 clay 渐变使用正确。</div></details>
+      </div>
+      <div class="dim-row" id="dimension-visual">
+        <div class="dim-header">
+          <span class="dim-name">视觉层级</span>
+          <span class="dim-score">8/10</span>
+        </div>
+        <div class="dim-bar"><div class="dim-bar-fill" style="width:80%"></div></div>
+        <div class="dim-evidence">Hero 标题 64px vs 正文 18px 的 3.5 倍对比优秀。CTA 按钮视觉权重适当。subtitle 与 h2 差距可再拉大。</div>
+      </div>
+      <div class="dim-row" id="dimension-detail">
+        <div class="dim-header">
+          <span class="dim-name">细节执行</span>
+          <span class="dim-score">5/10</span>
+        </div>
+        <div class="dim-bar"><div class="dim-bar-fill muted" style="width:50%"></div></div>
+        <div class="dim-evidence">间距系统混乱：<code>.card-title</code> margin-bottom 13px、footer 混用 12/16/18px，偏离 8pt 网格。8 处硬编码颜色值。</div>
+        <details><summary>查看详情</summary><div class="dim-evidence">硬编码间距：13px、18px、12px 均非 8pt 倍数。硬编码颜色：#7c3aed、#a855f7、#f3f4f6、#e5e7eb、#1f2937、#374151、#6b7280、#d1d5db。</div></details>
+      </div>
+      <div class="dim-row" id="dimension-functionality">
+        <div class="dim-header">
+          <span class="dim-name">功能性</span>
+          <span class="dim-score">7/10</span>
+        </div>
+        <div class="dim-bar"><div class="dim-bar-fill" style="width:70%"></div></div>
+        <div class="dim-evidence">装饰性数据无实际支撑（"10,000+ 用户"无来源），分散注意力。CTA 功能正常，导航可用。</div>
+      </div>
+      <div class="dim-row" id="dimension-innovation">
+        <div class="dim-header">
+          <span class="dim-name">创新性</span>
+          <span class="dim-score">6/10</span>
+        </div>
+        <div class="dim-bar"><div class="dim-bar-fill muted" style="width:60%"></div></div>
+        <div class="dim-evidence">整体采用成熟卡片布局，缺乏品牌独特签名。Hero 区域有品牌感但 Feature 区为通用模板风格。</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Detection</h2>
+    <hr class="rule">
+    <div class="detect-grid">
+      <div class="detect-card"><span>⚠️</span><div><div class="detect-name">硬编码值</div><div class="detect-issue">8 处违规</div></div></div>
+      <div class="detect-card"><span>✓</span><div><div class="detect-name">设计系统合规</div><div class="detect-issue">通过</div></div></div>
+      <div class="detect-card"><span>⚠️</span><div><div class="detect-name">品牌资产协议</div><div class="detect-issue">2 处违规</div></div></div>
+      <div class="detect-card"><span>✓</span><div><div class="detect-name">文案审查</div><div class="detect-issue">通过</div></div></div>
+      <div class="detect-card"><span>✓</span><div><div class="detect-name">图标审查</div><div class="detect-issue">通过</div></div></div>
+      <div class="detect-card"><span>⚠️</span><div><div class="detect-name">用户体验</div><div class="detect-issue">1 处需改进</div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Action</h2>
+    <hr class="rule">
+
+    <div style="margin-bottom:var(--space-8);font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--color-text-secondary)">Quick Wins</div>
+    <div class="fix-list" style="margin-bottom:var(--space-32)">
+      <div class="fix-item" id="fix-qw1">
+        <div class="fix-header">
+          <span class="fix-title">修复 .card-title margin-bottom</span>
+          <span class="tag">Quick Win</span>
+        </div>
+        <div class="fix-body">将 <code>margin-bottom: 13px</code> 改为 <code>var(--space-3)</code> = 16px → 预计 5 分钟</div>
+      </div>
+      <div class="fix-item" id="fix-qw2">
+        <div class="fix-header">
+          <span class="fix-title">移除未定义的紫色渐变</span>
+          <span class="tag">Quick Win</span>
+        </div>
+        <div class="fix-body">将 <code>.feature-card</code> 的紫色渐变替换为品牌色渐变 <code>linear-gradient(135deg, var(--color-primary), var(--color-secondary))</code> → 预计 5 分钟</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:var(--space-8);font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--color-text-secondary)">Fix List</div>
+    <div class="fix-list">
+      <div class="fix-item" id="fix-1">
+        <div class="fix-header">
+          <span class="fix-title">1. 间距系统不统一</span>
+          <span class="tag">P1 ⚡</span>
+          <span class="tag">中修</span>
+        </div>
+        <div class="fix-body">
+          <strong>当前</strong>：footer 混用 12px/16px/18px，偏离 8pt 网格<br>
+          <strong>问题</strong>：间距不一致导致视觉节奏混乱<br>
+          <strong>修复</strong>：统一为 token 值（12px→var(--space-3), 16px→var(--space-4), 18px→var(--space-5)）
+        </div>
+      </div>
+      <div class="fix-item" id="fix-2">
+        <div class="fix-header">
+          <span class="fix-title">2. 品牌色系违规</span>
+          <span class="tag">P1 ⚡</span>
+          <span class="tag">小修</span>
+        </div>
+        <div class="fix-body">
+          <strong>当前</strong>：Feature 卡片使用紫色渐变，与品牌暖色系矛盾<br>
+          <strong>问题</strong>：破坏品牌一致性<br>
+          <strong>修复</strong>：替换为品牌色渐变，全局搜索 gradient 确认
+        </div>
+      </div>
+      <div class="fix-item" id="fix-3">
+        <div class="fix-header">
+          <span class="fix-title">3. 装饰性数据无支撑</span>
+          <span class="tag">P1 ⚡</span>
+          <span class="tag">小修</span>
+        </div>
+        <div class="fix-body">
+          <strong>当前</strong>："10,000+ 用户"等数据无来源<br>
+          <strong>问题</strong>：虚假数据损害可信度<br>
+          <strong>修复</strong>：替换为真实数据或移除统计区块
+        </div>
+      </div>
+      <div class="fix-item" id="fix-4">
+        <div class="fix-header">
+          <span class="fix-title">4. 缺乏品牌签名元素</span>
+          <span class="tag">P2 💡</span>
+          <span class="tag">中修</span>
+        </div>
+        <div class="fix-body">
+          <strong>当前</strong>：整体为通用卡片布局<br>
+          <strong>问题</strong>：无法与竞品区分<br>
+          <strong>修复</strong>：在 Hero 区域引入品牌视觉签名（渐变动画/定制插图/独特排版）
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Hardcoded</h2>
+    <hr class="rule">
+    <div class="swatch-row">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#7c3aed"></div>
+        <div><div class="swatch-info">#7c3aed</div><div class="swatch-token">→ var(--color-primary)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#a855f7"></div>
+        <div><div class="swatch-info">#a855f7</div><div class="swatch-token">→ var(--color-secondary)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#f3f4f6"></div>
+        <div><div class="swatch-info">#f3f4f6</div><div class="swatch-token">→ var(--color-surface)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e5e7eb"></div>
+        <div><div class="swatch-info">#e5e7eb</div><div class="swatch-token">→ var(--color-border)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1f2937"></div>
+        <div><div class="swatch-info">#1f2937</div><div class="swatch-token">→ var(--color-text)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#374151"></div>
+        <div><div class="swatch-info">#374151</div><div class="swatch-token">→ var(--color-text-secondary)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#6b7280"></div>
+        <div><div class="swatch-info">#6b7280</div><div class="swatch-token">→ var(--color-text-muted)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#d1d5db"></div>
+        <div><div class="swatch-info">#d1d5db</div><div class="swatch-token">→ var(--color-border-light)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Keep</h2>
+    <hr class="rule">
+    <ul class="keep-list">
+      <li>Hero 区域 clay 渐变 + 大字号标题的品牌感传达到位</li>
+      <li>CTA 按钮的视觉权重和位置选择恰当</li>
+      <li>整体暖色系选择与品牌定位一致</li>
+    </ul>
+  </section>
+
+  <footer>
+    Generated by monkren-design &nbsp;·&nbsp; 2026-05-08 &nbsp;·&nbsp; .monkren/reviews/landing-page-2026-05-08/review-report.html
+  </footer>
+
+</div>
+</body>
+</html>

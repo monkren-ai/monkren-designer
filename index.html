@@ -1,0 +1,2371 @@
+<!doctype html>
+<html lang="zh-CN" id="top">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monkren Design v2.0 | 设计审查专家</title>
+  <meta
+    name="description"
+    content="Monkren Design 是一个设计审查专家 Skill。提交设计产出，拿回一份专业审查报告——10 维度多视角审查、40 种设计哲学库、硬编码值检测、Lazyweb 证据集成。"
+  />
+  <meta property="og:title" content="Monkren Design v2.0" />
+  <meta property="og:description" content="提交设计，拿回一份专业审查报告。" />
+  <style>
+    :root {
+      --color-canvas-black: #000000;
+      --color-arctic-white: #ffffff;
+      --color-subtle-gray: #a9a9a9;
+      --font-lausanne: 'Lausanne', ui-sans-serif, system-ui, -apple-system;
+      --font-victor-serif: 'Victor Serif', ui-serif, Georgia;
+      --font-black-tie: 'Black Tie', ui-monospace, SFMono-Regular, Menlo, Consolas;
+      --font-weight-light: 300;
+      --font-weight-regular: 400;
+      --text-12px: 12px;
+      --text-20px: 20px;
+      --text-14px: 14px;
+      --text-16px: 16px;
+      --text-18px: 18px;
+      --text-24px: 24px;
+      --text-32px: 32px;
+      --text-36px: 36px;
+      --text-48px: 48px;
+      --leading-tight: 1;
+      --leading-normal: 1.2;
+      --spacing-7: 7px;
+      --spacing-8: 8px;
+      --spacing-10: 10px;
+      --spacing-12: 12px;
+      --spacing-13: 13px;
+      --spacing-20: 20px;
+      --spacing-29: 29px;
+      --spacing-40: 40px;
+      --spacing-54: 54px;
+      --spacing-64: 64px;
+      --spacing-78: 78px;
+      --page-max-width: 1280px;
+      --section-gap: 29px;
+      --card-padding: 13px;
+      --element-gap: 13px;
+      --radius-full: 120px;
+      --border-width: 1px;
+      --surface-muted: rgba(255, 255, 255, .12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      overflow-x: hidden;
+      background: var(--color-canvas-black);
+      color: var(--color-arctic-white);
+      font-family: var(--font-lausanne);
+      font-weight: var(--font-weight-regular);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+    :focus-visible {
+      outline: var(--border-width) solid var(--color-arctic-white);
+      outline-offset: 2px;
+    }
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--spacing-13);
+      background: var(--color-arctic-white);
+      color: var(--color-canvas-black);
+      padding: var(--spacing-8) var(--spacing-13);
+      font-family: var(--font-lausanne);
+      font-size: var(--text-24px);
+      z-index: 100;
+    }
+    .skip-link:focus {
+      top: var(--spacing-8);
+    }
+    .wrap {
+      width: min(var(--page-max-width), calc(100% - var(--spacing-40)));
+      margin: 0 auto;
+    }
+
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: var(--border-width) solid var(--color-arctic-white);
+      background: var(--color-canvas-black);
+    }
+    .top-row {
+      min-height: var(--spacing-64);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-13);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-12);
+      min-width: 0;
+      font-weight: var(--font-weight-regular);
+    }
+    .mark {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--color-canvas-black);
+      font-family: var(--font-victor-serif);
+      font-weight: var(--font-weight-regular);
+    }
+    .brand span:last-child {
+      overflow-wrap: anywhere;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-13);
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      font-weight: var(--font-weight-regular);
+    }
+    .nav a {
+      padding: var(--spacing-7) 0;
+      border-bottom: var(--border-width) solid transparent;
+    }
+    .nav a:hover {
+      color: var(--color-arctic-white);
+      border-color: var(--color-arctic-white);
+    }
+
+    .hero {
+      min-height: calc(100svh - var(--spacing-64));
+      display: flex;
+      align-items: center;
+      padding: var(--spacing-54) 0 var(--spacing-29);
+      border-bottom: var(--border-width) solid var(--color-arctic-white);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, .7fr);
+      gap: var(--spacing-29);
+      align-items: center;
+      min-width: 0;
+    }
+    .hero-grid > * { min-width: 0; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-8);
+      color: var(--color-subtle-gray);
+      font-size: var(--text-16px);
+      font-weight: var(--font-weight-regular);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: currentColor;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin: var(--spacing-13) 0 0;
+      font-family: var(--font-lausanne);
+      font-size: var(--text-36px);
+      line-height: 44px;
+      font-weight: var(--font-weight-light);
+      overflow-wrap: anywhere;
+    }
+    h2 {
+      margin: var(--spacing-10) 0 0;
+      font-family: var(--font-victor-serif);
+      font-size: var(--text-48px);
+      line-height: var(--leading-normal);
+      font-weight: var(--font-weight-regular);
+    }
+    .lead {
+      margin: var(--spacing-20) 0 0;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-20px);
+      line-height: var(--leading-normal);
+      overflow-wrap: break-word;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-12);
+      margin-top: var(--spacing-29);
+    }
+    .btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-8);
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: var(--radius-full);
+      padding: 12px 13.2px;
+      background: transparent;
+      color: var(--color-arctic-white);
+      font-family: var(--font-lausanne);
+      font-size: var(--text-18px);
+      font-weight: var(--font-weight-regular);
+      white-space: nowrap;
+    }
+    .btn.primary {
+      background: var(--color-arctic-white);
+      color: var(--color-canvas-black);
+      border-color: var(--color-arctic-white);
+    }
+    .btn.primary:hover {
+      background: var(--color-canvas-black);
+      color: var(--color-arctic-white);
+    }
+    .btn:hover {
+      background: var(--color-arctic-white);
+      color: var(--color-canvas-black);
+    }
+    .hero-note {
+      margin-top: var(--spacing-20);
+      color: var(--color-subtle-gray);
+      font-family: var(--font-black-tie);
+      font-size: var(--text-16px);
+      line-height: var(--leading-normal);
+      overflow-wrap: anywhere;
+    }
+    .mobile-only { display: none; }
+
+    .report-panel {
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      background: var(--color-canvas-black);
+      overflow: hidden;
+    }
+    .panel-bar {
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-12);
+      padding: 0 var(--spacing-13);
+      border-bottom: var(--border-width) solid var(--color-arctic-white);
+      background: var(--color-canvas-black);
+      color: var(--color-subtle-gray);
+      font-family: var(--font-black-tie);
+      font-size: var(--text-20px);
+    }
+    .dots {
+      display: flex;
+      gap: var(--spacing-7);
+    }
+    .dots i {
+      width: 8px;
+      height: 8px;
+      display: block;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: .42;
+    }
+    .report-body {
+      padding: var(--spacing-20);
+    }
+    .report-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--spacing-13);
+      margin-bottom: var(--spacing-20);
+    }
+    .report-header strong {
+      display: block;
+      font-family: var(--font-lausanne);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+      font-weight: var(--font-weight-regular);
+    }
+    .report-header span {
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+    .radar-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--spacing-20);
+    }
+    .radar-wrap svg {
+      width: 180px;
+      height: 180px;
+    }
+    .score-bars {
+      display: grid;
+      gap: var(--spacing-8);
+    }
+    .score-bar {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr) 32px;
+      gap: var(--spacing-8);
+      align-items: center;
+      font-size: var(--text-16px);
+    }
+    .score-bar-label {
+      color: var(--color-subtle-gray);
+      font-weight: var(--font-weight-regular);
+      white-space: nowrap;
+    }
+    .score-bar-track {
+      height: 6px;
+      border-radius: 0;
+      background: var(--surface-muted);
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 0;
+    }
+    .score-bar-value {
+      font-family: var(--font-black-tie);
+      font-size: var(--text-20px);
+      font-weight: var(--font-weight-regular);
+      text-align: right;
+    }
+    .severity-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--spacing-8);
+      margin-top: var(--spacing-13);
+    }
+    .severity-tag {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: var(--radius-full);
+      padding: var(--spacing-8) var(--spacing-10);
+      font-size: var(--text-16px);
+      font-weight: var(--font-weight-regular);
+    }
+    .severity-tag .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+      background: var(--color-arctic-white);
+    }
+
+    .section {
+      padding: var(--spacing-78) 0;
+      border-bottom: var(--border-width) solid var(--color-arctic-white);
+      position: relative;
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, .82fr) minmax(0, 1fr);
+      gap: var(--spacing-29);
+      align-items: end;
+      margin-bottom: var(--spacing-29);
+    }
+    .section-head p {
+      margin: 0;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-24px);
+      line-height: var(--leading-normal);
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--spacing-13);
+    }
+    .card {
+      min-width: 0;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      background: transparent;
+    }
+    .card .num {
+      display: block;
+      margin-bottom: var(--spacing-13);
+      color: var(--color-arctic-white);
+      font-family: var(--font-lausanne);
+      font-size: var(--text-24px);
+      line-height: var(--leading-tight);
+      font-weight: var(--font-weight-regular);
+    }
+    .card h3 {
+      margin: 0;
+      font-size: var(--text-24px);
+      line-height: var(--leading-normal);
+    }
+    .card p {
+      margin: var(--spacing-10) 0 0;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+
+    .demo-stack {
+      display: grid;
+      gap: var(--spacing-29);
+    }
+    .demo-intro {
+      display: grid;
+      grid-template-columns: minmax(0, .78fr) minmax(0, 1fr);
+      gap: var(--spacing-20);
+      align-items: end;
+      margin-bottom: var(--spacing-13);
+    }
+    .demo-intro h3 {
+      margin: 0;
+      font-family: var(--font-lausanne);
+      font-size: var(--text-24px);
+      line-height: var(--leading-normal);
+    }
+    .demo-intro p {
+      margin: 0;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+
+    .stage {
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      overflow: hidden;
+      background: var(--color-canvas-black);
+    }
+    .stage-bar {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-12);
+      padding: 0 var(--spacing-13);
+      font-family: var(--font-black-tie);
+      font-size: var(--text-24px);
+      font-weight: var(--font-weight-regular);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .radar-demo .stage-bar {
+      background: var(--color-arctic-white);
+      color: var(--color-canvas-black);
+      border-bottom: var(--border-width) solid var(--color-arctic-white);
+    }
+    .radar-demo-body {
+      padding: var(--spacing-20);
+      color: var(--color-arctic-white);
+      background: var(--color-canvas-black);
+    }
+    .radar-demo-grid {
+      display: grid;
+      grid-template-columns: minmax(180px, .6fr) minmax(0, 1fr);
+      gap: var(--spacing-29);
+      align-items: center;
+    }
+    .radar-demo-grid svg {
+      width: 100%;
+      max-width: 200px;
+      margin: 0 auto;
+      display: block;
+    }
+    .radar-legend {
+      display: grid;
+      gap: var(--spacing-12);
+    }
+    .radar-legend-item {
+      display: grid;
+      grid-template-columns: 14px minmax(0, 1fr);
+      gap: var(--spacing-10);
+      align-items: start;
+      font-size: var(--text-24px);
+      line-height: var(--leading-normal);
+    }
+    .radar-legend-item .indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-top: 4px;
+      background: var(--color-arctic-white);
+    }
+    .radar-legend-item strong {
+      display: block;
+      font-size: var(--text-24px);
+    }
+    .radar-legend-item span {
+      display: block;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+
+    .discipline-demo .stage-bar {
+      background: var(--color-canvas-black);
+      color: var(--color-arctic-white);
+      border-bottom: var(--border-width) solid var(--color-arctic-white);
+    }
+    .discipline-body {
+      padding: var(--spacing-20);
+      background: var(--color-canvas-black);
+    }
+    .discipline-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--spacing-13);
+    }
+    .discipline-card {
+      min-height: 110px;
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      padding: var(--card-padding);
+      background: var(--color-canvas-black);
+    }
+    .discipline-card b {
+      display: block;
+      font-size: var(--text-24px);
+      margin-bottom: var(--spacing-7);
+      font-weight: var(--font-weight-regular);
+    }
+    .discipline-card span {
+      display: block;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+    .discipline-card .tag {
+      display: inline-block;
+      margin-top: var(--spacing-8);
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: var(--radius-full);
+      padding: 3px var(--spacing-8);
+      font-family: var(--font-black-tie);
+      font-size: var(--text-24px);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-arctic-white);
+    }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--spacing-13);
+    }
+    .philosophy-card {
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      padding: var(--spacing-20);
+      background: var(--color-canvas-black);
+    }
+    .philosophy-card h4 {
+      margin: 0 0 var(--spacing-8) 0;
+      font-size: var(--text-24px);
+      font-weight: var(--font-weight-regular);
+    }
+    .philosophy-card .genre {
+      display: inline-block;
+      color: var(--color-subtle-gray);
+      font-family: var(--font-black-tie);
+      font-size: var(--text-18px);
+      margin-bottom: var(--spacing-10);
+    }
+    .philosophy-card p {
+      margin: 0;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+    .philosophy-card .img-wrap {
+      width: 100%;
+      margin-bottom: var(--spacing-13);
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      overflow: hidden;
+    }
+    .philosophy-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .severity-demo .stage-bar {
+      background: var(--color-arctic-white);
+      color: var(--color-canvas-black);
+      border-bottom: var(--border-width) solid var(--color-arctic-white);
+    }
+    .severity-body {
+      padding: var(--spacing-20);
+      background: var(--color-canvas-black);
+    }
+    .severity-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--spacing-13);
+    }
+    .severity-card {
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      padding: var(--spacing-20);
+      text-align: center;
+    }
+    .severity-card .level {
+      display: block;
+      font-family: var(--font-lausanne);
+      font-size: var(--text-24px);
+      line-height: var(--leading-tight);
+      font-weight: var(--font-weight-regular);
+    }
+    .severity-card .label {
+      display: block;
+      margin-top: var(--spacing-8);
+      font-size: var(--text-24px);
+      font-weight: var(--font-weight-regular);
+    }
+    .severity-card .desc {
+      display: block;
+      margin-top: var(--spacing-7);
+      color: var(--color-subtle-gray);
+      font-size: var(--text-16px);
+      line-height: var(--leading-normal);
+    }
+
+    .steps {
+      counter-reset: step;
+    }
+    .step {
+      position: relative;
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: var(--spacing-13);
+      min-height: 132px;
+      border-top: var(--border-width) solid var(--color-arctic-white);
+      padding: 24px 0;
+    }
+    .step:last-child {
+      border-bottom: var(--border-width) solid var(--color-arctic-white);
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step, decimal-leading-zero);
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 50%;
+      background: var(--color-canvas-black);
+      color: var(--color-arctic-white);
+      font-family: var(--font-black-tie);
+      font-size: var(--text-24px);
+      font-weight: var(--font-weight-regular);
+    }
+    .step h3 {
+      margin: 0;
+      font-size: var(--text-24px);
+      line-height: var(--leading-normal);
+    }
+    .step p {
+      margin: var(--spacing-8) 0 0;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+
+    .command-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, .7fr);
+      gap: var(--spacing-13);
+      align-items: stretch;
+    }
+    .terminal {
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      background: var(--color-canvas-black);
+      color: var(--color-arctic-white);
+      overflow: hidden;
+    }
+    .terminal pre {
+      margin: 0;
+      padding: var(--spacing-20);
+      overflow-x: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-family: var(--font-black-tie);
+      font-size: var(--text-24px);
+      line-height: 1.7;
+    }
+    .terminal code { color: inherit; }
+    .terminal .prompt { color: var(--color-subtle-gray); }
+    .terminal .cmd { color: var(--color-arctic-white); }
+    .terminal .comment { color: var(--color-subtle-gray); }
+    .copy-card {
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      padding: var(--spacing-20);
+      background: var(--color-canvas-black);
+    }
+    .copy-card h3 {
+      margin: 0;
+      font-size: var(--text-24px);
+      font-weight: var(--font-weight-regular);
+    }
+    .copy-card p {
+      margin: var(--spacing-12) 0 0;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+    .copy-card ul {
+      display: grid;
+      gap: var(--spacing-10);
+      margin: var(--spacing-13) 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+    .copy-card li {
+      position: relative;
+      padding-left: var(--spacing-20);
+    }
+    .copy-card li::before {
+      content: "";
+      position: absolute;
+      top: .55em;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 50%;
+    }
+
+    .footer {
+      padding: 36px 0 56px;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-24px);
+      line-height: var(--leading-normal);
+    }
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--spacing-13);
+      border-top: var(--border-width) solid var(--color-arctic-white);
+      padding-top: 24px;
+    }
+    .footer a {
+      border-bottom: var(--border-width) solid var(--color-arctic-white);
+    }
+    .footer a:hover {
+      color: var(--color-arctic-white);
+    }
+
+    .chip {
+      display: inline-block;
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: var(--radius-full);
+      padding: 3px var(--spacing-8);
+      font-family: var(--font-black-tie);
+      font-size: var(--text-18px);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-arctic-white);
+      line-height: var(--leading-normal);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--spacing-13);
+    }
+    .skill-card {
+      min-width: 0;
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      padding: var(--spacing-20);
+      background: var(--color-canvas-black);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-10);
+    }
+    .skill-card .num {
+      font-family: var(--font-black-tie);
+      font-size: var(--text-18px);
+      line-height: var(--leading-tight);
+      color: var(--color-subtle-gray);
+    }
+    .skill-card h3 {
+      margin: 0;
+      font-family: var(--font-lausanne);
+      font-size: var(--text-24px);
+      line-height: var(--leading-normal);
+      font-weight: var(--font-weight-regular);
+    }
+    .skill-card p {
+      margin: 0;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+      flex: 1 0 auto;
+    }
+    .skill-card .triggers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-7);
+      margin-top: auto;
+    }
+
+    .school-block {
+      border-top: var(--border-width) solid var(--color-arctic-white);
+      padding-top: var(--spacing-20);
+      margin-top: var(--spacing-29);
+    }
+    .school-block:first-of-type {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+    .school-head {
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1fr);
+      gap: var(--spacing-13);
+      align-items: baseline;
+      margin-bottom: var(--spacing-13);
+    }
+    .school-head .num {
+      font-family: var(--font-black-tie);
+      font-size: var(--text-24px);
+      line-height: var(--leading-tight);
+      color: var(--color-subtle-gray);
+    }
+    .school-head h3 {
+      margin: 0 0 var(--spacing-7);
+      font-family: var(--font-victor-serif);
+      font-size: var(--text-36px);
+      line-height: var(--leading-normal);
+      font-weight: var(--font-weight-regular);
+    }
+    .school-head p {
+      margin: 0;
+      color: var(--color-subtle-gray);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+    .philosophy-card .path {
+      display: inline-block;
+      margin-top: var(--spacing-8);
+      color: var(--color-subtle-gray);
+      font-family: var(--font-black-tie);
+      font-size: var(--text-18px);
+      line-height: var(--leading-normal);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--spacing-13);
+    }
+    .case-card {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-8);
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      padding: var(--spacing-20);
+      background: var(--color-canvas-black);
+      text-decoration: none;
+      color: var(--color-arctic-white);
+      transition: background .12s, color .12s;
+    }
+    .case-card:hover {
+      background: var(--color-arctic-white);
+      color: var(--color-canvas-black);
+    }
+    .case-card .cat {
+      font-family: var(--font-black-tie);
+      font-size: var(--text-18px);
+      line-height: var(--leading-tight);
+      color: var(--color-subtle-gray);
+    }
+    .case-card:hover .cat {
+      color: var(--color-canvas-black);
+    }
+    .case-card h4 {
+      margin: 0;
+      font-family: var(--font-lausanne);
+      font-size: var(--text-24px);
+      line-height: var(--leading-normal);
+      font-weight: var(--font-weight-regular);
+    }
+
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--spacing-13);
+    }
+    .ref-card {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-10);
+      border: var(--border-width) solid var(--color-arctic-white);
+      border-radius: 0;
+      padding: var(--spacing-20);
+      background: var(--color-canvas-black);
+      text-decoration: none;
+      color: var(--color-arctic-white);
+      transition: background .12s, color .12s;
+    }
+    .ref-card:hover {
+      background: var(--color-arctic-white);
+      color: var(--color-canvas-black);
+    }
+    .ref-card .filename {
+      font-family: var(--font-black-tie);
+      font-size: var(--text-24px);
+      line-height: var(--leading-normal);
+      color: var(--color-arctic-white);
+    }
+    .ref-card:hover .filename {
+      color: var(--color-canvas-black);
+    }
+    .ref-card h3 {
+      margin: 0;
+      font-family: var(--font-lausanne);
+      font-size: var(--text-24px);
+      line-height: var(--leading-normal);
+      font-weight: var(--font-weight-regular);
+    }
+    .ref-card .chapters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-7);
+    }
+    .ref-card .chapters .chip {
+      font-size: var(--text-18px);
+    }
+    .ref-card:hover .chapters .chip {
+      border-color: var(--color-canvas-black);
+      color: var(--color-canvas-black);
+    }
+    .ref-card .meta {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-black-tie);
+      font-size: var(--text-18px);
+      line-height: var(--leading-tight);
+      color: var(--color-subtle-gray);
+    }
+    .ref-card:hover .meta {
+      color: var(--color-canvas-black);
+    }
+
+    @media (max-width: 920px) {
+      .nav { display: none; }
+      .hero {
+        min-height: auto;
+        padding: var(--spacing-29) 0 var(--spacing-20);
+      }
+      .hero-grid,
+      .section-head,
+      .demo-intro,
+      .radar-demo-grid,
+      .command-layout {
+        grid-template-columns: 1fr;
+      }
+      .hero-grid,
+      .section-head,
+      .demo-intro,
+      .radar-demo-grid,
+      .command-layout {
+        min-width: 0;
+      }
+      .hero-grid > *,
+      .section-head > *,
+      .demo-intro > *,
+      .radar-demo-grid > *,
+      .command-layout > * {
+        min-width: 0;
+        max-width: 100%;
+      }
+      .wrap {
+        width: min(100% - 32px, var(--page-max-width));
+      }
+      .section {
+        padding: 58px 0;
+      }
+      .discipline-grid,
+      .philosophy-grid {
+        grid-template-columns: 1fr;
+      }
+      .severity-cards {
+        grid-template-columns: 1fr;
+      }
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+      .skills-grid,
+      .gallery-grid,
+      .ref-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .school-head {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-7);
+      }
+      h1 {
+        font-size: var(--text-48px);
+      }
+      h2 {
+        font-size: var(--text-36px);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .wrap {
+        width: min(100% - 24px, var(--page-max-width));
+      }
+      .top-row {
+        min-height: 58px;
+      }
+      .brand {
+        font-size: var(--text-24px);
+      }
+      .hero {
+        padding-top: 38px;
+      }
+      h1 {
+        font-size: var(--text-36px);
+        line-height: var(--leading-tight);
+        width: auto;
+        max-width: 100%;
+        word-break: normal;
+        overflow-wrap: break-word;
+      }
+      h2 {
+        font-size: var(--text-24px);
+      }
+      .lead {
+        font-size: var(--text-24px);
+        width: auto;
+        max-width: 100%;
+        overflow-wrap: break-word;
+      }
+      .hero-actions,
+      .report-panel {
+        width: 100%;
+        max-width: 100%;
+      }
+      .hero-note {
+        width: auto;
+        max-width: 100%;
+      }
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+      }
+      .mobile-only { display: block; }
+      .report-body,
+      .copy-card {
+        padding: var(--spacing-13);
+      }
+      .report-header {
+        display: block;
+      }
+      .report-header span {
+        display: block;
+        margin-top: var(--spacing-8);
+      }
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+      .score-bar {
+        grid-template-columns: 70px minmax(0, 1fr) 28px;
+      }
+      .severity-row {
+        grid-template-columns: 1fr;
+      }
+      .radar-demo-grid {
+        grid-template-columns: 1fr;
+      }
+      .discipline-grid,
+      .philosophy-grid {
+        grid-template-columns: 1fr;
+      }
+      .severity-cards {
+        grid-template-columns: 1fr;
+      }
+      .skills-grid,
+      .gallery-grid,
+      .ref-grid {
+        grid-template-columns: 1fr;
+      }
+      .step {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-10);
+      }
+      .footer-row {
+        display: block;
+      }
+      .footer-row span {
+        display: block;
+        margin-top: var(--spacing-8);
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#skills">跳到主要内容</a>
+  <header class="top">
+    <div class="wrap top-row">
+      <a class="brand" href="#top" aria-label="Monkren Design home">
+        <span class="mark">M</span>
+        <span>Monkren Design v2.0</span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#skills">Sub-skills</a>
+        <a href="#capabilities">能力</a>
+        <a href="#philosophy-library">哲学库</a>
+        <a href="#case-gallery">案例</a>
+        <a href="#dimensions">审查维度</a>
+        <a href="#workflow">工作流</a>
+        <a href="#references">文档</a>
+        <a href="#use">使用</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">Design Review Expert</span>
+          <h1>提交设计，<br />拿回一份专业审查报告。</h1>
+          <p class="lead">
+            3 分钟，10 维度多视角审查 + 40 种哲学库 + 25+ 真实样本。每个问题都有具体数值和修复建议。
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#capabilities">查看能力</a>
+            <a class="btn" href="#use">安装 Skill</a>
+          </div>
+          <p class="hero-note">跨 agent 通用——Claude Code、Cursor、Codex、OpenClaw、Hermes 都能装。</p>
+        </div>
+
+        <aside class="report-panel" aria-label="审查报告预览">
+          <div class="panel-bar">
+            <span>monkren-design/report</span>
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          </div>
+          <div class="report-body">
+            <div class="report-header">
+              <strong>10 维度审查，薄弱处一目了然。</strong>
+              <span>5 维度 + 多视角 + 平台专项</span>
+            </div>
+            <div class="radar-wrap">
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="5维度雷达图">
+                <g fill="none" stroke="var(--color-arctic-white)" stroke-opacity=".1" stroke-width=".5">
+                  <polygon points="100,20 169.3,60 169.3,140 100,180 30.7,140 30.7,60" />
+                  <polygon points="100,36 156.2,68 156.2,132 100,164 43.8,132 43.8,68" />
+                  <polygon points="100,52 143.1,76 143.1,124 100,148 56.9,124 56.9,76" />
+                  <polygon points="100,68 130,84 130,116 100,132 70,116 70,84" />
+                  <polygon points="100,84 116.9,92 116.9,108 100,116 83.1,108 83.1,92" />
+                </g>
+                <g stroke="var(--color-arctic-white)" stroke-opacity=".06" stroke-width=".5">
+                  <line x1="100" y1="20" x2="100" y2="180" />
+                  <line x1="30.7" y1="60" x2="169.3" y2="140" />
+                  <line x1="30.7" y1="140" x2="169.3" y2="60" />
+                </g>
+                <polygon
+                  points="100,44 156.2,76 130,124 100,164 56.9,108"
+                  fill="var(--color-arctic-white)" fill-opacity=".12"
+                  stroke="var(--color-arctic-white)" stroke-opacity=".6" stroke-width="1.5"
+                />
+                <g fill="var(--color-arctic-white)">
+                  <circle cx="100" cy="44" r="3" />
+                  <circle cx="156.2" cy="76" r="3" />
+                  <circle cx="130" cy="124" r="3" />
+                  <circle cx="100" cy="164" r="3" />
+                  <circle cx="56.9" cy="108" r="3" />
+                </g>
+                <g font-family="var(--font-lausanne)" font-size="16" fill="var(--color-subtle-gray)" text-anchor="middle">
+                  <text x="100" y="14">哲学一致性</text>
+                  <text x="178" y="60">视觉层级</text>
+                  <text x="178" y="144">细节执行</text>
+                  <text x="100" y="194">功能性</text>
+                  <text x="22" y="60">创新性</text>
+                </g>
+              </svg>
+            </div>
+            <div class="score-bars">
+              <div class="score-bar">
+                <span class="score-bar-label">哲学一致性</span>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:88%;background:var(--color-arctic-white)"></div></div>
+                <span class="score-bar-value">9</span>
+              </div>
+              <div class="score-bar">
+                <span class="score-bar-label">视觉层级</span>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:var(--color-arctic-white)"></div></div>
+                <span class="score-bar-value">8</span>
+              </div>
+              <div class="score-bar">
+                <span class="score-bar-label">细节执行</span>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:70%;background:var(--color-subtle-gray)"></div></div>
+                <span class="score-bar-value">7</span>
+              </div>
+              <div class="score-bar">
+                <span class="score-bar-label">功能性</span>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:92%;background:var(--color-arctic-white)"></div></div>
+                <span class="score-bar-value">9</span>
+              </div>
+              <div class="score-bar">
+                <span class="score-bar-label">创新性</span>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:60%;background:var(--color-subtle-gray)"></div></div>
+                <span class="score-bar-value">6</span>
+              </div>
+            </div>
+            <div class="severity-row">
+              <div class="severity-tag"><span class="dot"></span>P0 ⚠️ 1</div>
+              <div class="severity-tag"><span class="dot"></span>P1 ⚡ 4</div>
+              <div class="severity-tag"><span class="dot"></span>P2 💡 3</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="skills" class="section" aria-labelledby="skills-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Sub-skills</span>
+            <h2 id="skills-title">7 个 Sub-skill，覆盖设计审查全场景。</h2>
+          </div>
+          <p>
+            主 skill Monkren Design 协调全流程审查，7 个 sub-skill 在不同场景下独立可调用。查实现细节用 research，脑暴用 brainstorm，改稿用 improve。
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <article class="skill-card" id="skill-visual-taste-lab">
+            <span class="num">01</span>
+            <h3>visual-taste-lab</h3>
+            <p>把模糊的「好看」请求变成可复用的设计语言工作流——截图蒸馏 → 风格提炼 → 复用规范。</p>
+            <div class="triggers">
+              <span class="chip">让 UI 更好看</span>
+              <span class="chip">去 AI 化</span>
+              <span class="chip">品牌系统</span>
+            </div>
+          </article>
+          <article class="skill-card" id="skill-design-brainstorm">
+            <span class="num">02</span>
+            <h3>design-brainstorm</h3>
+            <p>跨界联想，刻意跳出常规品类，从没人看的领域挖可用灵感，输出 3 个差异化方向。</p>
+            <div class="triggers">
+              <span class="chip">创意方案</span>
+              <span class="chip">不走寻常路</span>
+              <span class="chip">差异化</span>
+            </div>
+          </article>
+          <article class="skill-card" id="skill-design-improve">
+            <span class="num">03</span>
+            <h3>design-improve</h3>
+            <p>截图 + Lazyweb 找相似屏，给出有真实产品证据的改进建议，避免拍脑袋的「这样改」。</p>
+            <div class="triggers">
+              <span class="chip">改进这个设计</span>
+              <span class="chip">设计反馈</span>
+              <span class="chip">怎么改</span>
+            </div>
+          </article>
+          <article class="skill-card" id="skill-design-research">
+            <span class="num">04</span>
+            <h3>design-research</h3>
+            <p>深度调研 + 下载参考截图，输出结构化研究报告。竞品分析、最佳实践、行业调研一站完成。</p>
+            <div class="triggers">
+              <span class="chip">最佳实践</span>
+              <span class="chip">竞品分析</span>
+              <span class="chip">行业调研</span>
+            </div>
+          </article>
+          <article class="skill-card" id="skill-quick-references">
+            <span class="num">05</span>
+            <h3>quick-references</h3>
+            <p>快速找参考截图，按模式分组，不写完整报告。想看「别人怎么做的」先调它。</p>
+            <div class="triggers">
+              <span class="chip">给我看看例子</span>
+              <span class="chip">参考</span>
+              <span class="chip">UI 截图</span>
+            </div>
+          </article>
+          <article class="skill-card" id="skill-add-inspo-source">
+            <span class="num">06</span>
+            <h3>add-inspo-source</h3>
+            <p>接入外部灵感源（Mobbin / Savee / Dribbble / Behance），后续所有 lazyweb-* skill 自动纳入。</p>
+            <div class="triggers">
+              <span class="chip">接 Mobbin</span>
+              <span class="chip">连 Dribbble</span>
+              <span class="chip">加灵感源</span>
+            </div>
+          </article>
+          <article class="skill-card" id="skill-remove-inspo-source">
+            <span class="num">07</span>
+            <h3>remove-inspo-source</h3>
+            <p>断开已接入的灵感源，后续 lazyweb-* skill 不再搜索该源。</p>
+            <div class="triggers">
+              <span class="chip">断开 Mobbin</span>
+              <span class="chip">移除参考源</span>
+            </div>
+          </article>
+          <article class="skill-card" id="skill-monkren-design">
+            <span class="num">★</span>
+            <h3>monkren-design</h3>
+            <p>主 skill——5 维度评审 + 硬编码检测 + 合规性检查 + 设计方向顾问 + SwiftLint 规则生成。</p>
+            <div class="triggers">
+              <a class="chip" href="#capabilities">查看能力 →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="capabilities" class="section" aria-labelledby="cap-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">核心能力</span>
+            <h2 id="cap-title">一个 Skill，覆盖设计审查全链路。</h2>
+          </div>
+          <p>
+            从 10 维度多视角审查到 SwiftLint 规则生成，从 40 种设计哲学库到 Lazyweb 真实产品证据，每个能力都输出可操作的修复建议，不是泛泛而谈。
+          </p>
+        </div>
+
+        <div class="grid-4">
+          <article class="card">
+            <span class="num">01</span>
+            <h3>5 维度评审体系</h3>
+            <p>哲学一致性、视觉层级、细节执行、功能性、创新性——每个维度独立 0-10 分，附证据段落和修复方向。</p>
+          </article>
+          <article class="card">
+            <span class="num">02</span>
+            <h3>10 维度多视角审查</h3>
+            <p>视觉审美、交互体验、品牌一致性、可访问性、商业转化、用户体验、使用流程、功能使用旅程、UI 界面设计、功能展示合理性。</p>
+          </article>
+          <article class="card">
+            <span class="num">03</span>
+            <h3>硬编码值检测</h3>
+            <p>自动扫描颜色（HEX/RGB/HSL）、字体（font-family）、间距（非 4/8 倍数）三类硬编码，输出替换 token 建议。</p>
+          </article>
+          <article class="card">
+            <span class="num">04</span>
+            <h3>40 种设计哲学库</h3>
+            <p>10 流派 × 40 种设计哲学——Pentagram 信息建筑、Locomotive 运动诗学、Sottsass 后现代狂欢等，推荐 3 个差异化方向。<a href="#philosophy-library" style="color:inherit;border-bottom:var(--border-width) solid var(--color-arctic-white)">查看完整库 →</a></p>
+          </article>
+          <article class="card">
+            <span class="num">05</span>
+            <h3>Lazyweb 证据集成</h3>
+            <p>使用 Lazyweb 搜索真实产品截图作为视觉证据，哲学判断和设计规则优先，截图佐证，不交付空洞的建议。</p>
+          </article>
+          <article class="card">
+            <span class="num">06</span>
+            <h3>SwiftLint 规则生成</h3>
+            <p>9 条自定义规则，自动检测硬编码字体、间距、颜色值、非标准间距、自定义按钮替代设计系统等问题。</p>
+          </article>
+          <article class="card">
+            <span class="num">07</span>
+            <h3>平台类型专项审查</h3>
+            <p>移动端 App、桌面端软件、Web 应用、PPT/演示文稿、插画、角色 IP——每种类型有独立审查要点。<a href="#references" style="color:inherit;border-bottom:var(--border-width) solid var(--color-arctic-white)">查看 platform-guides →</a></p>
+          </article>
+          <article class="card">
+            <span class="num">08</span>
+            <h3>三层递进报告</h3>
+            <p>结论层（快速概览）→ 诊断层（维度卡片 + 专项检测）→ 行动层（Quick Wins + Fix 清单），让用户清楚改什么。<a href="#case-gallery" style="color:inherit;border-bottom:var(--border-width) solid var(--color-arctic-white)">查看 25+ 样本 →</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="philosophy-library" class="section" aria-labelledby="phil-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">设计哲学库</span>
+            <h2 id="phil-title">10 流派 × 40 种设计哲学。</h2>
+          </div>
+          <p>
+            需要设计方向建议？从 10 流派 40 种哲学中推荐 3 个差异化方向，每个方向含设计师/机构名、标志性视觉特征、气质关键词、最佳执行路径。
+          </p>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">01</span>
+            <div>
+              <h3>信息建筑派</h3>
+              <p>数据不是装饰，是建筑材料。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Swiss%20grid%20design%2C%20Helvetica%20typography%2C%20black%20and%20white%2C%2060%25%20whitespace%2C%20information%20architecture%2C%20minimal%20flat%20design&image_size=square" alt="Pentagram Michael Bierut style visualization" loading="lazy">
+              </div>
+              <h4>Pentagram — Michael Bierut</h4>
+              <span class="genre">信息建筑派</span>
+              <p>极度克制的颜色，瑞士网格，字体排印作为主要视觉语言，60%+ 留白。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cartographic%20data%20visualization%2C%20warm%20terracotta%20and%20sage%20green%2C%20organic%20patterns%2C%20topographic%20maps%2C%20minimal%20flat%20design&image_size=square" alt="Stamen Design data poetics style visualization" loading="lazy">
+              </div>
+              <h4>Stamen Design — 数据诗学</h4>
+              <span class="genre">信息建筑派</span>
+              <p>地图学思维应用于信息设计，温暖的可视化色调，算法生成的有机图形。</p>
+              <span class="path">→ 混合</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Content-first%20hierarchy%2C%20system%20fonts%2C%20classic%20blue%20hyperlinks%2C%20reading%20optimized%20layout%2C%20minimal%20flat%20design&image_size=square" alt="Information Architects style visualization" loading="lazy">
+              </div>
+              <h4>Information Architects</h4>
+              <span class="genre">信息建筑派</span>
+              <p>极端的内容层级清晰度，只使用系统字体，蓝色超链接传统的坚守。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Scientific%20journal%20aesthetic%2C%20precise%20data%20charts%2C%20neutral%20grays%20and%20navy%2C%20clean%20sans-serif%2C%20minimal%20flat%20design&image_size=square" alt="Fathom scientific narrative style visualization" loading="lazy">
+              </div>
+              <h4>Fathom — 科学叙事</h4>
+              <span class="genre">信息建筑派</span>
+              <p>每一个像素都必须承载信息，科学期刊的严谨+设计的优雅。</p>
+              <span class="path">→ HTML</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">02</span>
+            <div>
+              <h3>运动诗学派</h3>
+              <p>动态不是装饰，是叙事节拍。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Film-like%20parallax%20scroll%2C%20dark%20backgrounds%2C%20bold%20typography%20emerging%20from%20darkness%2C%20smooth%20motion%2C%20minimal%20flat%20design&image_size=square" alt="Locomotive scroll narrative style visualization" loading="lazy">
+              </div>
+              <h4>Locomotive</h4>
+              <span class="genre">运动诗学派</span>
+              <p>丝滑的视差滚动，电影化的分镜叙事，大胆的空间留白。</p>
+              <span class="path">→ 混合</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Particle%20systems%2C%20neon%20gradients%20cyan%20magenta%2C%203D%20depth%20space%2C%20mouse-reactive%20environment%2C%20minimal%20flat%20design&image_size=square" alt="Active Theory WebGL style visualization" loading="lazy">
+              </div>
+              <h4>Active Theory</h4>
+              <span class="genre">运动诗学派</span>
+              <p>WebGL 沉浸式叙事，互动装置的网页化表达。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Abstract%20geometric%20patterns%2C%20algorithmically%20generated%2C%20mathematical%20precision%2C%20monochromatic%20with%20vibrant%20accent%2C%20minimal%20flat%20design&image_size=square" alt="Field.io algorithmic aesthetics style visualization" loading="lazy">
+              </div>
+              <h4>Field.io</h4>
+              <span class="genre">运动诗学派</span>
+              <p>粒子系统与流体模拟作为艺术语言。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Illustrative%20style%20mixed%20with%20UI%2C%20gamified%20exploration%2C%20warm%20colors%2C%20scroll-triggered%20animations%2C%20minimal%20flat%20design&image_size=square" alt="Resn interactive storytelling style visualization" loading="lazy">
+              </div>
+              <h4>Resn</h4>
+              <span class="genre">运动诗学派</span>
+              <p>实验性互动，创意技术整合，玩心与工程并重。</p>
+              <span class="path">→ 混合</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">03</span>
+            <div>
+              <h3>极简主义派</h3>
+              <p>删除到不能再删，剩下的就是本质。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Conceptual%20minimalism%2C%20Mondrian%20composition%2C%20anti-commercial%2C%20bold%20typographic%20statements%2C%20minimal%20flat%20design&image_size=square" alt="Experimental Jetset conceptual minimalism style visualization" loading="lazy">
+              </div>
+              <h4>Experimental Jetset</h4>
+              <span class="genre">极简主义派</span>
+              <p>概念极简，蒙德里安式构图，反商业。</p>
+              <span class="path">→ 混合</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Mathematical%208pt%20grid%2C%20absolute%20alignment%2C%20monochrome%20or%20two-color%2C%20functionalism%2C%20Swiss%20style%2C%20minimal%20flat%20design&image_size=square" alt="Müller-Brockmann Swiss grid style visualization" loading="lazy">
+              </div>
+              <h4>Müller-Brockmann — 瑞士网格</h4>
+              <span class="genre">极简主义派</span>
+              <p>数学精确的 8pt 网格，绝对的左对齐或居中，单色或双色方案。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Bold%20contrast%2C%20dark%20canvas%2C%20oversized%20typography%2C%20anti-decoration%2C%20minimal%20flat%20design&image_size=square" alt="Build in Amsterdam bold typography style visualization" loading="lazy">
+              </div>
+              <h4>Build in Amsterdam</h4>
+              <span class="genre">极简主义派</span>
+              <p>大胆对比，深色画布，超大排版，反装饰而装饰感强。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Emotional%20typography%2C%20embroidery%20meets%20photography%2C%20emotional%20minimalism%2C%20tactile%20visuals%2C%20minimal%20flat%20design&image_size=square" alt="Sagmeister and Walsh emotional typography style visualization" loading="lazy">
+              </div>
+              <h4>Sagmeister &amp; Walsh</h4>
+              <span class="genre">极简主义派</span>
+              <p>情感化排版，刺绣与摄影的并置，感性的极简。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">04</span>
+            <div>
+              <h3>实验先锋派</h3>
+              <p>工具可见，过程可见，作品即过程。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Hand-drawn%20algorithmic%20graphics%2C%20real-time%20generative%20art%2C%20pure%20black%20and%20white%2C%20code%20poetry%2C%20minimal%20flat%20design&image_size=square" alt="Zach Lieberman code poetry style visualization" loading="lazy">
+              </div>
+              <h4>Zach Lieberman — 代码诗学</h4>
+              <span class="genre">实验先锋派</span>
+              <p>手绘感的算法图形，实时生成艺术，黑白的纯粹表达。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Code-generated%20abstract%20art%2C%20mechanical%20meets%20organic%2C%20computational%20design%2C%20geometric%20abstraction%2C%20minimal%20flat%20design&image_size=square" alt="Raven Kwok algorithmic aesthetics style visualization" loading="lazy">
+              </div>
+              <h4>Raven Kwok — 算法美学</h4>
+              <span class="genre">实验先锋派</span>
+              <p>代码生成抽象艺术，机械与有机交织。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cinematic%20visuals%2C%20cyberpunk%20aesthetics%2C%20immersive%20narrative%20design%2C%20dark%20futuristic%2C%20minimal%20flat%20design&image_size=square" alt="Ash Thorp cinematic cyberpunk style visualization" loading="lazy">
+              </div>
+              <h4>Ash Thorp</h4>
+              <span class="genre">实验先锋派</span>
+              <p>电影化视觉，赛博朋克美学，沉浸式叙事。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Sci-fi%20interface%20design%2C%20HUD%20aesthetics%2C%20film%20UI%2C%20futuristic%20controls%2C%20dark%20interface%2C%20minimal%20flat%20design&image_size=square" alt="Territory Studio sci-fi HUD style visualization" loading="lazy">
+              </div>
+              <h4>Territory Studio</h4>
+              <span class="genre">实验先锋派</span>
+              <p>科幻界面设计，电影 UI 范本，HUD 美学。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">05</span>
+            <div>
+              <h3>东方哲学派</h3>
+              <p>留白是内容，简洁是哲学。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Japanese%20engineering%20design%2C%20simplicity%20meets%20function%2C%20minimal%20industrial%2C%20clean%20Japanese%20aesthetic%2C%20minimal%20flat%20design&image_size=square" alt="Takram Japanese engineering design style visualization" loading="lazy">
+              </div>
+              <h4>Takram</h4>
+              <span class="genre">东方哲学派</span>
+              <p>日本的工程化设计思维，简洁与功能的统一。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Extreme%20whitespace%2080%25%2C%20paper%20texture%20digitalized%2C%20white%20layers%2C%20tactile%20visualization%2C%20Kenya%20Hara%20style%2C%20minimal%20flat%20design&image_size=square" alt="Kenya Hara white emptiness style visualization" loading="lazy">
+              </div>
+              <h4>Kenya Hara — 白</h4>
+              <span class="genre">东方哲学派</span>
+              <p>极致的留白（80%+），纸张质感的数字化，触觉的视觉化。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Books%20as%20sculpture%2C%20material%20expression%2C%20tactile%20design%2C%20book%20art%2C%20Irma%20Boom%20style%2C%20minimal%20flat%20design&image_size=square" alt="Irma Boom book as sculpture style visualization" loading="lazy">
+              </div>
+              <h4>Irma Boom</h4>
+              <span class="genre">东方哲学派</span>
+              <p>书籍作为雕塑，物质性的极致表达。</p>
+              <span class="path">→ 混合</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Unconscious%20design%2C%20objects%20naturally%20fitting%20behavior%2C%20subtle%20beauty%2C%20Naoto%20Fukasawa%20style%2C%20minimal%20flat%20design&image_size=square" alt="Naoto Fukasawa unconscious design style visualization" loading="lazy">
+              </div>
+              <h4>Naoto Fukasawa</h4>
+              <span class="genre">东方哲学派</span>
+              <p>无意识设计，物件与行为的自然吻合。</p>
+              <span class="path">→ 混合</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">06</span>
+            <div>
+              <h3>野蛮生长派</h3>
+              <p>系统是骨架，真实是皮肤。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Naked%20HTML%20structure%2C%20system%20fonts%2C%20zero%20decoration%2C%20zero%20rounded%20corners%2C%20raw%20web%20design%2C%20minimal%20flat%20design&image_size=square" alt="Pascal Devoyre naked HTML style visualization" loading="lazy">
+              </div>
+              <h4>Pascal Devoyre — 裸露真实</h4>
+              <span class="genre">野蛮生长派</span>
+              <p>裸露的 HTML 结构作为视觉语言，系统字体，零装饰，零圆角。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Pragmatic%20minimalism%2C%20transparent%20materials%2C%20function%20as%20form%2C%20Michele%20Mazzini%20style%2C%20minimal%20flat%20design&image_size=square" alt="Michele Mazzini pragmatic minimalism style visualization" loading="lazy">
+              </div>
+              <h4>Michele Mazzini</h4>
+              <span class="genre">野蛮生长派</span>
+              <p>实用主义的极简，透明材料，功能即形式。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Magazine%20design%20commercial%20minimal%2C%20cover%20narrative%2C%20data%20typography%2C%20Bloomberg%20Businessweek%20style%2C%20minimal%20flat%20design&image_size=square" alt="Bloomberg Businessweek magazine style visualization" loading="lazy">
+              </div>
+              <h4>Bloomberg Businessweek</h4>
+              <span class="genre">野蛮生长派</span>
+              <p>杂志设计的商业极简，封面叙事与数据排版。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Illustration%20meets%20layout%2C%20geometric%20and%20color%20restraint%2C%20poetic%20composition%2C%20Lotta%20Nieminen%20style%2C%20minimal%20flat%20design&image_size=square" alt="Lotta Nieminen illustration layout style visualization" loading="lazy">
+              </div>
+              <h4>Lotta Nieminen</h4>
+              <span class="genre">野蛮生长派</span>
+              <p>插画与版式的诗意组合，几何与色彩的克制。</p>
+              <span class="path">→ 混合</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">07</span>
+            <div>
+              <h3>后现代狂欢派</h3>
+              <p>反规则是规则，装饰即宣言。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Memphis%20movement%2C%20color%20celebration%2C%20geometric%20pop%20mix%2C%20playful%20bold%2C%20Ettore%20Sottsass%20style%2C%20minimal%20flat%20design&image_size=square" alt="Ettore Sottsass Memphis style visualization" loading="lazy">
+              </div>
+              <h4>Ettore Sottsass — 孟菲斯</h4>
+              <span class="genre">后现代狂欢派</span>
+              <p>孟菲斯运动的色彩狂欢，几何与波普的混合。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Bold%20geometric%20patterns%2C%20vibrant%20colors%2C%20urban%20scale%20visuals%2C%20Camille%20Walala%20style%2C%20minimal%20flat%20design&image_size=square" alt="Camille Walala geometric patterns style visualization" loading="lazy">
+              </div>
+              <h4>Camille Walala</h4>
+              <span class="genre">后现代狂欢派</span>
+              <p>大胆的几何图案，活力色彩，城市尺度的视觉。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Large-scale%20installations%2C%20color%20and%20structure%20celebration%2C%20Morag%20Myerscough%20style%2C%20minimal%20flat%20design&image_size=square" alt="Morag Myerscough large installations style visualization" loading="lazy">
+              </div>
+              <h4>Morag Myerscough</h4>
+              <span class="genre">后现代狂欢派</span>
+              <p>大型装置艺术，色彩与结构的庆典式构图。</p>
+              <span class="path">→ 混合</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Experimental%20typography%2C%20music%20visuals%2C%20anti-industrial%20industrial%2C%20Studio%20Moross%20style%2C%20minimal%20flat%20design&image_size=square" alt="Studio Moross experimental typography style visualization" loading="lazy">
+              </div>
+              <h4>Studio Moross</h4>
+              <span class="genre">后现代狂欢派</span>
+              <p>排版的实验性，音乐视觉的先锋，反工业的工业感。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">08</span>
+            <div>
+              <h3>有机仿生派</h3>
+              <p>形式追随生长，结构回应自然。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Nature%20meets%20technology%2C%20parametric%20design%2C%20material%20ecology%2C%20organic%20forms%2C%20Neri%20Oxman%20style%2C%20minimal%20flat%20design&image_size=square" alt="Neri Oxman nature tech fusion style visualization" loading="lazy">
+              </div>
+              <h4>Neri Oxman</h4>
+              <span class="genre">有机仿生派</span>
+              <p>自然与技术的融合，参数化设计，材料生态学。</p>
+              <span class="path">→ 混合</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Organic%20morphologies%2C%20natural%20engineering%20logic%2C%20flowing%20forms%2C%20Ross%20Lovegrove%20style%2C%20minimal%20flat%20design&image_size=square" alt="Ross Lovegrove organic flowing forms style visualization" loading="lazy">
+              </div>
+              <h4>Ross Lovegrove</h4>
+              <span class="genre">有机仿生派</span>
+              <p>有机形态的结构美学，自然界的工程逻辑。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Tech%20and%20light%20poetic%20interaction%2C%20future%20landscape%20design%2C%20Daan%20Roosegaarde%20style%2C%20minimal%20flat%20design&image_size=square" alt="Daan Roosegaarde light tech interaction style visualization" loading="lazy">
+              </div>
+              <h4>Daan Roosegaarde</h4>
+              <span class="genre">有机仿生派</span>
+              <p>科技与光影的诗意互动，未来景观的设计。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Material%20innovation%2C%20tactile%20emotion%2C%20architectural%20installations%2C%20Heatherwick%20Studio%20style%2C%20minimal%20flat%20design&image_size=square" alt="Heatherwick Studio material innovation style visualization" loading="lazy">
+              </div>
+              <h4>Heatherwick Studio</h4>
+              <span class="genre">有机仿生派</span>
+              <p>材料创新，触感与情感，建筑级装置感。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">09</span>
+            <div>
+              <h3>复古未来派</h3>
+              <p>过去想象的未来，现在是过去。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Futuristic%20vehicle%20design%2C%20cyber%20aesthetics%2C%20Blade%20Runner%20visuals%2C%20Syd%20Mead%20style%2C%20minimal%20flat%20design&image_size=square" alt="Syd Mead futuristic vehicles style visualization" loading="lazy">
+              </div>
+              <h4>Syd Mead</h4>
+              <span class="genre">复古未来派</span>
+              <p>未来交通工具设计，赛博美学奠基，《银翼杀手》视觉源头。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Sci-fi%20transport%20industrial%20design%2C%20TRON%20Legacy%20visual%20language%2C%20Daniel%20Simon%20style%2C%20minimal%20flat%20design&image_size=square" alt="Daniel Simon sci-fi transport style visualization" loading="lazy">
+              </div>
+              <h4>Daniel Simon</h4>
+              <span class="genre">复古未来派</span>
+              <p>科幻交通工具的工业设计，《TRON: Legacy》视觉语言。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Contemporary%20retro-futurism%2C%20metallic%20textures%20and%20geometry%2C%20hardware%20feel%2C%20Actual%20Source%20style%2C%20minimal%20flat%20design&image_size=square" alt="Actual Source retro-futurism style visualization" loading="lazy">
+              </div>
+              <h4>Actual Source</h4>
+              <span class="genre">复古未来派</span>
+              <p>当代复古未来，金属质感与几何，平面设计的硬件感。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Digital%20material%20poetry%2C%20rendered%20realism%2C%20metaverse%20aesthetics%2C%20Andres%20Reisinger%20style%2C%20minimal%20flat%20design&image_size=square" alt="Andrés Reisinger digital material style visualization" loading="lazy">
+              </div>
+              <h4>Andrés Reisinger</h4>
+              <span class="genre">复古未来派</span>
+              <p>数字物质的诗意，渲染现实主义，元宇宙美学的代表。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">10</span>
+            <div>
+              <h3>极繁主义派</h3>
+              <p>密度是丰富，不是混乱。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Rule-breaking%20typography%2C%20chaos%20within%20order%2C%20Ray%20Gun%20magazine%20style%2C%20David%20Carson%20style%2C%20minimal%20flat%20design&image_size=square" alt="David Carson rule-breaking typography style visualization" loading="lazy">
+              </div>
+              <h4>David Carson</h4>
+              <span class="genre">极繁主义派</span>
+              <p>颠覆排版规则，混乱中的秩序，《Ray Gun》开创性编辑设计。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Type%20as%20image%2C%20color%20and%20typography%20dialogue%2C%20public%20visual%20loudness%2C%20Paula%20Scher%20style%2C%20minimal%20flat%20design&image_size=square" alt="Paula Scher type as image style visualization" loading="lazy">
+              </div>
+              <h4>Paula Scher</h4>
+              <span class="genre">极繁主义派</span>
+              <p>字体作为图像，色彩与排版的对话，公共视觉的大声量。</p>
+              <span class="path">→ 混合</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Post-punk%20visual%20culture%2C%20album%20cover%20design%20language%2C%20Peter%20Saville%20style%2C%20minimal%20flat%20design&image_size=square" alt="Peter Saville post-punk visual culture style visualization" loading="lazy">
+              </div>
+              <h4>Peter Saville</h4>
+              <span class="genre">极繁主义派</span>
+              <p>后朋克视觉文化，专辑封面的设计语言。</p>
+              <span class="path">→ 混合</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="img-wrap">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Interior%20to%20graphic%2C%20texture%20and%20color%20feast%2C%20material%20improvisation%2C%20Kelly%20Wearstler%20style%2C%20minimal%20flat%20design&image_size=square" alt="Kelly Wearstler texture color feast style visualization" loading="lazy">
+              </div>
+              <h4>Kelly Wearstler</h4>
+              <span class="genre">极繁主义派</span>
+              <p>室内设计到平面，纹理与色彩的盛宴，材料的即兴演出。</p>
+              <span class="path">→ 混合</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="case-gallery" class="section" aria-labelledby="case-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Case Gallery</span>
+            <h2 id="case-title">25+ 真实审查样本。</h2>
+          </div>
+          <p>
+            每一份样本都是用 Monkren Design 实际跑出来的产物——设计审查、PR 总结、事故复盘、工程文档、交互解释。打开看就是一份完整的样本报告。
+          </p>
+        </div>
+
+        <div class="gallery-grid">
+          <a class="case-card" href="case/Design Review — Landing Page.html" target="_blank" rel="noopener">
+            <span class="cat">设计审查</span>
+            <h4>Design Review — Landing Page</h4>
+          </a>
+          <a class="case-card" href="case/Design Suggestion — Landing Page.html" target="_blank" rel="noopener">
+            <span class="cat">设计审查</span>
+            <h4>Design Suggestion — Landing Page</h4>
+          </a>
+          <a class="case-card" href="case/Score Improvement — Landing Page.html" target="_blank" rel="noopener">
+            <span class="cat">设计审查</span>
+            <h4>Score Improvement — Landing Page</h4>
+          </a>
+          <a class="case-card" href="case/Empty state — four visual directions.html" target="_blank" rel="noopener">
+            <span class="cat">设计审查</span>
+            <h4>Empty state — four visual directions</h4>
+          </a>
+
+          <a class="case-card" href="case/Background jobs — header illustrations.html" target="_blank" rel="noopener">
+            <span class="cat">设计审查</span>
+            <h4>Background jobs — header illustrations</h4>
+          </a>
+          <a class="case-card" href="case/Birchline — Card Variant Matrix.html" target="_blank" rel="noopener">
+            <span class="cat">设计审查</span>
+            <h4>Birchline — Card Variant Matrix</h4>
+          </a>
+          <a class="case-card" href="case/PR #247 — Review Summary.html" target="_blank" rel="noopener">
+            <span class="cat">PR 审查</span>
+            <h4>PR #247 — Review Summary</h4>
+          </a>
+          <a class="case-card" href="case/PR #312 — Move notification delivery onto a queue.html" target="_blank" rel="noopener">
+            <span class="cat">PR 审查</span>
+            <h4>PR #312 — Move notification onto a queue</h4>
+          </a>
+
+          <a class="case-card" href="case/INC-2025-0412 — Elevated 502s on task sync.html" target="_blank" rel="noopener">
+            <span class="cat">事故复盘</span>
+            <h4>INC-2025-0412 — Elevated 502s</h4>
+          </a>
+          <a class="case-card" href="case/Birchline — Design System Reference.html" target="_blank" rel="noopener">
+            <span class="cat">工程文档</span>
+            <h4>Birchline — Design System Reference</h4>
+          </a>
+          <a class="case-card" href="case/Birchline — Cycle 14 triage.html" target="_blank" rel="noopener">
+            <span class="cat">工程文档</span>
+            <h4>Birchline — Cycle 14 triage</h4>
+          </a>
+          <a class="case-card" href="case/Birchline — Engineering Status — Week 11.html" target="_blank" rel="noopener">
+            <span class="cat">工程文档</span>
+            <h4>Birchline — Eng Status — Week 11</h4>
+          </a>
+
+          <a class="case-card" href="case/Birchline — flags.production.json.html" target="_blank" rel="noopener">
+            <span class="cat">工程文档</span>
+            <h4>Birchline — flags.production.json</h4>
+          </a>
+          <a class="case-card" href="case/Birchline — Support reply prompt tuner.html" target="_blank" rel="noopener">
+            <span class="cat">工程文档</span>
+            <h4>Birchline — Support reply prompt tuner</h4>
+          </a>
+          <a class="case-card" href="case/Birchline — Sidebar drag-to-reorder.html" target="_blank" rel="noopener">
+            <span class="cat">工程文档</span>
+            <h4>Birchline — Sidebar drag-to-reorder</h4>
+          </a>
+          <a class="case-card" href="case/Birchline — Task completed micro-interaction.html" target="_blank" rel="noopener">
+            <span class="cat">工程文档</span>
+            <h4>Birchline — Task completed micro-interaction</h4>
+          </a>
+
+          <a class="case-card" href="case/How authentication flows through birchline_web.html" target="_blank" rel="noopener">
+            <span class="cat">教程</span>
+            <h4>How authentication flows through birchline_web</h4>
+          </a>
+          <a class="case-card" href="case/How rate limiting works in birchline_api.html" target="_blank" rel="noopener">
+            <span class="cat">教程</span>
+            <h4>How rate limiting works in birchline_api</h4>
+          </a>
+          <a class="case-card" href="case/Implementation plan — Comment threads on task cards.html" target="_blank" rel="noopener">
+            <span class="cat">工程文档</span>
+            <h4>Implementation plan — Comment threads</h4>
+          </a>
+          <a class="case-card" href="case/Platform Eng — Week of Mar 10.html" target="_blank" rel="noopener">
+            <span class="cat">工程文档</span>
+            <h4>Platform Eng — Week of Mar 10</h4>
+          </a>
+
+          <a class="case-card" href="case/Consistent hashing — an interactive explainer.html" target="_blank" rel="noopener">
+            <span class="cat">教程</span>
+            <h4>Consistent hashing — interactive explainer</h4>
+          </a>
+          <a class="case-card" href="case/Debounced search — three approaches.html" target="_blank" rel="noopener">
+            <span class="cat">教程</span>
+            <h4>Debounced search — three approaches</h4>
+          </a>
+          <a class="case-card" href="case/Deploy pipeline — annotated flowchart.html" target="_blank" rel="noopener">
+            <span class="cat">教程</span>
+            <h4>Deploy pipeline — annotated flowchart</h4>
+          </a>
+          <a class="case-card" href="case/The unreasonable effectiveness of HTML — examples.html" target="_blank" rel="noopener">
+            <span class="cat">教程</span>
+            <h4>The unreasonable effectiveness of HTML</h4>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="dimensions" class="section" aria-labelledby="dim-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">审查维度</span>
+            <h2 id="dim-title">5 维度 + 多视角 + 平台专项。</h2>
+          </div>
+          <p>
+            核心 5 维度 + 10 维度多视角 + 6 种平台专项，配合 4 条评分铁律确保客观，3 级严重度让修复有优先级。
+          </p>
+        </div>
+
+        <div class="demo-stack">
+          <article class="radar-demo">
+            <div class="demo-intro">
+              <h3>5 维度评审体系</h3>
+              <p>每个维度独立 0-10 分，评分必须引证具体元素/文件/行号，禁止评分通胀。</p>
+            </div>
+            <div class="stage">
+              <div class="stage-bar"><span>5 维度评分</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="radar-demo-body">
+                <div class="radar-demo-grid">
+                  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="5维度雷达图">
+                    <g fill="none" stroke="var(--color-arctic-white)" stroke-opacity=".1" stroke-width=".5">
+                      <polygon points="100,20 169.3,60 169.3,140 100,180 30.7,140 30.7,60" />
+                      <polygon points="100,36 156.2,68 156.2,132 100,164 43.8,132 43.8,68" />
+                      <polygon points="100,52 143.1,76 143.1,124 100,148 56.9,124 56.9,76" />
+                      <polygon points="100,68 130,84 130,116 100,132 70,116 70,84" />
+                      <polygon points="100,84 116.9,92 116.9,108 100,116 83.1,108 83.1,92" />
+                    </g>
+                    <g stroke="var(--color-arctic-white)" stroke-opacity=".06" stroke-width=".5">
+                      <line x1="100" y1="20" x2="100" y2="180" />
+                      <line x1="30.7" y1="60" x2="169.3" y2="140" />
+                      <line x1="30.7" y1="140" x2="169.3" y2="60" />
+                    </g>
+                    <polygon
+                      points="100,36 156.2,68 143.1,124 100,164 43.8,124"
+                      fill="var(--color-arctic-white)" fill-opacity=".1"
+                      stroke="var(--color-arctic-white)" stroke-opacity=".6" stroke-width="1.5"
+                    />
+                    <g fill="var(--color-arctic-white)">
+                      <circle cx="100" cy="36" r="3.5" />
+                      <circle cx="156.2" cy="68" r="3.5" />
+                      <circle cx="143.1" cy="124" r="3.5" />
+                      <circle cx="100" cy="164" r="3.5" />
+                      <circle cx="43.8" cy="124" r="3.5" />
+                    </g>
+                    <g font-family="var(--font-lausanne)" font-size="9" fill="var(--color-arctic-white)" font-weight="400" text-anchor="middle">
+                      <text x="100" y="14">9</text>
+                      <text x="180" y="60">8</text>
+                      <text x="180" y="144">7</text>
+                      <text x="100" y="196">9</text>
+                      <text x="20" y="132">6</text>
+                    </g>
+                  </svg>
+                  <div class="radar-legend">
+                    <div class="radar-legend-item">
+                      <span class="indicator"></span>
+                      <div><strong>哲学一致性 9/10</strong><span>设计体现了明确的视觉哲学，核心特征到位</span></div>
+                    </div>
+                    <div class="radar-legend-item">
+                      <span class="indicator"></span>
+                      <div><strong>视觉层级 8/10</strong><span>主次关系清晰，偶有 1-2 处层级模糊</span></div>
+                    </div>
+                    <div class="radar-legend-item">
+                      <span class="indicator" style="background:var(--color-subtle-gray)"></span>
+                      <div><strong>细节执行 7/10</strong><span>基本对齐，但间距不统一，颜色不够系统</span></div>
+                    </div>
+                    <div class="radar-legend-item">
+                      <span class="indicator"></span>
+                      <div><strong>功能性 9/10</strong><span>每个元素都服务于目标，零冗余</span></div>
+                    </div>
+                    <div class="radar-legend-item">
+                      <span class="indicator" style="background:var(--color-subtle-gray)"></span>
+                      <div><strong>创新性 6/10</strong><span>中规中矩，看起来像模板</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="discipline-demo">
+            <div class="demo-intro">
+              <h3>评分纪律铁律</h3>
+              <p>4 条铁律确保审查评分客观，不交付有偏见或自相矛盾的报告。</p>
+            </div>
+            <div class="stage">
+              <div class="stage-bar"><span>评分纪律</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="discipline-body">
+                <div class="discipline-grid">
+                  <div class="discipline-card">
+                    <b>禁止评分通胀</b>
+                    <span>全维度 ≥7 时触发自检——是不是真的都好，还是不敢给低分？</span>
+                    <span class="tag">铁律 1</span>
+                  </div>
+                  <div class="discipline-card">
+                    <b>禁止平均上浮</b>
+                    <span>取最差持续段而非平均值——一段 5 分的体验不能被旁边的 9 分稀释。</span>
+                    <span class="tag">铁律 2</span>
+                  </div>
+                  <div class="discipline-card">
+                    <b>评分必须引证</b>
+                    <span>必须引用具体元素、文件、行号——「看起来不太好」不是审查意见。</span>
+                    <span class="tag">铁律 3</span>
+                  </div>
+                  <div class="discipline-card">
+                    <b>创新性允许低分</b>
+                    <span>5/10 对生产交付物合理——不是每个项目都需要创新，但需要诚实。</span>
+                    <span class="tag">铁律 4</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="severity-demo">
+            <div class="demo-intro">
+              <h3>问题严重度分级</h3>
+              <p>每个问题标记 P0/P1/P2 严重度，修复有优先级——先改致命问题，再优化细节。</p>
+            </div>
+            <div class="stage">
+              <div class="stage-bar"><span>严重度分级</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+              <div class="severity-body">
+                <div class="severity-cards">
+                  <div class="severity-card">
+                    <span class="level">P0</span>
+                    <span class="label">⚠️ 致命</span>
+                    <span class="desc">阻断性问题，发布前必须修复。如：关键信息不可读、核心功能不可用。</span>
+                  </div>
+                  <div class="severity-card">
+                    <span class="level">P1</span>
+                    <span class="label">⚡ 重要</span>
+                    <span class="desc">影响体验或一致性，下一迭代修复。如：间距不统一、颜色过多、层级模糊。</span>
+                  </div>
+                  <div class="severity-card">
+                    <span class="level">P2</span>
+                    <span class="label">💡 优化</span>
+                    <span class="desc">锦上添花，有空时改进。如：微调字重对比、优化动效时长、增加 hover 状态。</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow" class="section" aria-labelledby="work-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">审查工作流</span>
+            <h2 id="work-title">从提交到报告，7 步完成专业审查。</h2>
+          </div>
+          <p>
+            工作流足够紧凑，agent 可以在单次会话中完成；也足够结构化，避免审查变成随意的装饰建议。
+          </p>
+        </div>
+
+        <div class="steps">
+          <article class="step">
+            <div>
+              <h3>审查前发现</h3>
+              <p>确认输入格式（截图/HTML/代码/Figma）、设计类型（App/Web/PPT/插画/角色 IP）、审查视角、审查范围、报告格式。用户描述模糊时拒绝猜测。</p>
+            </div>
+          </article>
+          <article class="step">
+            <div>
+              <h3>理解审查对象</h3>
+              <p>搞清楚审的是什么——整体还是局部？单页还是全流程？有没有品牌规范或设计系统？</p>
+            </div>
+          </article>
+          <article class="step">
+            <div>
+              <h3>提取设计上下文</h3>
+              <p>找到参照系——读代码提取 token、组件、品牌资产；理解现有设计系统和品牌规范。</p>
+            </div>
+          </article>
+          <article class="step">
+            <div>
+              <h3>品牌资产提取</h3>
+              <p>5 步系统化提取品牌资产：定位 → 下载 → 提取色值 → 编写摘要 → 确认。素材质量遵循 5-10-2-8 原则。</p>
+            </div>
+          </article>
+          <article class="step">
+            <div>
+              <h3>参考搜索（条件性）</h3>
+              <p>使用 Lazyweb 搜索真实产品截图作为视觉证据，但截图是佐证不是标准——哲学判断和设计规则优先。</p>
+            </div>
+          </article>
+          <article class="step">
+            <div>
+              <h3>执行审查</h3>
+              <p>5 维度评审 + 多视角审查 + 平台专项审查 + 硬编码检测 + 合规性检查 + 反 slop 检查。</p>
+            </div>
+          </article>
+          <article class="step">
+            <div>
+              <h3>输出报告</h3>
+              <p>三层递进报告：结论层（快速概览）→ 诊断层（维度卡片 + 专项检测）→ 行动层（Quick Wins + Fix 清单）。</p>
+            </div>
+          </article>
+          <article class="step">
+            <div>
+              <h3>自检迭代</h3>
+              <p>评分与描述一致性检查 + Fix 可操作性验证 + 自相矛盾检查，不交付有漏洞的报告。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="references" class="section" aria-labelledby="ref-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Deep Dives</span>
+            <h2 id="ref-title">7 份子文档，按需深入。</h2>
+          </div>
+          <p>
+            介绍页给的是项目骨架，深层规则、报告模板、平台专项、视角体系在 references/ 下独立维护。装上 skill 后 agent 会按需读，访客可以提前看。
+          </p>
+        </div>
+
+        <div class="ref-grid">
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/philosophy.md" target="_blank" rel="noopener">
+            <span class="filename">philosophy.md</span>
+            <h3>40 种设计哲学 + 方向顾问</h3>
+            <div class="chapters">
+              <span class="chip">核心哲学</span>
+              <span class="chip">40 哲学库</span>
+              <span class="chip">方向顾问</span>
+              <span class="chip">流派适配</span>
+            </div>
+            <div class="meta"><span>105 KB</span><span>7 章节</span></div>
+          </a>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/aesthetics.md" target="_blank" rel="noopener">
+            <span class="filename">aesthetics.md</span>
+            <h3>5 维度评审 + 反 slop</h3>
+            <div class="chapters">
+              <span class="chip">5 维度</span>
+              <span class="chip">slop 黑名单</span>
+              <span class="chip">评分纪律</span>
+            </div>
+            <div class="meta"><span>29 KB</span><span>3 章节</span></div>
+          </a>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/design-system.md" target="_blank" rel="noopener">
+            <span class="filename">design-system.md</span>
+            <h3>9 段框架 + 硬编码检测</h3>
+            <div class="chapters">
+              <span class="chip">9 段框架</span>
+              <span class="chip">Token 架构</span>
+              <span class="chip">合规性检查</span>
+              <span class="chip">SwiftLint</span>
+            </div>
+            <div class="meta"><span>22 KB</span><span>4 章节</span></div>
+          </a>
+
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/implementation.md" target="_blank" rel="noopener">
+            <span class="filename">implementation.md</span>
+            <h3>工作流 + 报告模板 + 报告示例</h3>
+            <div class="chapters">
+              <span class="chip">审查工作流</span>
+              <span class="chip">报告模板</span>
+              <span class="chip">示例报告</span>
+              <span class="chip">自检迭代</span>
+            </div>
+            <div class="meta"><span>89 KB</span><span>5 章节</span></div>
+          </a>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/platform-guides.md" target="_blank" rel="noopener">
+            <span class="filename">platform-guides.md</span>
+            <h3>6 种平台专项审查</h3>
+            <div class="chapters">
+              <span class="chip">移动端</span>
+              <span class="chip">桌面端</span>
+              <span class="chip">Web</span>
+              <span class="chip">PPT / 插画 / IP</span>
+            </div>
+            <div class="meta"><span>22 KB</span><span>6 章节</span></div>
+          </a>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/review-perspectives.md" target="_blank" rel="noopener">
+            <span class="filename">review-perspectives.md</span>
+            <h3>10 视角审查体系</h3>
+            <div class="chapters">
+              <span class="chip">视觉审美</span>
+              <span class="chip">交互体验</span>
+              <span class="chip">品牌一致性</span>
+              <span class="chip">+ 7 视角</span>
+            </div>
+            <div class="meta"><span>41 KB</span><span>10 章节</span></div>
+          </a>
+
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/lazyweb-integration.md" target="_blank" rel="noopener">
+            <span class="filename">lazyweb-integration.md</span>
+            <h3>Lazyweb 真实证据集成</h3>
+            <div class="chapters">
+              <span class="chip">证据协议</span>
+              <span class="chip">Prompt 工程</span>
+              <span class="chip">哲学优先</span>
+            </div>
+            <div class="meta"><span>27 KB</span><span>3 章节</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="use" class="section" aria-labelledby="use-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">装上就能用</span>
+            <h2 id="use-title">在你的 agent 里对话即审查。</h2>
+          </div>
+          <p>
+            一行命令安装，然后直接说话。没有按钮、没有面板——对话即审查。
+          </p>
+        </div>
+
+        <div class="command-layout">
+          <div class="terminal" aria-label="安装和使用示例">
+            <div class="panel-bar" style="border-bottom:var(--border-width) solid var(--color-arctic-white)">
+              <span>terminal</span>
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            </div>
+            <pre><code><span class="comment"># 安装 Skill</span>
+<span class="prompt">$</span> <span class="cmd">npx skills add monkren/monkren-design</span>
+
+<span class="comment"># 然后直接对话</span>
+<span class="prompt">></span> <span class="cmd">简单审查这个设计</span>
+<span class="prompt">></span> <span class="cmd">深度审查这个项目</span>
+<span class="prompt">></span> <span class="cmd">全流程审查整个 App</span>
+<span class="prompt">></span> <span class="cmd">检测这段代码里的硬编码颜色和间距值</span>
+<span class="prompt">></span> <span class="cmd">这个页面有没有违反设计系统规范？</span>
+<span class="prompt">></span> <span class="cmd">推荐 3 个适合这个产品的设计方向</span>
+<span class="prompt">></span> <span class="cmd">帮我生成 SwiftLint 规则检测硬编码设计值</span>
+<span class="prompt">></span> <span class="cmd">这个 PPT 需要改什么，给出 Quick Wins</span></code></pre>
+          </div>
+
+          <aside class="copy-card">
+            <h3>跨 agent 通用</h3>
+            <p>Monkren Design 是一个 skills.sh 兼容的 Skill，不绑定特定 agent。</p>
+            <ul>
+              <li>Claude Code、Cursor、Codex 都能装</li>
+              <li>OpenClaw、Hermes 同样支持</li>
+              <li>对话即审查，无需额外面板</li>
+              <li>个人使用免费，企业商用需授权</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <span>Monkren Design v2.0 — 设计审查专家 Skill。个人使用免费，企业商用需授权。</span>
+      <span><a href="https://github.com/monkren">GitHub</a></span>
+    </div>
+  </footer>
+</body>
+</html>

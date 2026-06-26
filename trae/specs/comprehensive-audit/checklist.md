@@ -1,0 +1,13 @@
+- [x] README.md 工作流已更新为 6 步
+- [x] README.md 能力列表包含 7 项新增能力
+- [x] README.md 仓库结构包含 design-systems-baseline.md
+- [x] README.md 核心机制章节包含 SVG 雷达图、评分纪律、P0/P1/P2 分级描述
+- [x] README.en.md 与 README.md 内容对齐（英文版）
+- [x] SKILL.md 设计哲学表格与 design-styles.md 实际内容一致
+- [x] workflow.md 无 Step 2.5 非标准编号，Step 编号与 SKILL.md 一致
+- [x] SKILL.md 和 critique-guide.md 评级标签统一
+- [x] critique-guide.md「评分纪律」章节有 SKILL.md 引用说明
+- [x] verification.md「自审迭代」章节有 SKILL.md 引用说明
+- [x] critique-guide.md 版本日期为 2026-05-01
+- [x] design-context.md 无"Phase 7"旧编号
+- [x] content-guidelines.md 无不当硬编码色值
