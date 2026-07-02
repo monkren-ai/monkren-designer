@@ -1,5 +1,5 @@
 ---
-name: lazyweb-quick-references
+name: quick-references
 description: |
   Find app screenshots and UI references quickly. Downloads results locally and
   groups them by pattern. Use when the user wants to see examples of a specific

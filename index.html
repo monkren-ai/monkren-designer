@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Monkren Design v2.0 | 设计审查专家</title>
+  <title>Monkren Design v3.1 | 设计大圣</title>
   <meta
     name="description"
     content="Monkren Design 是一个设计审查专家 Skill。提交设计产出，拿回一份专业审查报告——10 维度多视角审查、40 种设计哲学库、硬编码值检测、Lazyweb 证据集成。"
   />
-  <meta property="og:title" content="Monkren Design v2.0" />
+  <meta property="og:title" content="Monkren Design v3.1" />
   <meta property="og:description" content="提交设计，拿回一份专业审查报告。" />
   <style>
     :root {
@@ -20,34 +20,52 @@
       --font-black-tie: 'Black Tie', ui-monospace, SFMono-Regular, Menlo, Consolas;
       --font-weight-light: 300;
       --font-weight-regular: 400;
+      --text-11px: 11px;
       --text-12px: 12px;
-      --text-20px: 20px;
       --text-14px: 14px;
       --text-16px: 16px;
       --text-18px: 18px;
+      --text-20px: 20px;
       --text-24px: 24px;
+      --text-28px: 28px;
       --text-32px: 32px;
       --text-36px: 36px;
       --text-48px: 48px;
+      --text-64px: 64px;
+      --text-80px: 80px;
       --leading-tight: 1;
       --leading-normal: 1.2;
-      --spacing-7: 7px;
+      --leading-snug: 1.3;
+      --leading-body: 1.4;
+      --leading-loose: 1.7;
+      --spacing-4: 4px;
       --spacing-8: 8px;
-      --spacing-10: 10px;
       --spacing-12: 12px;
-      --spacing-13: 13px;
+      --spacing-16: 16px;
       --spacing-20: 20px;
-      --spacing-29: 29px;
+      --spacing-28: 28px;
       --spacing-40: 40px;
-      --spacing-54: 54px;
+      --spacing-56: 56px;
       --spacing-64: 64px;
-      --spacing-78: 78px;
+      --spacing-80: 80px;
+      --spacing-96: 96px;
       --page-max-width: 1280px;
-      --section-gap: 29px;
-      --card-padding: 13px;
-      --element-gap: 13px;
+      --section-gap: 28px;
+      --card-padding: 16px;
+      --element-gap: 12px;
       --radius-full: 120px;
       --border-width: 1px;
+      --btn-min-height: 44px;
+      --panel-min-height: 48px;
+      --topbar-min-height: 64px;
+      --step-min-height: 128px;
+      --step-num-size: 56px;
+      --radar-size: 180px;
+      --discipline-min-height: 112px;
+      --watermark-opacity: .05;
+      --watermark-size: 280px;
+      --image-size: 240px;
+      --section-watermark-size: 200px;
       --surface-muted: rgba(255, 255, 255, .12);
     }
 
@@ -73,10 +91,10 @@
     .skip-link {
       position: absolute;
       top: -100%;
-      left: var(--spacing-13);
+      left: var(--spacing-12);
       background: var(--color-arctic-white);
       color: var(--color-canvas-black);
-      padding: var(--spacing-8) var(--spacing-13);
+      padding: var(--spacing-8) var(--spacing-12);
       font-family: var(--font-lausanne);
       font-size: var(--text-24px);
       z-index: 100;
@@ -101,7 +119,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
     }
     .brand {
       display: inline-flex;
@@ -111,8 +129,8 @@
       font-weight: var(--font-weight-regular);
     }
     .mark {
-      width: 34px;
-      height: 34px;
+      width: var(--spacing-40);
+      height: var(--spacing-40);
       flex: 0 0 auto;
       border: var(--border-width) solid var(--color-arctic-white);
       border-radius: 50%;
@@ -128,31 +146,53 @@
     .nav {
       display: flex;
       align-items: center;
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
       color: var(--color-subtle-gray);
       font-size: var(--text-18px);
       font-weight: var(--font-weight-regular);
     }
     .nav a {
-      padding: var(--spacing-7) 0;
+      padding: var(--spacing-8) 0;
       border-bottom: var(--border-width) solid transparent;
     }
     .nav a:hover {
       color: var(--color-arctic-white);
       border-color: var(--color-arctic-white);
     }
+    .inline-link {
+      color: inherit;
+      border-bottom: var(--border-width) solid var(--color-arctic-white);
+    }
 
     .hero {
+      position: relative;
       min-height: calc(100svh - var(--spacing-64));
       display: flex;
       align-items: center;
-      padding: var(--spacing-54) 0 var(--spacing-29);
+      padding: var(--spacing-56) 0 var(--spacing-40);
       border-bottom: var(--border-width) solid var(--color-arctic-white);
+      overflow: hidden;
+    }
+    .hero-watermark {
+      position: absolute;
+      right: -8%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-lausanne);
+      font-size: var(--watermark-size);
+      line-height: var(--leading-tight);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-arctic-white);
+      opacity: var(--watermark-opacity);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -.04em;
     }
     .hero-grid {
+      position: relative;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(280px, .7fr);
-      gap: var(--spacing-29);
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
+      gap: var(--spacing-40);
       align-items: center;
       min-width: 0;
     }
@@ -169,48 +209,50 @@
     }
     .eyebrow::before {
       content: "";
-      width: 22px;
-      height: 1px;
+      width: var(--spacing-28);
+      height: var(--border-width);
       background: currentColor;
     }
     h1, h2, h3, p { margin-top: 0; }
     h1 {
-      margin: var(--spacing-13) 0 0;
+      margin: var(--spacing-16) 0 0;
       font-family: var(--font-lausanne);
-      font-size: var(--text-36px);
-      line-height: 44px;
-      font-weight: var(--font-weight-light);
+      font-size: var(--text-64px);
+      line-height: var(--leading-tight);
+      font-weight: var(--font-weight-regular);
+      letter-spacing: -.02em;
       overflow-wrap: anywhere;
     }
     h2 {
-      margin: var(--spacing-10) 0 0;
+      margin: var(--spacing-12) 0 0;
       font-family: var(--font-victor-serif);
-      font-size: var(--text-48px);
-      line-height: var(--leading-normal);
+      font-size: var(--text-36px);
+      line-height: var(--leading-snug);
       font-weight: var(--font-weight-regular);
+      letter-spacing: -.01em;
     }
     .lead {
       margin: var(--spacing-20) 0 0;
       color: var(--color-subtle-gray);
       font-size: var(--text-20px);
-      line-height: var(--leading-normal);
+      line-height: var(--leading-snug);
       overflow-wrap: break-word;
     }
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: var(--spacing-12);
-      margin-top: var(--spacing-29);
+      margin-top: var(--spacing-28);
     }
     .btn {
-      min-height: 44px;
+      min-height: var(--btn-min-height);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: var(--spacing-8);
       border: var(--border-width) solid var(--color-arctic-white);
       border-radius: var(--radius-full);
-      padding: 12px 13.2px;
+      padding: var(--spacing-12) var(--spacing-16);
       background: transparent;
       color: var(--color-arctic-white);
       font-family: var(--font-lausanne);
@@ -248,12 +290,12 @@
       overflow: hidden;
     }
     .panel-bar {
-      min-height: 46px;
+      min-height: var(--panel-min-height);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--spacing-12);
-      padding: 0 var(--spacing-13);
+      padding: 0 var(--spacing-12);
       border-bottom: var(--border-width) solid var(--color-arctic-white);
       background: var(--color-canvas-black);
       color: var(--color-subtle-gray);
@@ -262,15 +304,28 @@
     }
     .dots {
       display: flex;
-      gap: var(--spacing-7);
+      gap: var(--spacing-8);
     }
     .dots i {
-      width: 8px;
-      height: 8px;
+      width: var(--spacing-8);
+      height: var(--spacing-8);
       display: block;
       border-radius: 50%;
       background: currentColor;
       opacity: .42;
+    }
+    .panel-label {
+      font-size: var(--text-11px);
+      letter-spacing: .08em;
+      color: var(--color-arctic-white);
+      border: var(--border-width) solid var(--color-arctic-white);
+      padding: 2px var(--spacing-8);
+      text-transform: uppercase;
+    }
+    .panel-bar-end {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-12);
     }
     .report-body {
       padding: var(--spacing-20);
@@ -279,7 +334,7 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
       margin-bottom: var(--spacing-20);
     }
     .report-header strong {
@@ -300,8 +355,8 @@
       margin-bottom: var(--spacing-20);
     }
     .radar-wrap svg {
-      width: 180px;
-      height: 180px;
+      width: var(--radar-size);
+      height: var(--radar-size);
     }
     .score-bars {
       display: grid;
@@ -309,7 +364,7 @@
     }
     .score-bar {
       display: grid;
-      grid-template-columns: 90px minmax(0, 1fr) 32px;
+      grid-template-columns: 88px minmax(0, 1fr) var(--spacing-40);
       gap: var(--spacing-8);
       align-items: center;
       font-size: var(--text-16px);
@@ -320,7 +375,7 @@
       white-space: nowrap;
     }
     .score-bar-track {
-      height: 6px;
+      height: var(--spacing-8);
       border-radius: 0;
       background: var(--surface-muted);
       overflow: hidden;
@@ -339,48 +394,64 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--spacing-8);
-      margin-top: var(--spacing-13);
+      margin-top: var(--spacing-12);
     }
     .severity-tag {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: var(--spacing-4);
       border: var(--border-width) solid var(--color-arctic-white);
       border-radius: var(--radius-full);
-      padding: var(--spacing-8) var(--spacing-10);
+      padding: var(--spacing-8) var(--spacing-12);
       font-size: var(--text-16px);
       font-weight: var(--font-weight-regular);
     }
     .severity-tag .dot {
-      width: 7px;
-      height: 7px;
+      width: var(--spacing-8);
+      height: var(--spacing-8);
       border-radius: 50%;
       flex: 0 0 auto;
       background: var(--color-arctic-white);
     }
 
     .section {
-      padding: var(--spacing-78) 0;
+      padding: var(--spacing-96) 0;
       border-bottom: var(--border-width) solid var(--color-arctic-white);
       position: relative;
+      overflow: hidden;
+    }
+    .section-num {
+      position: absolute;
+      top: var(--spacing-56);
+      right: var(--spacing-20);
+      font-family: var(--font-lausanne);
+      font-size: var(--section-watermark-size);
+      line-height: var(--leading-tight);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-arctic-white);
+      opacity: var(--watermark-opacity);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -.04em;
     }
     .section-head {
       display: grid;
       grid-template-columns: minmax(0, .82fr) minmax(0, 1fr);
-      gap: var(--spacing-29);
+      gap: var(--spacing-28);
       align-items: end;
-      margin-bottom: var(--spacing-29);
+      margin-bottom: var(--spacing-40);
+      position: relative;
     }
     .section-head p {
       margin: 0;
       color: var(--color-subtle-gray);
-      font-size: var(--text-24px);
-      line-height: var(--leading-normal);
+      font-size: var(--text-20px);
+      line-height: var(--leading-snug);
     }
     .grid-4 {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
     }
     .card {
       min-width: 0;
@@ -391,7 +462,7 @@
     }
     .card .num {
       display: block;
-      margin-bottom: var(--spacing-13);
+      margin-bottom: var(--spacing-12);
       color: var(--color-arctic-white);
       font-family: var(--font-lausanne);
       font-size: var(--text-24px);
@@ -404,7 +475,7 @@
       line-height: var(--leading-normal);
     }
     .card p {
-      margin: var(--spacing-10) 0 0;
+      margin: var(--spacing-12) 0 0;
       color: var(--color-subtle-gray);
       font-size: var(--text-18px);
       line-height: var(--leading-normal);
@@ -412,14 +483,14 @@
 
     .demo-stack {
       display: grid;
-      gap: var(--spacing-29);
+      gap: var(--spacing-28);
     }
     .demo-intro {
       display: grid;
       grid-template-columns: minmax(0, .78fr) minmax(0, 1fr);
       gap: var(--spacing-20);
       align-items: end;
-      margin-bottom: var(--spacing-13);
+      margin-bottom: var(--spacing-12);
     }
     .demo-intro h3 {
       margin: 0;
@@ -441,12 +512,12 @@
       background: var(--color-canvas-black);
     }
     .stage-bar {
-      min-height: 44px;
+      min-height: var(--spacing-40);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--spacing-12);
-      padding: 0 var(--spacing-13);
+      padding: 0 var(--spacing-12);
       font-family: var(--font-black-tie);
       font-size: var(--text-24px);
       font-weight: var(--font-weight-regular);
@@ -466,13 +537,13 @@
     }
     .radar-demo-grid {
       display: grid;
-      grid-template-columns: minmax(180px, .6fr) minmax(0, 1fr);
-      gap: var(--spacing-29);
+      grid-template-columns: minmax(184px, .6fr) minmax(0, 1fr);
+      gap: var(--spacing-28);
       align-items: center;
     }
     .radar-demo-grid svg {
       width: 100%;
-      max-width: 200px;
+      max-width: var(--radar-size);
       margin: 0 auto;
       display: block;
     }
@@ -482,17 +553,17 @@
     }
     .radar-legend-item {
       display: grid;
-      grid-template-columns: 14px minmax(0, 1fr);
-      gap: var(--spacing-10);
+      grid-template-columns: var(--spacing-16) minmax(0, 1fr);
+      gap: var(--spacing-12);
       align-items: start;
       font-size: var(--text-24px);
       line-height: var(--leading-normal);
     }
     .radar-legend-item .indicator {
-      width: 10px;
-      height: 10px;
+      width: var(--spacing-8);
+      height: var(--spacing-8);
       border-radius: 50%;
-      margin-top: 4px;
+      margin-top: var(--spacing-4);
       background: var(--color-arctic-white);
     }
     .radar-legend-item strong {
@@ -518,10 +589,10 @@
     .discipline-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
     }
     .discipline-card {
-      min-height: 110px;
+      min-height: var(--discipline-min-height);
       border: var(--border-width) solid var(--color-arctic-white);
       border-radius: 0;
       padding: var(--card-padding);
@@ -530,7 +601,7 @@
     .discipline-card b {
       display: block;
       font-size: var(--text-24px);
-      margin-bottom: var(--spacing-7);
+      margin-bottom: var(--spacing-8);
       font-weight: var(--font-weight-regular);
     }
     .discipline-card span {
@@ -544,17 +615,19 @@
       margin-top: var(--spacing-8);
       border: var(--border-width) solid var(--color-arctic-white);
       border-radius: var(--radius-full);
-      padding: 3px var(--spacing-8);
+      padding: var(--spacing-4) var(--spacing-8);
       font-family: var(--font-black-tie);
-      font-size: var(--text-24px);
+      font-size: var(--text-11px);
       font-weight: var(--font-weight-regular);
       color: var(--color-arctic-white);
+      text-transform: uppercase;
+      letter-spacing: .04em;
     }
 
     .philosophy-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
     }
     .philosophy-card {
       border: var(--border-width) solid var(--color-arctic-white);
@@ -572,7 +645,7 @@
       color: var(--color-subtle-gray);
       font-family: var(--font-black-tie);
       font-size: var(--text-18px);
-      margin-bottom: var(--spacing-10);
+      margin-bottom: var(--spacing-12);
     }
     .philosophy-card p {
       margin: 0;
@@ -580,17 +653,56 @@
       font-size: var(--text-18px);
       line-height: var(--leading-normal);
     }
-    .philosophy-card .img-wrap {
+    .philosophy-card .signature {
       width: 100%;
-      margin-bottom: var(--spacing-13);
+      min-height: auto;
+      margin-bottom: var(--spacing-16);
       border: var(--border-width) solid var(--color-arctic-white);
       border-radius: 0;
-      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: var(--spacing-12);
+      place-items: center;
+      background: var(--color-canvas-black);
+      padding: var(--spacing-20);
     }
-    .philosophy-card img {
+    .philosophy-card .signature .sig-bitmap {
       width: 100%;
-      height: auto;
+      max-width: var(--image-size);
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
       display: block;
+      filter: grayscale(100%) contrast(1.15);
+      transition: filter 0.2s ease;
+    }
+    .philosophy-card:hover .signature .sig-bitmap,
+    .philosophy-card:focus-within .signature .sig-bitmap,
+    .signature .sig-bitmap:hover {
+      filter: none;
+    }
+    .philosophy-card .signature .sig-monogram {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-8);
+      padding-top: var(--spacing-8);
+      border-top: var(--border-width) solid var(--color-arctic-white);
+      font-family: var(--font-black-tie);
+      font-size: var(--text-11px);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .philosophy-card .signature .monogram-org {
+      color: var(--color-arctic-white);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .philosophy-card .signature .monogram-name {
+      color: var(--color-subtle-gray);
+      flex: 0 0 auto;
+      font-weight: var(--font-weight-regular);
     }
 
     .severity-demo .stage-bar {
@@ -605,7 +717,7 @@
     .severity-cards {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
     }
     .severity-card {
       border: var(--border-width) solid var(--color-arctic-white);
@@ -628,7 +740,7 @@
     }
     .severity-card .desc {
       display: block;
-      margin-top: var(--spacing-7);
+      margin-top: var(--spacing-8);
       color: var(--color-subtle-gray);
       font-size: var(--text-16px);
       line-height: var(--leading-normal);
@@ -640,11 +752,11 @@
     .step {
       position: relative;
       display: grid;
-      grid-template-columns: 54px minmax(0, 1fr);
-      gap: var(--spacing-13);
-      min-height: 132px;
+      grid-template-columns: var(--step-num-size) minmax(0, 1fr);
+      gap: var(--spacing-12);
+      min-height: var(--step-min-height);
       border-top: var(--border-width) solid var(--color-arctic-white);
-      padding: 24px 0;
+      padding: var(--spacing-20) 0;
     }
     .step:last-child {
       border-bottom: var(--border-width) solid var(--color-arctic-white);
@@ -652,8 +764,8 @@
     .step::before {
       counter-increment: step;
       content: counter(step, decimal-leading-zero);
-      width: 54px;
-      height: 54px;
+      width: var(--step-num-size);
+      height: var(--step-num-size);
       display: grid;
       place-items: center;
       border: var(--border-width) solid var(--color-arctic-white);
@@ -679,7 +791,7 @@
     .command-layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(280px, .7fr);
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
       align-items: stretch;
     }
     .terminal {
@@ -697,7 +809,7 @@
       overflow-wrap: anywhere;
       font-family: var(--font-black-tie);
       font-size: var(--text-24px);
-      line-height: 1.7;
+      line-height: var(--leading-loose);
     }
     .terminal code { color: inherit; }
     .terminal .prompt { color: var(--color-subtle-gray); }
@@ -722,8 +834,8 @@
     }
     .copy-card ul {
       display: grid;
-      gap: var(--spacing-10);
-      margin: var(--spacing-13) 0 0;
+      gap: var(--spacing-12);
+      margin: var(--spacing-12) 0 0;
       padding: 0;
       list-style: none;
       color: var(--color-subtle-gray);
@@ -739,24 +851,24 @@
       position: absolute;
       top: .55em;
       left: 0;
-      width: 8px;
-      height: 8px;
+      width: var(--spacing-8);
+      height: var(--spacing-8);
       border: var(--border-width) solid var(--color-arctic-white);
       border-radius: 50%;
     }
 
     .footer {
-      padding: 36px 0 56px;
+      padding: var(--spacing-40) 0 var(--spacing-56);
       color: var(--color-subtle-gray);
-      font-size: var(--text-24px);
+      font-size: var(--text-18px);
       line-height: var(--leading-normal);
     }
     .footer-row {
       display: flex;
       justify-content: space-between;
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
       border-top: var(--border-width) solid var(--color-arctic-white);
-      padding-top: 24px;
+      padding-top: var(--spacing-28);
     }
     .footer a {
       border-bottom: var(--border-width) solid var(--color-arctic-white);
@@ -769,7 +881,7 @@
       display: inline-block;
       border: var(--border-width) solid var(--color-arctic-white);
       border-radius: var(--radius-full);
-      padding: 3px var(--spacing-8);
+      padding: var(--spacing-4) var(--spacing-8);
       font-family: var(--font-black-tie);
       font-size: var(--text-18px);
       font-weight: var(--font-weight-regular);
@@ -780,7 +892,7 @@
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
     }
     .skill-card {
       min-width: 0;
@@ -790,7 +902,7 @@
       background: var(--color-canvas-black);
       display: flex;
       flex-direction: column;
-      gap: var(--spacing-10);
+      gap: var(--spacing-12);
     }
     .skill-card .num {
       font-family: var(--font-black-tie);
@@ -815,14 +927,14 @@
     .skill-card .triggers {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--spacing-7);
+      gap: var(--spacing-8);
       margin-top: auto;
     }
 
     .school-block {
       border-top: var(--border-width) solid var(--color-arctic-white);
       padding-top: var(--spacing-20);
-      margin-top: var(--spacing-29);
+      margin-top: var(--spacing-28);
     }
     .school-block:first-of-type {
       margin-top: 0;
@@ -832,9 +944,9 @@
     .school-head {
       display: grid;
       grid-template-columns: 80px minmax(0, 1fr);
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
       align-items: baseline;
-      margin-bottom: var(--spacing-13);
+      margin-bottom: var(--spacing-12);
     }
     .school-head .num {
       font-family: var(--font-black-tie);
@@ -843,7 +955,7 @@
       color: var(--color-subtle-gray);
     }
     .school-head h3 {
-      margin: 0 0 var(--spacing-7);
+      margin: 0 0 var(--spacing-8);
       font-family: var(--font-victor-serif);
       font-size: var(--text-36px);
       line-height: var(--leading-normal);
@@ -867,7 +979,7 @@
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
     }
     .case-card {
       min-width: 0;
@@ -906,13 +1018,13 @@
     .ref-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--spacing-13);
+      gap: var(--spacing-12);
     }
     .ref-card {
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: var(--spacing-10);
+      gap: var(--spacing-12);
       border: var(--border-width) solid var(--color-arctic-white);
       border-radius: 0;
       padding: var(--spacing-20);
@@ -944,7 +1056,7 @@
     .ref-card .chapters {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--spacing-7);
+      gap: var(--spacing-8);
     }
     .ref-card .chapters .chip {
       font-size: var(--text-18px);
@@ -966,11 +1078,23 @@
       color: var(--color-canvas-black);
     }
 
+    @media (min-width: 1440px) {
+      h1 {
+        font-size: var(--text-80px);
+      }
+    }
+
     @media (max-width: 920px) {
       .nav { display: none; }
       .hero {
         min-height: auto;
-        padding: var(--spacing-29) 0 var(--spacing-20);
+        padding: var(--spacing-40) 0 var(--spacing-28);
+      }
+      .hero-watermark { display: none; }
+      .section-num {
+        font-size: var(--section-watermark-size-md);
+        top: var(--spacing-20);
+        right: var(--spacing-12);
       }
       .hero-grid,
       .section-head,
@@ -995,10 +1119,10 @@
         max-width: 100%;
       }
       .wrap {
-        width: min(100% - 32px, var(--page-max-width));
+        width: min(100% - 2 * var(--spacing-16), var(--page-max-width));
       }
       .section {
-        padding: 58px 0;
+        padding: var(--spacing-56) 0;
       }
       .discipline-grid,
       .philosophy-grid {
@@ -1017,28 +1141,33 @@
       }
       .school-head {
         grid-template-columns: 1fr;
-        gap: var(--spacing-7);
+        gap: var(--spacing-8);
       }
       h1 {
         font-size: var(--text-48px);
       }
       h2 {
-        font-size: var(--text-36px);
+        font-size: var(--text-28px);
       }
     }
 
     @media (max-width: 560px) {
       .wrap {
-        width: min(100% - 24px, var(--page-max-width));
+        width: min(100% - 2 * var(--spacing-12), var(--page-max-width));
       }
       .top-row {
-        min-height: 58px;
+        min-height: var(--spacing-56);
       }
       .brand {
-        font-size: var(--text-24px);
+        font-size: var(--text-20px);
       }
       .hero {
-        padding-top: 38px;
+        padding-top: var(--spacing-40);
+      }
+      .section-num {
+        font-size: var(--text-80px);
+        top: var(--spacing-12);
+        right: var(--spacing-8);
       }
       h1 {
         font-size: var(--text-36px);
@@ -1052,7 +1181,7 @@
         font-size: var(--text-24px);
       }
       .lead {
-        font-size: var(--text-24px);
+        font-size: var(--text-20px);
         width: auto;
         max-width: 100%;
         overflow-wrap: break-word;
@@ -1078,7 +1207,7 @@
       .mobile-only { display: block; }
       .report-body,
       .copy-card {
-        padding: var(--spacing-13);
+        padding: var(--spacing-12);
       }
       .report-header {
         display: block;
@@ -1091,7 +1220,7 @@
         grid-template-columns: 1fr;
       }
       .score-bar {
-        grid-template-columns: 70px minmax(0, 1fr) 28px;
+        grid-template-columns: 72px minmax(0, 1fr) var(--spacing-28);
       }
       .severity-row {
         grid-template-columns: 1fr;
@@ -1113,7 +1242,7 @@
       }
       .step {
         grid-template-columns: 1fr;
-        gap: var(--spacing-10);
+        gap: var(--spacing-12);
       }
       .footer-row {
         display: block;
@@ -1131,7 +1260,7 @@
     <div class="wrap top-row">
       <a class="brand" href="#top" aria-label="Monkren Design home">
         <span class="mark">M</span>
-        <span>Monkren Design v2.0</span>
+        <span>Monkren Design v3.1</span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
         <a href="#skills">Sub-skills</a>
@@ -1148,12 +1277,13 @@
 
   <main>
     <section class="hero">
+      <div class="hero-watermark" aria-hidden="true">10</div>
       <div class="wrap hero-grid">
         <div>
           <span class="eyebrow">Design Review Expert</span>
           <h1>提交设计，<br />拿回一份专业审查报告。</h1>
           <p class="lead">
-            3 分钟，10 维度多视角审查 + 40 种哲学库 + 25+ 真实样本。每个问题都有具体数值和修复建议。
+            5 维度评审 + 10 视角审查 + 40 种哲学库。每一个问题都有引证、严重度、修复建议——3 分钟跑完，0 拍脑袋。
           </p>
           <div class="hero-actions">
             <a class="btn primary" href="#capabilities">查看能力</a>
@@ -1162,14 +1292,17 @@
           <p class="hero-note">跨 agent 通用——Claude Code、Cursor、Codex、OpenClaw、Hermes 都能装。</p>
         </div>
 
-        <aside class="report-panel" aria-label="审查报告预览">
+        <aside class="report-panel" aria-label="Monkren Design v3.1 自评">
           <div class="panel-bar">
-            <span>monkren-design/report</span>
-            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span>monkren-design/self-eval</span>
+            <div class="panel-bar-end">
+              <span class="panel-label" aria-hidden="true">v3.1</span>
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            </div>
           </div>
           <div class="report-body">
             <div class="report-header">
-              <strong>10 维度审查，薄弱处一目了然。</strong>
+              <strong>5 维度自评——v3.1 优化后。</strong>
               <span>5 维度 + 多视角 + 平台专项</span>
             </div>
             <div class="radar-wrap">
@@ -1187,18 +1320,18 @@
                   <line x1="30.7" y1="140" x2="169.3" y2="60" />
                 </g>
                 <polygon
-                  points="100,44 156.2,76 130,124 100,164 56.9,108"
-                  fill="var(--color-arctic-white)" fill-opacity=".12"
-                  stroke="var(--color-arctic-white)" stroke-opacity=".6" stroke-width="1.5"
+                  points="100,28 162.6,67 130,124 100,148 60,124"
+                  fill="var(--color-arctic-white)" fill-opacity=".14"
+                  stroke="var(--color-arctic-white)" stroke-opacity=".7" stroke-width="1.5"
                 />
                 <g fill="var(--color-arctic-white)">
-                  <circle cx="100" cy="44" r="3" />
-                  <circle cx="156.2" cy="76" r="3" />
+                  <circle cx="100" cy="28" r="3" />
+                  <circle cx="162.6" cy="67" r="3" />
                   <circle cx="130" cy="124" r="3" />
-                  <circle cx="100" cy="164" r="3" />
-                  <circle cx="56.9" cy="108" r="3" />
+                  <circle cx="100" cy="148" r="3" />
+                  <circle cx="60" cy="124" r="3" />
                 </g>
-                <g font-family="var(--font-lausanne)" font-size="16" fill="var(--color-subtle-gray)" text-anchor="middle">
+                <g font-family="var(--font-lausanne)" style="font-size:var(--text-16px)" fill="var(--color-subtle-gray)" text-anchor="middle">
                   <text x="100" y="14">哲学一致性</text>
                   <text x="178" y="60">视觉层级</text>
                   <text x="178" y="144">细节执行</text>
@@ -1210,7 +1343,7 @@
             <div class="score-bars">
               <div class="score-bar">
                 <span class="score-bar-label">哲学一致性</span>
-                <div class="score-bar-track"><div class="score-bar-fill" style="width:88%;background:var(--color-arctic-white)"></div></div>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:90%;background:var(--color-arctic-white)"></div></div>
                 <span class="score-bar-value">9</span>
               </div>
               <div class="score-bar">
@@ -1220,24 +1353,24 @@
               </div>
               <div class="score-bar">
                 <span class="score-bar-label">细节执行</span>
-                <div class="score-bar-track"><div class="score-bar-fill" style="width:70%;background:var(--color-subtle-gray)"></div></div>
-                <span class="score-bar-value">7</span>
-              </div>
-              <div class="score-bar">
-                <span class="score-bar-label">功能性</span>
-                <div class="score-bar-track"><div class="score-bar-fill" style="width:92%;background:var(--color-arctic-white)"></div></div>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:90%;background:var(--color-arctic-white)"></div></div>
                 <span class="score-bar-value">9</span>
               </div>
               <div class="score-bar">
+                <span class="score-bar-label">功能性</span>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:var(--color-arctic-white)"></div></div>
+                <span class="score-bar-value">8</span>
+              </div>
+              <div class="score-bar">
                 <span class="score-bar-label">创新性</span>
-                <div class="score-bar-track"><div class="score-bar-fill" style="width:60%;background:var(--color-subtle-gray)"></div></div>
-                <span class="score-bar-value">6</span>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:var(--color-arctic-white)"></div></div>
+                <span class="score-bar-value">8</span>
               </div>
             </div>
             <div class="severity-row">
-              <div class="severity-tag"><span class="dot"></span>P0 ⚠️ 1</div>
-              <div class="severity-tag"><span class="dot"></span>P1 ⚡ 4</div>
-              <div class="severity-tag"><span class="dot"></span>P2 💡 3</div>
+              <div class="severity-tag"><span class="dot"></span>P0 致命 0</div>
+              <div class="severity-tag"><span class="dot"></span>P1 重要 2</div>
+              <div class="severity-tag"><span class="dot"></span>P2 优化 3</div>
             </div>
           </div>
         </aside>
@@ -1245,6 +1378,7 @@
     </section>
 
     <section id="skills" class="section" aria-labelledby="skills-title">
+      <div class="section-num" aria-hidden="true">01</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -1339,6 +1473,7 @@
     </section>
 
     <section id="capabilities" class="section" aria-labelledby="cap-title">
+      <div class="section-num" aria-hidden="true">02</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -1369,7 +1504,7 @@
           <article class="card">
             <span class="num">04</span>
             <h3>40 种设计哲学库</h3>
-            <p>10 流派 × 40 种设计哲学——Pentagram 信息建筑、Locomotive 运动诗学、Sottsass 后现代狂欢等，推荐 3 个差异化方向。<a href="#philosophy-library" style="color:inherit;border-bottom:var(--border-width) solid var(--color-arctic-white)">查看完整库 →</a></p>
+            <p>10 流派 × 40 种设计哲学——Pentagram 信息建筑、Locomotive 运动诗学、Sottsass 后现代狂欢等，推荐 3 个差异化方向。<a href="#philosophy-library" class="inline-link">查看完整库 →</a></p>
           </article>
           <article class="card">
             <span class="num">05</span>
@@ -1384,18 +1519,19 @@
           <article class="card">
             <span class="num">07</span>
             <h3>平台类型专项审查</h3>
-            <p>移动端 App、桌面端软件、Web 应用、PPT/演示文稿、插画、角色 IP——每种类型有独立审查要点。<a href="#references" style="color:inherit;border-bottom:var(--border-width) solid var(--color-arctic-white)">查看 platform-guides →</a></p>
+            <p>移动端 App、桌面端软件、Web 应用、PPT/演示文稿、插画、角色 IP——每种类型有独立审查要点。<a href="#references" class="inline-link">查看 platform-guides →</a></p>
           </article>
           <article class="card">
             <span class="num">08</span>
             <h3>三层递进报告</h3>
-            <p>结论层（快速概览）→ 诊断层（维度卡片 + 专项检测）→ 行动层（Quick Wins + Fix 清单），让用户清楚改什么。<a href="#case-gallery" style="color:inherit;border-bottom:var(--border-width) solid var(--color-arctic-white)">查看 25+ 样本 →</a></p>
+            <p>结论层（快速概览）→ 诊断层（维度卡片 + 专项检测）→ 行动层（Quick Wins + Fix 清单），让用户清楚改什么。<a href="#case-gallery" class="inline-link">查看 3 份已发布样本 →</a></p>
           </article>
         </div>
       </div>
     </section>
 
     <section id="philosophy-library" class="section" aria-labelledby="phil-title">
+      <div class="section-num" aria-hidden="true">03</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -1417,8 +1553,12 @@
           </div>
           <div class="philosophy-grid">
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Swiss%20grid%20design%2C%20Helvetica%20typography%2C%20black%20and%20white%2C%2060%25%20whitespace%2C%20information%20architecture%2C%20minimal%20flat%20design&image_size=square" alt="Pentagram Michael Bierut style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/01-pentagram-michael-bierut.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">PENTAGRAM</span>
+                  <span class="monogram-name">MB</span>
+                </div>
               </div>
               <h4>Pentagram — Michael Bierut</h4>
               <span class="genre">信息建筑派</span>
@@ -1426,8 +1566,12 @@
               <span class="path">→ HTML</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cartographic%20data%20visualization%2C%20warm%20terracotta%20and%20sage%20green%2C%20organic%20patterns%2C%20topographic%20maps%2C%20minimal%20flat%20design&image_size=square" alt="Stamen Design data poetics style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/02-stamen-design.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">STAMEN</span>
+                  <span class="monogram-name">SD</span>
+                </div>
               </div>
               <h4>Stamen Design — 数据诗学</h4>
               <span class="genre">信息建筑派</span>
@@ -1435,8 +1579,12 @@
               <span class="path">→ 混合</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Content-first%20hierarchy%2C%20system%20fonts%2C%20classic%20blue%20hyperlinks%2C%20reading%20optimized%20layout%2C%20minimal%20flat%20design&image_size=square" alt="Information Architects style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/03-information-architects.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">iA</span>
+                  <span class="monogram-name">iA</span>
+                </div>
               </div>
               <h4>Information Architects</h4>
               <span class="genre">信息建筑派</span>
@@ -1444,8 +1592,12 @@
               <span class="path">→ HTML</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Scientific%20journal%20aesthetic%2C%20precise%20data%20charts%2C%20neutral%20grays%20and%20navy%2C%20clean%20sans-serif%2C%20minimal%20flat%20design&image_size=square" alt="Fathom scientific narrative style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/04-fathom.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">FATHOM</span>
+                  <span class="monogram-name">FH</span>
+                </div>
               </div>
               <h4>Fathom — 科学叙事</h4>
               <span class="genre">信息建筑派</span>
@@ -1465,8 +1617,12 @@
           </div>
           <div class="philosophy-grid">
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Film-like%20parallax%20scroll%2C%20dark%20backgrounds%2C%20bold%20typography%20emerging%20from%20darkness%2C%20smooth%20motion%2C%20minimal%20flat%20design&image_size=square" alt="Locomotive scroll narrative style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/05-locomotive.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">LOCOMOTIVE</span>
+                  <span class="monogram-name">LC</span>
+                </div>
               </div>
               <h4>Locomotive</h4>
               <span class="genre">运动诗学派</span>
@@ -1474,8 +1630,12 @@
               <span class="path">→ 混合</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Particle%20systems%2C%20neon%20gradients%20cyan%20magenta%2C%203D%20depth%20space%2C%20mouse-reactive%20environment%2C%20minimal%20flat%20design&image_size=square" alt="Active Theory WebGL style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/06-active-theory.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">ACTIVETHEORY</span>
+                  <span class="monogram-name">AT</span>
+                </div>
               </div>
               <h4>Active Theory</h4>
               <span class="genre">运动诗学派</span>
@@ -1483,8 +1643,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Abstract%20geometric%20patterns%2C%20algorithmically%20generated%2C%20mathematical%20precision%2C%20monochromatic%20with%20vibrant%20accent%2C%20minimal%20flat%20design&image_size=square" alt="Field.io algorithmic aesthetics style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/07-field-io.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">FIELD.IO</span>
+                  <span class="monogram-name">FI</span>
+                </div>
               </div>
               <h4>Field.io</h4>
               <span class="genre">运动诗学派</span>
@@ -1492,8 +1656,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Illustrative%20style%20mixed%20with%20UI%2C%20gamified%20exploration%2C%20warm%20colors%2C%20scroll-triggered%20animations%2C%20minimal%20flat%20design&image_size=square" alt="Resn interactive storytelling style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/08-resn.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">RESN</span>
+                  <span class="monogram-name">RN</span>
+                </div>
               </div>
               <h4>Resn</h4>
               <span class="genre">运动诗学派</span>
@@ -1513,8 +1681,12 @@
           </div>
           <div class="philosophy-grid">
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Conceptual%20minimalism%2C%20Mondrian%20composition%2C%20anti-commercial%2C%20bold%20typographic%20statements%2C%20minimal%20flat%20design&image_size=square" alt="Experimental Jetset conceptual minimalism style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/09-experimental-jetset.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">JETSET</span>
+                  <span class="monogram-name">EJ</span>
+                </div>
               </div>
               <h4>Experimental Jetset</h4>
               <span class="genre">极简主义派</span>
@@ -1522,8 +1694,12 @@
               <span class="path">→ 混合</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Mathematical%208pt%20grid%2C%20absolute%20alignment%2C%20monochrome%20or%20two-color%2C%20functionalism%2C%20Swiss%20style%2C%20minimal%20flat%20design&image_size=square" alt="Müller-Brockmann Swiss grid style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/10-m-ller-brockmann.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">M-BROCK</span>
+                  <span class="monogram-name">MB</span>
+                </div>
               </div>
               <h4>Müller-Brockmann — 瑞士网格</h4>
               <span class="genre">极简主义派</span>
@@ -1531,8 +1707,12 @@
               <span class="path">→ HTML</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Bold%20contrast%2C%20dark%20canvas%2C%20oversized%20typography%2C%20anti-decoration%2C%20minimal%20flat%20design&image_size=square" alt="Build in Amsterdam bold typography style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/11-build-in-amsterdam.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">BUILD</span>
+                  <span class="monogram-name">BL</span>
+                </div>
               </div>
               <h4>Build in Amsterdam</h4>
               <span class="genre">极简主义派</span>
@@ -1540,8 +1720,12 @@
               <span class="path">→ HTML</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Emotional%20typography%2C%20embroidery%20meets%20photography%2C%20emotional%20minimalism%2C%20tactile%20visuals%2C%20minimal%20flat%20design&image_size=square" alt="Sagmeister and Walsh emotional typography style visualization" loading="lazy">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/12-sagmeister-walsh.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">SAGMEISTER</span>
+                  <span class="monogram-name">SW</span>
+                </div>
               </div>
               <h4>Sagmeister &amp; Walsh</h4>
               <span class="genre">极简主义派</span>
@@ -1561,8 +1745,12 @@
           </div>
           <div class="philosophy-grid">
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Hand-drawn%20algorithmic%20graphics%2C%20real-time%20generative%20art%2C%20pure%20black%20and%20white%2C%20code%20poetry%2C%20minimal%20flat%20design&image_size=square" alt="Zach Lieberman code poetry style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/13-zach-lieberman.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">LIEBERMAN</span>
+                  <span class="monogram-name">ZL</span>
+                </div>
               </div>
               <h4>Zach Lieberman — 代码诗学</h4>
               <span class="genre">实验先锋派</span>
@@ -1570,8 +1758,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Code-generated%20abstract%20art%2C%20mechanical%20meets%20organic%2C%20computational%20design%2C%20geometric%20abstraction%2C%20minimal%20flat%20design&image_size=square" alt="Raven Kwok algorithmic aesthetics style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/14-raven-kwok.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">RAVENKWOK</span>
+                  <span class="monogram-name">RK</span>
+                </div>
               </div>
               <h4>Raven Kwok — 算法美学</h4>
               <span class="genre">实验先锋派</span>
@@ -1579,8 +1771,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cinematic%20visuals%2C%20cyberpunk%20aesthetics%2C%20immersive%20narrative%20design%2C%20dark%20futuristic%2C%20minimal%20flat%20design&image_size=square" alt="Ash Thorp cinematic cyberpunk style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/15-ash-thorp.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">ASHTHORP</span>
+                  <span class="monogram-name">AT</span>
+                </div>
               </div>
               <h4>Ash Thorp</h4>
               <span class="genre">实验先锋派</span>
@@ -1588,8 +1784,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Sci-fi%20interface%20design%2C%20HUD%20aesthetics%2C%20film%20UI%2C%20futuristic%20controls%2C%20dark%20interface%2C%20minimal%20flat%20design&image_size=square" alt="Territory Studio sci-fi HUD style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/16-territory-studio.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">TERRITORY</span>
+                  <span class="monogram-name">TS</span>
+                </div>
               </div>
               <h4>Territory Studio</h4>
               <span class="genre">实验先锋派</span>
@@ -1609,8 +1809,12 @@
           </div>
           <div class="philosophy-grid">
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Japanese%20engineering%20design%2C%20simplicity%20meets%20function%2C%20minimal%20industrial%2C%20clean%20Japanese%20aesthetic%2C%20minimal%20flat%20design&image_size=square" alt="Takram Japanese engineering design style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/17-takram.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">TAKRAM</span>
+                  <span class="monogram-name">TK</span>
+                </div>
               </div>
               <h4>Takram</h4>
               <span class="genre">东方哲学派</span>
@@ -1618,8 +1822,12 @@
               <span class="path">→ HTML</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Extreme%20whitespace%2080%25%2C%20paper%20texture%20digitalized%2C%20white%20layers%2C%20tactile%20visualization%2C%20Kenya%20Hara%20style%2C%20minimal%20flat%20design&image_size=square" alt="Kenya Hara white emptiness style visualization" loading="lazy">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/18-kenya-hara.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">KENYAHARA</span>
+                  <span class="monogram-name">KH</span>
+                </div>
               </div>
               <h4>Kenya Hara — 白</h4>
               <span class="genre">东方哲学派</span>
@@ -1627,8 +1835,12 @@
               <span class="path">→ HTML</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Books%20as%20sculpture%2C%20material%20expression%2C%20tactile%20design%2C%20book%20art%2C%20Irma%20Boom%20style%2C%20minimal%20flat%20design&image_size=square" alt="Irma Boom book as sculpture style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/19-irma-boom.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">IRMABOOM</span>
+                  <span class="monogram-name">IB</span>
+                </div>
               </div>
               <h4>Irma Boom</h4>
               <span class="genre">东方哲学派</span>
@@ -1636,8 +1848,12 @@
               <span class="path">→ 混合</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Unconscious%20design%2C%20objects%20naturally%20fitting%20behavior%2C%20subtle%20beauty%2C%20Naoto%20Fukasawa%20style%2C%20minimal%20flat%20design&image_size=square" alt="Naoto Fukasawa unconscious design style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/20-naoto-fukasawa.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">FUKASAWA</span>
+                  <span class="monogram-name">NF</span>
+                </div>
               </div>
               <h4>Naoto Fukasawa</h4>
               <span class="genre">东方哲学派</span>
@@ -1657,8 +1873,12 @@
           </div>
           <div class="philosophy-grid">
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Naked%20HTML%20structure%2C%20system%20fonts%2C%20zero%20decoration%2C%20zero%20rounded%20corners%2C%20raw%20web%20design%2C%20minimal%20flat%20design&image_size=square" alt="Pascal Devoyre naked HTML style visualization" loading="lazy">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/21-pascal-devoyre.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">DEVOYRE</span>
+                  <span class="monogram-name">PD</span>
+                </div>
               </div>
               <h4>Pascal Devoyre — 裸露真实</h4>
               <span class="genre">野蛮生长派</span>
@@ -1666,8 +1886,12 @@
               <span class="path">→ HTML</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Pragmatic%20minimalism%2C%20transparent%20materials%2C%20function%20as%20form%2C%20Michele%20Mazzini%20style%2C%20minimal%20flat%20design&image_size=square" alt="Michele Mazzini pragmatic minimalism style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/22-michele-mazzini.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">MAZZINI</span>
+                  <span class="monogram-name">MM</span>
+                </div>
               </div>
               <h4>Michele Mazzini</h4>
               <span class="genre">野蛮生长派</span>
@@ -1675,8 +1899,12 @@
               <span class="path">→ HTML</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Magazine%20design%20commercial%20minimal%2C%20cover%20narrative%2C%20data%20typography%2C%20Bloomberg%20Businessweek%20style%2C%20minimal%20flat%20design&image_size=square" alt="Bloomberg Businessweek magazine style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/23-bloomberg-businessweek.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">BLOOMBERG</span>
+                  <span class="monogram-name">BW</span>
+                </div>
               </div>
               <h4>Bloomberg Businessweek</h4>
               <span class="genre">野蛮生长派</span>
@@ -1684,8 +1912,12 @@
               <span class="path">→ HTML</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Illustration%20meets%20layout%2C%20geometric%20and%20color%20restraint%2C%20poetic%20composition%2C%20Lotta%20Nieminen%20style%2C%20minimal%20flat%20design&image_size=square" alt="Lotta Nieminen illustration layout style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/24-lotta-nieminen.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">NIEMINEN</span>
+                  <span class="monogram-name">LN</span>
+                </div>
               </div>
               <h4>Lotta Nieminen</h4>
               <span class="genre">野蛮生长派</span>
@@ -1705,8 +1937,12 @@
           </div>
           <div class="philosophy-grid">
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Memphis%20movement%2C%20color%20celebration%2C%20geometric%20pop%20mix%2C%20playful%20bold%2C%20Ettore%20Sottsass%20style%2C%20minimal%20flat%20design&image_size=square" alt="Ettore Sottsass Memphis style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/25-ettore-sottsass.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">SOTTSASS</span>
+                  <span class="monogram-name">ES</span>
+                </div>
               </div>
               <h4>Ettore Sottsass — 孟菲斯</h4>
               <span class="genre">后现代狂欢派</span>
@@ -1714,8 +1950,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Bold%20geometric%20patterns%2C%20vibrant%20colors%2C%20urban%20scale%20visuals%2C%20Camille%20Walala%20style%2C%20minimal%20flat%20design&image_size=square" alt="Camille Walala geometric patterns style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/26-camille-walala.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">WALALA</span>
+                  <span class="monogram-name">CW</span>
+                </div>
               </div>
               <h4>Camille Walala</h4>
               <span class="genre">后现代狂欢派</span>
@@ -1723,8 +1963,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Large-scale%20installations%2C%20color%20and%20structure%20celebration%2C%20Morag%20Myerscough%20style%2C%20minimal%20flat%20design&image_size=square" alt="Morag Myerscough large installations style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/27-morag-myerscough.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">MYERSCOUGH</span>
+                  <span class="monogram-name">MM</span>
+                </div>
               </div>
               <h4>Morag Myerscough</h4>
               <span class="genre">后现代狂欢派</span>
@@ -1732,8 +1976,12 @@
               <span class="path">→ 混合</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Experimental%20typography%2C%20music%20visuals%2C%20anti-industrial%20industrial%2C%20Studio%20Moross%20style%2C%20minimal%20flat%20design&image_size=square" alt="Studio Moross experimental typography style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/28-studio-moross.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">MOROSS</span>
+                  <span class="monogram-name">SM</span>
+                </div>
               </div>
               <h4>Studio Moross</h4>
               <span class="genre">后现代狂欢派</span>
@@ -1753,8 +2001,12 @@
           </div>
           <div class="philosophy-grid">
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Nature%20meets%20technology%2C%20parametric%20design%2C%20material%20ecology%2C%20organic%20forms%2C%20Neri%20Oxman%20style%2C%20minimal%20flat%20design&image_size=square" alt="Neri Oxman nature tech fusion style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/29-neri-oxman.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">OXMAN</span>
+                  <span class="monogram-name">NO</span>
+                </div>
               </div>
               <h4>Neri Oxman</h4>
               <span class="genre">有机仿生派</span>
@@ -1762,8 +2014,12 @@
               <span class="path">→ 混合</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Organic%20morphologies%2C%20natural%20engineering%20logic%2C%20flowing%20forms%2C%20Ross%20Lovegrove%20style%2C%20minimal%20flat%20design&image_size=square" alt="Ross Lovegrove organic flowing forms style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/30-ross-lovegrove.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">LOVEGROVE</span>
+                  <span class="monogram-name">RL</span>
+                </div>
               </div>
               <h4>Ross Lovegrove</h4>
               <span class="genre">有机仿生派</span>
@@ -1771,8 +2027,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Tech%20and%20light%20poetic%20interaction%2C%20future%20landscape%20design%2C%20Daan%20Roosegaarde%20style%2C%20minimal%20flat%20design&image_size=square" alt="Daan Roosegaarde light tech interaction style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/31-daan-roosegaarde.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">ROOSEGAARDE</span>
+                  <span class="monogram-name">DR</span>
+                </div>
               </div>
               <h4>Daan Roosegaarde</h4>
               <span class="genre">有机仿生派</span>
@@ -1780,8 +2040,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Material%20innovation%2C%20tactile%20emotion%2C%20architectural%20installations%2C%20Heatherwick%20Studio%20style%2C%20minimal%20flat%20design&image_size=square" alt="Heatherwick Studio material innovation style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/32-heatherwick-studio.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">HEATHERWICK</span>
+                  <span class="monogram-name">HS</span>
+                </div>
               </div>
               <h4>Heatherwick Studio</h4>
               <span class="genre">有机仿生派</span>
@@ -1801,8 +2065,12 @@
           </div>
           <div class="philosophy-grid">
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Futuristic%20vehicle%20design%2C%20cyber%20aesthetics%2C%20Blade%20Runner%20visuals%2C%20Syd%20Mead%20style%2C%20minimal%20flat%20design&image_size=square" alt="Syd Mead futuristic vehicles style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/33-syd-mead.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">SYDMEAD</span>
+                  <span class="monogram-name">SM</span>
+                </div>
               </div>
               <h4>Syd Mead</h4>
               <span class="genre">复古未来派</span>
@@ -1810,8 +2078,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Sci-fi%20transport%20industrial%20design%2C%20TRON%20Legacy%20visual%20language%2C%20Daniel%20Simon%20style%2C%20minimal%20flat%20design&image_size=square" alt="Daniel Simon sci-fi transport style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/34-daniel-simon.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">DANIELSIMON</span>
+                  <span class="monogram-name">DS</span>
+                </div>
               </div>
               <h4>Daniel Simon</h4>
               <span class="genre">复古未来派</span>
@@ -1819,8 +2091,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Contemporary%20retro-futurism%2C%20metallic%20textures%20and%20geometry%2C%20hardware%20feel%2C%20Actual%20Source%20style%2C%20minimal%20flat%20design&image_size=square" alt="Actual Source retro-futurism style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/35-actual-source.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">ACTUALSOURCE</span>
+                  <span class="monogram-name">AS</span>
+                </div>
               </div>
               <h4>Actual Source</h4>
               <span class="genre">复古未来派</span>
@@ -1828,8 +2104,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Digital%20material%20poetry%2C%20rendered%20realism%2C%20metaverse%20aesthetics%2C%20Andres%20Reisinger%20style%2C%20minimal%20flat%20design&image_size=square" alt="Andrés Reisinger digital material style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/36-andr-s-reisinger.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">REISINGER</span>
+                  <span class="monogram-name">AR</span>
+                </div>
               </div>
               <h4>Andrés Reisinger</h4>
               <span class="genre">复古未来派</span>
@@ -1849,8 +2129,12 @@
           </div>
           <div class="philosophy-grid">
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Rule-breaking%20typography%2C%20chaos%20within%20order%2C%20Ray%20Gun%20magazine%20style%2C%20David%20Carson%20style%2C%20minimal%20flat%20design&image_size=square" alt="David Carson rule-breaking typography style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/37-david-carson.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">DAVIDCARSON</span>
+                  <span class="monogram-name">DC</span>
+                </div>
               </div>
               <h4>David Carson</h4>
               <span class="genre">极繁主义派</span>
@@ -1858,8 +2142,12 @@
               <span class="path">→ AI 生成</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Type%20as%20image%2C%20color%20and%20typography%20dialogue%2C%20public%20visual%20loudness%2C%20Paula%20Scher%20style%2C%20minimal%20flat%20design&image_size=square" alt="Paula Scher type as image style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/38-paula-scher.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">SCHER</span>
+                  <span class="monogram-name">PS</span>
+                </div>
               </div>
               <h4>Paula Scher</h4>
               <span class="genre">极繁主义派</span>
@@ -1867,8 +2155,12 @@
               <span class="path">→ 混合</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Post-punk%20visual%20culture%2C%20album%20cover%20design%20language%2C%20Peter%20Saville%20style%2C%20minimal%20flat%20design&image_size=square" alt="Peter Saville post-punk visual culture style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/39-peter-saville.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">SAVILLE</span>
+                  <span class="monogram-name">PS</span>
+                </div>
               </div>
               <h4>Peter Saville</h4>
               <span class="genre">极繁主义派</span>
@@ -1876,8 +2168,12 @@
               <span class="path">→ 混合</span>
             </div>
             <div class="philosophy-card">
-              <div class="img-wrap">
-                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Interior%20to%20graphic%2C%20texture%20and%20color%20feast%2C%20material%20improvisation%2C%20Kelly%20Wearstler%20style%2C%20minimal%20flat%20design&image_size=square" alt="Kelly Wearstler texture color feast style visualization" loading="lazy">
+                            <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/40-kelly-wearstler.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">WEARSTLER</span>
+                  <span class="monogram-name">KW</span>
+                </div>
               </div>
               <h4>Kelly Wearstler</h4>
               <span class="genre">极繁主义派</span>
@@ -1886,18 +2182,211 @@
             </div>
           </div>
         </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">11</span>
+            <div>
+              <h3>数字界面派</h3>
+              <p>界面是行为的延伸。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/41-jony-ive.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">APPLE</span>
+                  <span class="monogram-name">JI</span>
+                </div>
+              </div>
+              <h4>Jony Ive — Apple 数字极简</h4>
+              <span class="genre">数字界面派</span>
+              <p>硬件即软件，无缝材质与克制细节，让技术隐于无形。</p>
+              <span class="path">→ iOS / 产品</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/42-dieter-rams.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">RAMS</span>
+                  <span class="monogram-name">DR</span>
+                </div>
+              </div>
+              <h4>Dieter Rams — 设计十诫</h4>
+              <span class="genre">数字界面派</span>
+              <p>Less but better，好设计是尽可能少的设计，Apple 设计哲学的源头。</p>
+              <span class="path">→ 产品设计</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/43-material-design-3.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">MATERIAL</span>
+                  <span class="monogram-name">M3</span>
+                </div>
+              </div>
+              <h4>Material Design 3 — Google</h4>
+              <span class="genre">数字界面派</span>
+              <p>动态色彩、自适应组件、跨平台一致性的设计语言系统。</p>
+              <span class="path">→ Android</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/44-apple-hig.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">APPLEHIG</span>
+                  <span class="monogram-name">HIG</span>
+                </div>
+              </div>
+              <h4>Apple HIG — 人机界面指南</h4>
+              <span class="genre">数字界面派</span>
+              <p>清晰、遵从、纵深，iOS/macOS 交互范式与视觉规范的基石。</p>
+              <span class="path">→ iOS / macOS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">12</span>
+            <div>
+              <h3>体验人本派</h3>
+              <p>设计的起点是人，不是屏幕。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/45-don-norman.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">NORMAN</span>
+                  <span class="monogram-name">DN</span>
+                </div>
+              </div>
+              <h4>Don Norman — 日常之物的设计</h4>
+              <span class="genre">体验人本派</span>
+              <p>affordance 与示能，以人为中心的可用性思考，从门把手到界面。</p>
+              <span class="path">→ 用户研究</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/46-ideo.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">IDEO</span>
+                  <span class="monogram-name">ID</span>
+                </div>
+              </div>
+              <h4>IDEO — 设计思维</h4>
+              <span class="genre">体验人本派</span>
+              <p>共情→定义→构思→原型→测试，以人为本的创新方法论。</p>
+              <span class="path">→ 服务设计</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/47-frog-design.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">FROG</span>
+                  <span class="monogram-name">FD</span>
+                </div>
+              </div>
+              <h4>Frog Design — 情感化设计</h4>
+              <span class="genre">体验人本派</span>
+              <p>形式追随情感，产品与用户之间的情感共鸣驱动设计决策。</p>
+              <span class="path">→ 产品策略</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/48-nn-group.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">NNGROUP</span>
+                  <span class="monogram-name">NN</span>
+                </div>
+              </div>
+              <h4>Nielsen Norman Group — 可用性</h4>
+              <span class="genre">体验人本派</span>
+              <p>10 条可用性启发式原则，UX 研究领域的黄金标准。</p>
+              <span class="path">→ UX 研究</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">13</span>
+            <div>
+              <h3>网页系统派</h3>
+              <p>网页是可生长的系统。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/49-jeffrey-zeldman.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">ZELDMAN</span>
+                  <span class="monogram-name">JZ</span>
+                </div>
+              </div>
+              <h4>Jeffrey Zeldman — Web 标准</h4>
+              <span class="genre">网页系统派</span>
+              <p>语义化、可访问性与渐进增强，现代网页标准的奠基之声。</p>
+              <span class="path">→ HTML / CSS</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/50-ethan-marcotte.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">MARCOTTE</span>
+                  <span class="monogram-name">EM</span>
+                </div>
+              </div>
+              <h4>Ethan Marcotte — 响应式设计</h4>
+              <span class="genre">网页系统派</span>
+              <p>流体网格、弹性图片、媒体查询，一个网址适配所有屏幕。</p>
+              <span class="path">→ 前端</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/51-brad-frost.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">FROST</span>
+                  <span class="monogram-name">BF</span>
+                </div>
+              </div>
+              <h4>Brad Frost — 原子设计</h4>
+              <span class="genre">网页系统派</span>
+              <p>原子→分子→有机体→模板→页面，组件化设计系统的构建方法论。</p>
+              <span class="path">→ 设计系统</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/52-stripe-design.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">STRIPE</span>
+                  <span class="monogram-name">SD</span>
+                </div>
+              </div>
+              <h4>Stripe Design — 系统之美</h4>
+              <span class="genre">网页系统派</span>
+              <p>开发者优先的设计语言，API 美学的可视化表达。</p>
+              <span class="path">→ 开发者工具</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="case-gallery" class="section" aria-labelledby="case-title">
+      <div class="section-num" aria-hidden="true">04</div>
       <div class="wrap">
         <div class="section-head">
           <div>
             <span class="eyebrow">Case Gallery</span>
-            <h2 id="case-title">25+ 真实审查样本。</h2>
+            <h2 id="case-title">3 份已发布的真实审查样本。</h2>
           </div>
           <p>
-            每一份样本都是用 Monkren Design 实际跑出来的产物——设计审查、PR 总结、事故复盘、工程文档、交互解释。打开看就是一份完整的样本报告。
+            每一份样本都是用 Monkren Design 实际跑出来的产物——设计审查、PR 总结、事故复盘、工程文档、交互解释。当前 3 份已发布（其余 21 份规划中），打开看就是一份完整的样本报告。
           </p>
         </div>
 
@@ -1914,6 +2403,7 @@
             <span class="cat">设计审查</span>
             <h4>Score Improvement — Landing Page</h4>
           </a>
+          <!-- TODO: 补齐 21 个 case 文件后再启用
           <a class="case-card" href="case/Empty state — four visual directions.html" target="_blank" rel="noopener">
             <span class="cat">设计审查</span>
             <h4>Empty state — four visual directions</h4>
@@ -2003,11 +2493,13 @@
             <span class="cat">教程</span>
             <h4>The unreasonable effectiveness of HTML</h4>
           </a>
+          -->
         </div>
       </div>
     </section>
 
     <section id="dimensions" class="section" aria-labelledby="dim-title">
+      <div class="section-num" aria-hidden="true">05</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -2054,7 +2546,7 @@
                       <circle cx="100" cy="164" r="3.5" />
                       <circle cx="43.8" cy="124" r="3.5" />
                     </g>
-                    <g font-family="var(--font-lausanne)" font-size="9" fill="var(--color-arctic-white)" font-weight="400" text-anchor="middle">
+                    <g font-family="var(--font-lausanne)" style="font-size:var(--text-12px)" fill="var(--color-arctic-white)" font-weight="400" text-anchor="middle">
                       <text x="100" y="14">9</text>
                       <text x="180" y="60">8</text>
                       <text x="180" y="144">7</text>
@@ -2134,17 +2626,17 @@
                 <div class="severity-cards">
                   <div class="severity-card">
                     <span class="level">P0</span>
-                    <span class="label">⚠️ 致命</span>
+                    <span class="label">致命</span>
                     <span class="desc">阻断性问题，发布前必须修复。如：关键信息不可读、核心功能不可用。</span>
                   </div>
                   <div class="severity-card">
                     <span class="level">P1</span>
-                    <span class="label">⚡ 重要</span>
+                    <span class="label">重要</span>
                     <span class="desc">影响体验或一致性，下一迭代修复。如：间距不统一、颜色过多、层级模糊。</span>
                   </div>
                   <div class="severity-card">
                     <span class="level">P2</span>
-                    <span class="label">💡 优化</span>
+                    <span class="label">优化</span>
                     <span class="desc">锦上添花，有空时改进。如：微调字重对比、优化动效时长、增加 hover 状态。</span>
                   </div>
                 </div>
@@ -2156,6 +2648,7 @@
     </section>
 
     <section id="workflow" class="section" aria-labelledby="work-title">
+      <div class="section-num" aria-hidden="true">06</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -2221,6 +2714,7 @@
     </section>
 
     <section id="references" class="section" aria-labelledby="ref-title">
+      <div class="section-num" aria-hidden="true">07</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -2315,6 +2809,7 @@
     </section>
 
     <section id="use" class="section" aria-labelledby="use-title">
+      <div class="section-num" aria-hidden="true">08</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -2328,7 +2823,7 @@
 
         <div class="command-layout">
           <div class="terminal" aria-label="安装和使用示例">
-            <div class="panel-bar" style="border-bottom:var(--border-width) solid var(--color-arctic-white)">
+            <div class="panel-bar">
               <span>terminal</span>
               <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
             </div>
@@ -2363,7 +2858,7 @@
 
   <footer class="footer">
     <div class="wrap footer-row">
-      <span>Monkren Design v2.0 — 设计审查专家 Skill。个人使用免费，企业商用需授权。</span>
+      <span>Monkren Design v3.1 — 设计审查专家 Skill。个人使用免费，企业商用需授权。</span>
       <span><a href="https://github.com/monkren">GitHub</a></span>
     </div>
   </footer>

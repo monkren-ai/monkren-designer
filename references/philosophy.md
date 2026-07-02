@@ -1978,6 +1978,548 @@ typography. The data tells a story of dramatic channel shift.
 
 ---
 
+### 十一、数字界面派（41-44）
+> 哲学：「界面是行为的延伸」
+
+界面不是装饰层，是用户行为的延伸。数字产品的设计语言必须与交互范式、平台规范、品牌人格三位一体。数字界面派的哲学核心是：每一个像素都应该服务于交互目的，形式永远是功能的表达。
+
+#### 反模式检测
+
+| 反模式 | 为什么违反 | 修复方向 |
+|--------|-----------|---------|
+| ❌ 装饰性 UI 元素掩盖核心功能 | 界面是行为的延伸，装饰性元素干扰用户完成任务 | ✅ 审查每个 UI 元素——"移除它会影响任务完成吗？"不会则删除 |
+| ❌ 跨平台交互不一致 | 违反平台规范导致用户认知混乱 | ✅ 遵循各平台 HIG/Material Design 标准交互范式 |
+| ❌ 触控热区小于 44pt | Apple HIG 和 Material 规范均要求最小触控区域 | ✅ 确保所有可交互元素触控区域 ≥ 44pt |
+| ❌ 色彩未考虑无障碍 | 数字界面必须服务所有用户 | ✅ 确保文字对比度 ≥ 4.5:1（WCAG AA），色彩不单独传达信息 |
+| ❌ 动画无目的性 | 克制是数字界面派的核心，无意义的动画浪费用户注意力 | ✅ 动画必须服务于导航引导、状态反馈或空间关系表达 |
+
+#### 提升路径
+
+**Quick Win**（5 分钟）：检查所有可交互元素的触控区域是否 ≥ 44pt，修复不符合的。
+
+**提升路径**（从 5 分到 8 分）：
+1. 遵循平台 HIG——确保交互范式与 iOS/Android 标准一致
+2. 建立触控热区规范——全局统一最小 44pt
+3. 审查色彩无障碍——文字对比度 ≥ 4.5:1，色彩不单独传达信息
+4. 精简动画——只保留功能性动画（导航引导、状态反馈、空间关系）
+5. 建立组件库——所有 UI 元素来自统一的组件系统，不允许独有样式
+
+#### 41. Jony Ive — Apple 数字极简
+**哲学**：硬件即软件，无缝材质与克制细节
+**核心特征**：
+- 极致克制的材质表达（毛玻璃、半透明、无边框）
+- 物理世界隐喻（阴影层级、弹性动画、惯性滚动）
+- 留白作为核心设计语言
+- 排版精确到像素级
+
+**提示词DNA**：
+```
+Jony Ive / Apple design:
+- Seamless material transitions, frosted glass
+- Physical world metaphors (depth, shadow, inertia)
+- Maximal whitespace, minimal visible UI
+- Pixel-perfect typography (SF Pro / SF Display)
+- Rounded corners (continuous curvature)
+- Dark mode optimized, dynamic color system
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.18 250) → #007AFF
+- 辅色: oklch(0.70 0.02 100) → #8E8E93
+- 强调色: oklch(0.65 0.22 25) → #FF3B30
+- 背景: oklch(0.97 0.002 250) → #F2F2F7
+- 文字: oklch(0.12 0.01 260) → #1C1C1E
+
+**参考字体栈**：
+- Display: SF Pro Display / Helvetica Neue
+- Body: SF Pro Text / Helvetica Neue
+- Mono: SF Mono / Menlo / monospace
+
+**布局姿态**：大留白 / 层级阴影 / 弹性滚动
+
+**代表作**：iOS 7+ 界面设计语言
+**搜索关键词**：Apple iOS design language Jony Ive
+
+---
+
+#### 42. Dieter Rams — 设计十诫
+**哲学**：Less but better，好设计是尽可能少的设计
+**核心特征**：
+- 十诫原则：创新、有用、美观、易懂、克制、诚实、持久、细节、环保、少即是多
+- 功能主义美学的极致表达
+- 纯粹几何形态与中性色调
+- 物理产品设计哲学对数字界面的映射
+
+**提示词DNA**：
+```
+Dieter Rams / Braun design:
+- Purely functional, every element justified
+- Neutral color palette (white, light gray, charcoal)
+- Geometric purity, right angles, circles
+- Tactile, physicality in design language
+- No unnecessary decoration, honest materials
+- Modular, systematic approach
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.15 0.01 260) → #1A1A2A
+- 辅色: oklch(0.65 0.01 260) → #8A8A9A
+- 强调色: oklch(0.55 0.16 40) → #C47A38
+- 背景: oklch(0.97 0.002 80) → #F7F5F0
+- 文字: oklch(0.10 0.01 260) → #0A0A1A
+
+**参考字体栈**：
+- Display: Helvetica Neue / Univers
+- Body: Helvetica Neue / Arial
+- Mono: SF Mono / Menlo / monospace
+
+**布局姿态**：几何网格 / 极简留白 / 功能分区
+
+**代表作**：Braun ET66 计算器、Braun SK5 收音机
+**搜索关键词**：Dieter Rams Braun design ten principles
+
+---
+
+#### 43. Material Design 3 — Google
+**哲学**：动态色彩、自适应组件、跨平台一致性
+**核心特征**：
+- Material You 动态色彩系统（从壁纸自动生成色板）
+- 自适应组件（跨手机、平板、折叠屏、桌面）
+- 层级清晰的海拔系统（阴影、表面色变化）
+- 运动设计语言（有意义的过渡动画）
+
+**提示词DNA**：
+```
+Material Design 3 / Google:
+- Dynamic color (Material You, tonal palettes)
+- Adaptive components for all screen sizes
+- Elevation system (surface tints + shadows)
+- Meaningful motion (shared axis, container transform)
+- Rounded shapes (extra small to extra large)
+- Accessibility-first, high contrast defaults
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.20 260) → #6750A4
+- 辅色: oklch(0.60 0.15 180) → #006B5E
+- 强调色: oklch(0.55 0.22 40) → #B3261E
+- 背景: oklch(0.98 0.005 260) → #FEF7FF
+- 文字: oklch(0.20 0.01 260) → #1D1B20
+
+**参考字体栈**：
+- Display: Google Sans / Roboto
+- Body: Roboto / Noto Sans
+- Mono: Roboto Mono / monospace
+
+**布局姿态**：卡片层级 / 响应式网格 / 动态表面
+
+**代表作**：Material Design 3 规范文档
+**搜索关键词**：Material Design 3 Material You Google
+
+---
+
+#### 44. Apple HIG — 人机界面指南
+**哲学**：清晰、遵从、纵深
+**核心特征**：
+- 平台原生交互范式（Navigation Bar、Tab Bar、Toolbar）
+- 动态字体系统（Dynamic Type 支持用户自定义字号）
+- SF Symbols 图标系统（5000+ 系统图标）
+- 暗黑模式深度适配
+
+**提示词DNA**：
+```
+Apple HIG / Human Interface:
+- Clarity, deference, depth principles
+- Native navigation patterns (tab bar, nav bar)
+- Dynamic Type, SF Symbols, system colors
+- Dark mode optimized, semantic colors
+- High contrast, VoiceOver accessibility
+- Minimalist with purpose
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.18 250) → #007AFF
+- 辅色: oklch(0.60 0.15 150) → #34C759
+- 强调色: oklch(0.60 0.22 30) → #FF9500
+- 背景: oklch(0.95 0.002 250) → #F2F2F7
+- 文字: oklch(0.12 0.01 260) → #1C1C1E
+
+**参考字体栈**：
+- Display: SF Pro Display
+- Body: SF Pro Text
+- Mono: SF Mono / Menlo / monospace
+
+**布局姿态**：导航栏 + 内容区 / 安全区域 / 层级导航
+
+**代表作**：iOS Human Interface Guidelines
+**搜索关键词**：Apple HIG Human Interface Guidelines iOS
+
+---
+
+### 十二、体验人本派（45-48）
+> 哲学：「设计的起点是人，不是屏幕」
+
+屏幕上的每一像素都应该回答"用户此刻需要什么"。设计从共情开始，到可用性测试结束，循环往复。体验人本派的核心信念是：技术服务于人，而不是让人适应技术。
+
+#### 反模式检测
+
+| 反模式 | 为什么违反 | 修复方向 |
+|--------|-----------|---------|
+| ❌ 功能堆砌超过用户需求 | 用户体验的核心是"做减法"，不是堆砌功能 | ✅ 用 Jobs-to-be-Done 框架重新审视每个功能——"用户需要完成什么任务？" |
+| ❌ 无用户测试直接上线 | 未经测试的设计是假设，不是设计 | ✅ 至少进行 5 人可用性测试（Nielsen 法则：5 人可发现 85% 问题） |
+| ❌ 错误状态无友好提示 | 用户犯错时不应感到被责备 | ✅ 所有错误状态提供：问题描述 + 原因 + 解决方案 |
+| ❌ 信息架构混乱 | 用户找不到内容 = 内容不存在 | ✅ 进行卡片分类测试，确保信息架构匹配用户心智模型 |
+| ❌ 无进度反馈 | 用户不知道系统在做什么会焦虑 | ✅ 所有超过 200ms 的操作提供进度指示 |
+
+#### 提升路径
+
+**Quick Win**（5 分钟）：检查所有错误状态是否有友好提示——问题描述 + 原因 + 解决方案。
+
+**提升路径**（从 5 分到 8 分）：
+1. 进行 5 人可用性测试——记录任务完成时间、错误率、满意度
+2. 建立用户旅程地图——识别所有接触点的痛点和机会
+3. 优化信息架构——卡片分类测试，确保匹配用户心智模型
+4. 完善反馈系统——所有操作提供即时反馈（视觉/触觉/声音）
+5. 建立设计系统——组件化确保跨页面一致性
+
+#### 45. Don Norman — 日常之物的设计
+**哲学**：affordance 与示能，从门把手到界面
+**核心特征**：
+- 示能性（Affordance）：物品的外观暗示其使用方式
+- 意符（Signifiers）：指示操作位置的视觉线索
+- 映射（Mapping）：控制与效果之间的对应关系
+- 反馈（Feedback）：操作后的即时响应
+
+**提示词DNA**：
+```
+Don Norman / UX philosophy:
+- Clear affordances (button looks clickable)
+- Visible signifiers for all interactions
+- Natural mapping between controls and effects
+- Immediate feedback for every action
+- Error prevention over error recovery
+- Conceptual model matches user mental model
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.18 250) → #2962FF
+- 辅色: oklch(0.55 0.05 100) → #757575
+- 强调色: oklch(0.55 0.18 30) → #E65100
+- 背景: oklch(0.98 0.002 250) → #FAFAFA
+- 文字: oklch(0.15 0.01 260) → #212121
+
+**参考字体栈**：
+- Display: Inter / SF Pro
+- Body: Inter / SF Pro Text
+- Mono: JetBrains Mono / monospace
+
+**布局姿态**：清晰信息层级 / 可见操作入口 / 即时反馈
+
+**代表作**：《The Design of Everyday Things》
+**搜索关键词**：Don Norman affordance signifier user experience
+
+---
+
+#### 46. IDEO — 设计思维
+**哲学**：共情→定义→构思→原型→测试，以人为本
+**核心特征**：
+- 双钻模型（Discover → Define → Develop → Deliver）
+- 以人为本的共情研究方法
+- 快速原型与迭代测试
+- 跨学科团队协作
+
+**提示词DNA**：
+```
+IDEO / Design Thinking:
+- Empathy-driven research methods
+- Double Diamond process (diverge-converge)
+- Rapid prototyping, fail fast mentality
+- Cross-disciplinary collaboration
+- Human-centered, not technology-centered
+- Visual thinking and sketching culture
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.15 200) → #00897B
+- 辅色: oklch(0.60 0.12 80) → #7CB342
+- 强调色: oklch(0.55 0.20 20) → #E64A19
+- 背景: oklch(0.97 0.005 80) → #F5F5F0
+- 文字: oklch(0.18 0.01 260) → #263238
+
+**参考字体栈**：
+- Display: Proxima Nova / Montserrat
+- Body: Proxima Nova / Open Sans
+- Mono: Fira Code / monospace
+
+**布局姿态**：便签墙 / 思维导图 / 原型迭代
+
+**代表作**：IDEO Shopping Cart 项目（Deep Dive 纪录片）
+**搜索关键词**：IDEO design thinking human centered innovation
+
+---
+
+#### 47. Frog Design — 情感化设计
+**哲学**：形式追随情感，情感共鸣驱动设计决策
+**核心特征**：
+- 产品与用户的情感连接
+- 设计作为品牌故事的载体
+- 跨物理与数字的体验设计
+- 分别针对本能层、行为层、反思层的设计策略
+
+**提示词DNA**：
+```
+Frog Design / Emotional Design:
+- Design for visceral, behavioral, reflective levels
+- Emotional connection between product and user
+- Brand storytelling through design
+- Cross-physical-digital experiences
+- Beauty and function in harmony
+- Future-forward, optimistic aesthetic
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.45 0.15 270) → #5C6BC0
+- 辅色: oklch(0.55 0.10 140) → #43A047
+- 强调色: oklch(0.55 0.20 30) → #EF6C00
+- 背景: oklch(0.96 0.005 260) → #F0F0F5
+- 文字: oklch(0.15 0.02 260) → #1A1A2E
+
+**参考字体栈**：
+- Display: Circular / Proxima Nova
+- Body: Circular / Inter
+- Mono: Fira Code / monospace
+
+**布局姿态**：品牌叙事 / 情感节奏 / 跨屏体验
+
+**代表作**：Apple Snow White 设计语言、Sony Walkman
+**搜索关键词**：Frog Design Hartmut Esslinger emotional design
+
+---
+
+#### 48. Nielsen Norman Group — 可用性
+**哲学**：10 条启发式原则，UX 研究的黄金标准
+**核心特征**：
+- 系统状态可见性
+- 系统与现实匹配
+- 用户控制与自由
+- 一致性与标准
+- 错误预防
+- 识别而非回忆
+- 灵活性与效率
+- 美学与极简设计
+- 帮助用户识别、诊断和恢复错误
+- 帮助与文档
+
+**提示词DNA**：
+```
+Nielsen Norman / Usability Heuristics:
+- System status visibility
+- Match between system and real world
+- User control and freedom (undo/redo)
+- Consistency and standards
+- Error prevention over error messages
+- Recognition rather than recall
+- Aesthetic and minimalist design
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.48 0.18 250) → #1A73E8
+- 辅色: oklch(0.55 0.05 100) → #616161
+- 强调色: oklch(0.55 0.20 30) → #D93025
+- 背景: oklch(0.98 0.002 250) → #FFFFFF
+- 文字: oklch(0.15 0.01 260) → #202124
+
+**参考字体栈**：
+- Display: Roboto / Inter
+- Body: Roboto / Inter
+- Mono: Roboto Mono / monospace
+
+**布局姿态**：清晰导航 / 可见状态 / 标准模式
+
+**代表作**：10 Usability Heuristics for User Interface Design
+**搜索关键词**：Nielsen Norman Group usability heuristics UX
+
+---
+
+### 十三、网页系统派（49-52）
+> 哲学：「网页是可生长的系统」
+
+网页不是静态画布，是动态生长的系统。从语义化 HTML 到原子化组件，Web 设计的哲学是"构建可维护的生态系统"。网页系统派相信：好的 Web 设计是可持续的、可访问的、可维护的。
+
+#### 反模式检测
+
+| 反模式 | 为什么违反 | 修复方向 |
+|--------|-----------|---------|
+| ❌ 固定像素布局（无响应式） | 网页必须在所有设备上可用，固定宽度是对移动用户的拒绝 | ✅ 使用流体网格、弹性图片、媒体查询实现响应式 |
+| ❌ div 嵌套代替语义化 HTML | 屏幕阅读器和搜索引擎无法理解纯 div 结构 | ✅ 使用 header、nav、main、article、section、footer 等语义标签 |
+| ❌ 内联样式代替 CSS 令牌 | 设计系统无法维护，一致性无法保证 | ✅ 将颜色、间距、字体定义为 CSS 自定义属性/设计令牌 |
+| ❌ 无渐进增强 | 依赖 JavaScript 渲染所有内容，JS 失败 = 页面空白 | ✅ 核心内容在 HTML 中直接渲染，JS 作为增强层 |
+| ❌ 无无障碍设计 | 排除残障用户，违反 WCAG 标准和法律要求 | ✅ 确保键盘可操作、屏幕阅读器友好、色彩对比度合规 |
+
+#### 提升路径
+
+**Quick Win**（5 分钟）：检查页面是否使用语义化 HTML 标签（header、nav、main、footer），替换纯 div 结构。
+
+**提升路径**（从 5 分到 8 分）：
+1. 实现响应式设计——流体网格 + 弹性图片 + 媒体查询
+2. 语义化重构——使用正确的 HTML5 标签
+3. 建立 CSS 设计令牌——颜色、间距、字体定义为 CSS 变量
+4. 实现渐进增强——核心内容在 HTML 中渲染，JS 为增强
+5. 通过 WCAG AA 无障碍审计——键盘导航、屏幕阅读器、色彩对比度
+
+#### 49. Jeffrey Zeldman — Web 标准
+**哲学**：语义化、可访问性、渐进增强
+**核心特征**：
+- 语义化 HTML 作为内容基础
+- CSS 用于表现，HTML 用于结构，JS 用于行为
+- 渐进增强：基础体验 → 增强体验
+- 可访问性不是附加项，是基本要求
+
+**提示词DNA**：
+```
+Jeffrey Zeldman / Web Standards:
+- Semantic HTML (header, nav, main, article, footer)
+- CSS for presentation, HTML for structure
+- Progressive enhancement (content-first)
+- Accessibility as baseline (WCAG AA minimum)
+- Separation of concerns (structure/presentation/behavior)
+- Graceful degradation
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.18 250) → #2962FF
+- 辅色: oklch(0.55 0.05 100) → #757575
+- 强调色: oklch(0.55 0.18 20) → #D32F2F
+- 背景: oklch(0.98 0.002 250) → #FAFAFA
+- 文字: oklch(0.15 0.01 260) → #212121
+
+**参考字体栈**：
+- Display: system-ui / -apple-system
+- Body: system-ui / -apple-system
+- Mono: SF Mono / Menlo / monospace
+
+**布局姿态**：语义化结构 / 内容优先 / 渐进增强
+
+**代表作**：A List Apart 杂志、Designing With Web Standards
+**搜索关键词**：Jeffrey Zeldman A List Apart web standards
+
+---
+
+#### 50. Ethan Marcotte — 响应式设计
+**哲学**：流体网格、弹性图片、媒体查询
+**核心特征**：
+- 流体网格（百分比代替固定像素）
+- 弹性图片（max-width: 100%）
+- 媒体查询（断点适配不同屏幕）
+- 移动优先的设计策略
+
+**提示词DNA**：
+```
+Ethan Marcotte / Responsive Design:
+- Fluid grids (percentage-based layouts)
+- Flexible images (max-width: 100%)
+- Media queries (breakpoints for device adaptation)
+- Mobile-first design strategy
+- Content parity across devices
+- Viewport meta tag, responsive typography
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.15 200) → #00796B
+- 辅色: oklch(0.55 0.08 100) → #757575
+- 强调色: oklch(0.55 0.18 40) → #E64A19
+- 背景: oklch(0.98 0.002 250) → #FAFAFA
+- 文字: oklch(0.15 0.01 260) → #212121
+
+**参考字体栈**：
+- Display: system-ui / -apple-system
+- Body: system-ui / -apple-system
+- Mono: SF Mono / monospace
+
+**布局姿态**：流体网格 / 弹性媒体 / 移动优先
+
+**代表作**：《Responsive Web Design》(A Book Apart)
+**搜索关键词**：Ethan Marcotte responsive web design fluid grid
+
+---
+
+#### 51. Brad Frost — 原子设计
+**哲学**：原子→分子→有机体→模板→页面
+**核心特征**：
+- 原子设计五层级：原子（标签、按钮）→ 分子（搜索框）→ 有机体（导航栏）→ 模板（页面布局）→ 页面（实际内容）
+- 组件驱动的设计系统方法论
+- Pattern Lab 作为设计系统工作坊
+- 设计系统与代码库的双向同步
+
+**提示词DNA**：
+```
+Brad Frost / Atomic Design:
+- Atoms (buttons, inputs, labels)
+- Molecules (search form, nav item)
+- Organisms (header, footer, card grid)
+- Templates (page-level layouts)
+- Pages (real content instances)
+- Design system as single source of truth
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.20 260) → #5C6BC0
+- 辅色: oklch(0.55 0.10 100) → #757575
+- 强调色: oklch(0.55 0.20 30) → #F4511E
+- 背景: oklch(0.98 0.002 260) → #F5F5FA
+- 文字: oklch(0.15 0.02 260) → #1A1A2E
+
+**参考字体栈**：
+- Display: Inter / system-ui
+- Body: Inter / system-ui
+- Mono: Fira Code / monospace
+
+**布局姿态**：组件库 / 设计令牌 / 模式文档
+
+**代表作**：Pattern Lab、《Atomic Design》
+**搜索关键词**：Brad Frost atomic design pattern lab
+
+---
+
+#### 52. Stripe Design — 系统之美
+**哲学**：开发者优先的设计语言
+**核心特征**：
+- 设计系统作为 API（开发者友好）
+- 交互式文档（代码 + 预览）
+- 细腻的微交互与动画
+- 深色模式原生支持
+- 设计令牌系统（颜色、间距、排版、阴影）
+
+**提示词DNA**：
+```
+Stripe Design / Developer-first:
+- Design system as API (developer-friendly)
+- Interactive documentation (code + preview)
+- Refined micro-interactions and animations
+- Dark mode native support
+- Design tokens (colors, spacing, typography, shadows)
+- Gradient backgrounds, subtle noise textures
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.22 260) → #635BFF
+- 辅色: oklch(0.55 0.15 180) → #00A3C4
+- 强调色: oklch(0.55 0.22 30) → #FF6B35
+- 背景: oklch(0.15 0.01 260) → #1A1A2E
+- 文字: oklch(0.95 0.002 250) → #F5F5F7
+
+**参考字体栈**：
+- Display: Inter / -apple-system
+- Body: Inter / -apple-system
+- Mono: Source Code Pro / SF Mono
+
+**布局姿态**：开发者面板 / 交互式文档 / 渐变背景
+
+**代表作**：Stripe.com 设计系统、Stripe Elements
+**搜索关键词**：Stripe Design web interface developer tools
+
+---
+
 ## 3. 品位锚点详细解释
 
 没有 design system 时，审查应参考品位基线。
@@ -2517,7 +3059,7 @@ E. 标杆对齐 — 想对标某个产品/品牌
 
 **8. Demo 预览**:
    - [若用户说"demo/演示/出个html/看看效果"] → 已生成可运行Demo，见 `[文件路径]`，浏览器直接打开查看
-   - [若用户未要求] → 💡 输入"demo"或"演示一下"，我可以生成一个可在浏览器打开的HTML Demo展示这个方向的实际效果。参考范例: [case/philosophy-demos/](file:///Users/ruishengzhang/Documents/GitHub/monkren-design/case/philosophy-demos/)
+   - [若用户未要求] → 💡 输入"demo"或"演示一下"，我可以生成一个可在浏览器打开的HTML Demo展示这个方向的实际效果。生成规范见 `references/philosophy.md §12`，保存到 `.monkren/demos/` 目录。
 
 ---
 
@@ -2760,21 +3302,17 @@ E. 标杆对齐 — 想对标某个产品/品牌
 - [ ] **无控制台错误**：HTML结构正确，无未闭合标签
 - [ ] **文件体积**：单文件<50KB
 
-### 12.4 范例Demo参考
+### 12.4 Demo保存位置
 
-以下3个范例Demo已生成，作为生成时的骨架和质量参考：
+生成的 Demo 保存到：`.monkren/demos/{philosophy-slug}-{page-type}-{YYYY-MM-DD}.html`
 
-| 流派 | 页面类型 | 文件路径 |
-|------|---------|---------|
-| 信息建筑派(Pentagram) | 品牌落地页 | [pentagram-landing.html](file:///Users/ruishengzhang/Documents/GitHub/monkren-design/case/philosophy-demos/pentagram-landing.html) |
-| 运动诗学派(Locomotive) | 品牌落地页 | [locomotive-landing.html](file:///Users/ruishengzhang/Documents/GitHub/monkren-design/case/philosophy-demos/locomotive-landing.html) |
-| 野蛮生长派(Mazzini) | Dashboard | [brutalist-dashboard.html](file:///Users/ruishengzhang/Documents/GitHub/monkren-design/case/philosophy-demos/brutalist-dashboard.html) |
+> 历史范例已归档清理。生成 Demo 时请按 §12.1-§12.3 规范独立输出，无需依赖预存样本。
 
 ### 12.5 Demo生成执行流程
 
 1. **解析请求**：确定流派+哲学名+页面类型（未指定时默认品牌落地页）
 2. **读取素材**：从§2获取该哲学的色板+字体栈+核心特征；从§5获取反模式；从§11获取页面模式
-3. **选择骨架参考**：若有匹配的范例Demo（12.4表中），参考其结构；否则从零构建
+3. **构建骨架**：从零按 §11 页面模式库 + §9 概念包构建结构
 4. **注入Token**：在:root中声明该哲学的CSS变量（色板/字体/间距/边框/阴影）
 5. **构建区块**：按§9字段7b布局范式+§11模式库依次构建Nav→Hero→Features→CTA→Footer
 6. **添加交互**：为按钮/卡片/链接添加hover态CSS（不写JS，用CSS transition即可）

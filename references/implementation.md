@@ -1056,7 +1056,6 @@ AI生成设计的典型痕迹：
 - 审查报告：`case/Design Review — Landing Page.html`
 - 评分提升建议：`case/Score Improvement — Landing Page.html`
 - 设计建议报告：`case/Design Suggestion — Landing Page.html`
-- 设计哲学Demo：`case/philosophy-demos/`目录下3个范例(pentagram-landing/locomotive-landing/brutalist-dashboard)
 
 ### Step 5.8：Demo生成(条件性,用户请求时)
 

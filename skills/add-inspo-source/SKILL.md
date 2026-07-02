@@ -1,5 +1,5 @@
 ---
-name: lazyweb-add-inspo-source
+name: add-inspo-source
 description: |
   Connect an external inspiration source (Mobbin, Savee, Dribbble, Behance, etc.)
   as a first-class source in all Lazyweb design skills. Authenticates via headless

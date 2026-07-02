@@ -1,5 +1,5 @@
 ---
-name: lazyweb-design-brainstorm
+name: design-brainstorm
 description: |
   Cross-pollination design brainstorm. Deliberately searches outside the obvious category
   to find novel patterns that could be applied in unexpected ways. The "zig when everyone

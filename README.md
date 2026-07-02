@@ -64,7 +64,10 @@ npx skills add monkren/monkren-design
 | 设计系统合规性检查 | 组件使用/品牌资产/token 引用合规报告 | 3 min |
 | 品牌资产协议审查 | 是否使用真实品牌资产（非 CSS 剪影/SVG 手画） | 2 min |
 | 反 AI slop 检查 | 紫渐变/emoji/圆角 border accent 等 slop 清单 | 1 min |
-| 设计方向顾问 | 10 流派 × 40 种设计哲学 · 推荐 3 差异化方向 | 3 min |
+| 设计方向顾问 | 12 维度项目画像 + 10 流派 × 40 哲学 · 3 差异化方向 + 8 字段输出 + 落地概念包 | 3 min |
+| 落地概念包 | Token/组件/布局/动效/Checklist 可执行指导 | 随方向 |
+| 哲学基因重组 | 反共识方向发散 + 梯度式（保守→激进）演进 | 随方向 |
+| 页面类型×设计模式库 | Landing/Dashboard/表单/详情页/列表页 等模式库 | 随方向 |
 | SwiftLint 规则 | 检测硬编码字体/间距/颜色值的自定义规则 | 2 min |
 | SVG 雷达图可视化报告 | 5 维度评分雷达图 + 评级 + 证据段落 | 随评审 |
 | 评分纪律铁律 | 禁止通胀/禁止上浮/必须引证/创新性允许低分 | 随评审 |
@@ -178,13 +181,16 @@ npx skills add monkren/monkren-design
 
 ```
 monkren-design/
-├── SKILL.md                 # 主文档（给 agent 读，四维骨架）
-├── README.md                # 本文件（给用户读）
+├── SKILL.md                 # 主文档（agent 入口）
+├── README.md                # 本文件（中文）
 ├── README.en.md             # English README
-├── DESIGN.md               # Monkren 项目设计系统
-├── index.html             # 首页 / 着陆页
-├── case/                  # 案例文件（HTML 格式的示例文件）
-├── skills/                # Skill 模块（包含多个子 skill）
+├── DESIGN.md                # Monkren 项目设计系统
+├── index.html               # Landing page
+├── case/                    # 视觉参考样本（审查报告/评分提升/设计建议的 HTML 示例）
+│   ├── Design Review — Landing Page.html
+│   ├── Score Improvement — Landing Page.html
+│   └── Design Suggestion — Landing Page.html
+├── skills/                  # 子 skill 模块
 │   ├── add-inspo-source/
 │   ├── design-brainstorm/
 │   ├── design-improve/
@@ -192,14 +198,14 @@ monkren-design/
 │   ├── quick-references/
 │   ├── remove-inspo-source/
 │   └── visual-taste-lab/
-└── references/              # 按三层深入读的子文档
-    ├── philosophy.md        # 信念层：40 种哲学库 + 核心信念 + 品位锚点 + 方向顾问
-    ├── aesthetics.md        # 标准层（美学）：5 维度评审标准 + slop 黑名单 + 评分纪律 + 文案/图标规范
-    ├── design-system.md     # 标准层（系统）：9 段框架 + 硬编码检测 + 合规性检查 + SwiftLint + Token 架构
-    ├── implementation.md    # 执行层：审查工作流 + 报告模板 + 上下文提取 + 自检迭代 + 审查报告示例
-    ├── platform-guides.md   # 平台指南：不同平台（移动端/桌面端/Web/PPT/插画/角色 IP）的专项审查
-    ├── review-perspectives.md # 多视角审查体系：10 个视角（视觉审美/交互体验/品牌一致性/可访问性/商业转化/用户体验/使用流程/功能使用旅程/UI 界面设计/功能展示合理性）
-    └── lazyweb-integration.md # Lazyweb 集成：真实产品截图作为证据 + Lazyweb Prompt 工程
+└── references/              # 三层深度参考（中文）
+    ├── philosophy.md        # 信念层：40 哲学库 + 12 维度项目画像 + 8 字段 + 5 铁律 + Demo 规范
+    ├── aesthetics.md        # 标准层（美学）：5 维度 + slop 黑名单 + 评分纪律 + 文案/图标规范
+    ├── design-system.md     # 标准层（系统）：9 段框架 + 硬编码 + 合规 + SwiftLint + Token 架构
+    ├── implementation.md    # 执行层：工作流 + 报告模板 + 持久化 + 自检 + 审查示例
+    ├── platform-guides.md   # 平台指南：移动端/桌面端/Web/PPT/插画/角色 IP 专项审查
+    ├── review-perspectives.md # 多视角审查：10 视角（视觉/交互/品牌/可访问性/转化/UX/流程/旅程/UI/功能展示）
+    └── lazyweb-integration.md # Lazyweb 集成：真实产品截图作为证据 + Prompt 工程
 ```
 
 ---

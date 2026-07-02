@@ -27,7 +27,7 @@ Works across agents — Claude Code, Cursor, Codex, OpenClaw, Hermes all support
 
 [Install](#install) · [What it does](#what-it-does) · [Core Mechanics](#core-mechanics)
 
-> 📖 **Note for English readers**: this skill is built by a Chinese-speaking developer. The skill's agent prompts (`SKILL.md`, `references/*.md`) are in Chinese but the agent is bilingual — works fine with English tasks.
+> 📖 **Note for English readers**: this skill is built by a Chinese-speaking developer. The agent prompt framework (`SKILL.md`, `references/*.md`) is written in Chinese, but the **agent itself is bilingual** — it accepts English tasks, prompts, and design submissions without any setup. You can ask "review this design" in English and get a full English report back.
 
 </div>
 
@@ -66,7 +66,10 @@ No buttons, no panels. Conversation = review.
 | Design system compliance check | Component usage / brand asset / token reference compliance report | 3 min |
 | Brand asset protocol review | Whether real brand assets are used (not CSS silhouettes / SVG hand-drawn) | 2 min |
 | Anti AI-slop check | Purple gradient / emoji / rounded border accent slop list | 1 min |
-| Design direction advisor | 10 schools × 40 philosophies · 3 differentiated directions | 3 min |
+| Design direction advisor | 12-dimension project profile + 10 schools × 40 philosophies · 3 differentiated directions + 8-field output + actionable concept pack | 3 min |
+| Actionable concept pack | Token / component / layout / motion / Checklist executable guidance | with direction |
+| Philosophy gene recombination | Counter-consensus direction divergence + gradient (conservative → radical) evolution | with direction |
+| Page type × design pattern library | Landing / Dashboard / Form / Detail / List patterns | with direction |
 | SwiftLint rules | Custom rules for detecting hardcoded fonts / spacing / color values | 2 min |
 | SVG radar chart report | 5-dimension score radar chart + rating + evidence paragraphs | with review |
 | Scoring discipline | No inflation / no averaging up / must cite evidence / low originality OK | with review |
@@ -180,13 +183,16 @@ Discovery (incl. trigger command identification) → Understand target → [Page
 
 ```
 monkren-design/
-├── SKILL.md                 # Main doc (read by agent, four-dimension skeleton)
+├── SKILL.md                 # Main doc (agent entry point)
 ├── README.md                # Chinese README (default)
 ├── README.en.md             # English README (this file)
 ├── DESIGN.md                # Monkren project design system
-├── index.html               # Homepage / Landing page
-├── case/                    # Case files (HTML format examples)
-├── skills/                  # Skill modules (multiple sub-skills)
+├── index.html               # Landing page
+├── case/                    # Visual reference samples (review report / score improvement / design suggestion HTML examples)
+│   ├── Design Review — Landing Page.html
+│   ├── Score Improvement — Landing Page.html
+│   └── Design Suggestion — Landing Page.html
+├── skills/                  # Sub-skill modules
 │   ├── add-inspo-source/
 │   ├── design-brainstorm/
 │   ├── design-improve/
@@ -195,13 +201,13 @@ monkren-design/
 │   ├── remove-inspo-source/
 │   └── visual-taste-lab/
 └── references/              # Drill-down docs by three layers (Chinese)
-    ├── philosophy.md        # Belief Layer: 40 philosophies + core beliefs + taste anchors + direction advisor
-    ├── aesthetics.md        # Standards Layer (Aesthetics): 5-dimension criteria + slop blacklist + scoring discipline + copy/icon rules
-    ├── design-system.md     # Standards Layer (System): 9-segment framework + hardcoded detection + compliance + SwiftLint + token architecture
-    ├── implementation.md    # Execution Layer: review workflow + report template + context extraction + self-check + review examples
-    ├── platform-guides.md   # Platform guides: platform-specific review (mobile/desktop/web/PPT/illustration/character IP)
-    ├── review-perspectives.md # Multi-perspective review: 10 perspectives (visual/interaction/brand/accessibility/conversion/UX/flow/journey/UI design/feature presentation)
-    └── lazyweb-integration.md # Lazyweb integration: real product screenshots as evidence + Lazyweb prompt engineering
+    ├── philosophy.md        # Belief Layer: 40 philosophies + 12-dim project profile + 8-field output + 5 iron rules + Demo spec
+    ├── aesthetics.md        # Standards Layer (Aesthetics): 5 dimensions + slop blacklist + scoring discipline + copy/icon rules
+    ├── design-system.md     # Standards Layer (System): 9-segment framework + hardcoded detection + compliance + SwiftLint + Token architecture
+    ├── implementation.md    # Execution Layer: workflow + report template + persistence + self-check + review examples
+    ├── platform-guides.md   # Platform guides: mobile / desktop / web / PPT / illustration / character IP
+    ├── review-perspectives.md # Multi-perspective review: 10 perspectives (visual / interaction / brand / a11y / conversion / UX / flow / journey / UI / feature presentation)
+    └── lazyweb-integration.md # Lazyweb integration: real product screenshots as evidence + Prompt engineering
 ```
 
 ---

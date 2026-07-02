@@ -1,5 +1,5 @@
 ---
-name: lazyweb-design-improve
+name: design-improve
 description: |
   Capture a screenshot of the user's current design, find similar screens in Lazyweb,
   and generate concrete improvement ideas backed by real references. Use when the user

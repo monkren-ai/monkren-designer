@@ -1,5 +1,5 @@
 ---
-name: lazyweb-remove-inspo-source
+name: remove-inspo-source
 description: |
   Disconnect an inspiration source from Lazyweb design skills.
   Lists connected sources and removes the selected one.
