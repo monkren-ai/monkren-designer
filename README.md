@@ -156,6 +156,10 @@ npx skills add monkren/monkren-design
 
 审查时使用 DESIGN.md 9 段框架作为对比基线：色彩/排版/间距/布局/组件/动效/语调/品牌/反模式。有设计系统时逐段对比标记偏离项，无设计系统时用框架作基线。
 
+### 自身设计哲学
+
+Monkren 自身采用 **Graphic Monochrome Canvas** 视觉语言：纯黑白高对比、无圆角几何、1px 边框、400 单一字重。核心信念：上下文优先、反 AI slop、系统优先不要填充、Placeholder > 烂实现、品牌的哲学是被认出来。→ 详见 [`DESIGN.md`](DESIGN.md)
+
 ---
 
 ## 审查工作流

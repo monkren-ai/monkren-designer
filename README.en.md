@@ -158,6 +158,10 @@ Review reports include an inline SVG radar chart with 5 axes for 5 dimensions. T
 
 Uses DESIGN.md 9-segment framework as review baseline: color / typography / spacing / layout / components / motion / voice / brand / anti-patterns. When a design system exists, compare segment by segment and flag deviations. When none exists, use the framework as baseline.
 
+### Design Philosophy
+
+Monkren itself follows the **Graphic Monochrome Canvas** visual language: pure black-and-white high contrast, zero-radius geometry, 1px borders, single 400 font weight. Core beliefs: start from existing context, anti AI slop, system over filler, placeholder > bad implementation, a brand is what gets recognized. → See [`DESIGN.md`](DESIGN.md)
+
 ---
 
 ## Review Workflow

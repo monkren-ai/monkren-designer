@@ -383,6 +383,7 @@
     .score-bar-fill {
       height: 100%;
       border-radius: 0;
+      background: var(--color-arctic-white);
     }
     .score-bar-value {
       font-family: var(--font-black-tie);
@@ -565,6 +566,17 @@
       border-radius: 50%;
       margin-top: var(--spacing-4);
       background: var(--color-arctic-white);
+    }
+    .radar-legend-item .indicator-muted {
+      background: var(--color-subtle-gray);
+    }
+    .radar-axis-label {
+      font-family: var(--font-lausanne);
+      font-size: var(--text-16px);
+    }
+    .radar-axis-label-small {
+      font-family: var(--font-lausanne);
+      font-size: var(--text-12px);
     }
     .radar-legend-item strong {
       display: block;
@@ -1265,6 +1277,7 @@
       <nav class="nav" aria-label="Primary navigation">
         <a href="#skills">Sub-skills</a>
         <a href="#capabilities">能力</a>
+        <a href="#monkren-philosophy">哲学</a>
         <a href="#philosophy-library">哲学库</a>
         <a href="#case-gallery">案例</a>
         <a href="#dimensions">审查维度</a>
@@ -1331,7 +1344,7 @@
                   <circle cx="100" cy="148" r="3" />
                   <circle cx="60" cy="124" r="3" />
                 </g>
-                <g font-family="var(--font-lausanne)" style="font-size:var(--text-16px)" fill="var(--color-subtle-gray)" text-anchor="middle">
+                <g class="radar-axis-label" fill="var(--color-subtle-gray)" text-anchor="middle">
                   <text x="100" y="14">哲学一致性</text>
                   <text x="178" y="60">视觉层级</text>
                   <text x="178" y="144">细节执行</text>
@@ -1343,27 +1356,27 @@
             <div class="score-bars">
               <div class="score-bar">
                 <span class="score-bar-label">哲学一致性</span>
-                <div class="score-bar-track"><div class="score-bar-fill" style="width:90%;background:var(--color-arctic-white)"></div></div>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
                 <span class="score-bar-value">9</span>
               </div>
               <div class="score-bar">
                 <span class="score-bar-label">视觉层级</span>
-                <div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:var(--color-arctic-white)"></div></div>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
                 <span class="score-bar-value">8</span>
               </div>
               <div class="score-bar">
                 <span class="score-bar-label">细节执行</span>
-                <div class="score-bar-track"><div class="score-bar-fill" style="width:90%;background:var(--color-arctic-white)"></div></div>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
                 <span class="score-bar-value">9</span>
               </div>
               <div class="score-bar">
                 <span class="score-bar-label">功能性</span>
-                <div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:var(--color-arctic-white)"></div></div>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
                 <span class="score-bar-value">8</span>
               </div>
               <div class="score-bar">
                 <span class="score-bar-label">创新性</span>
-                <div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:var(--color-arctic-white)"></div></div>
+                <div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
                 <span class="score-bar-value">8</span>
               </div>
             </div>
@@ -1504,7 +1517,7 @@
           <article class="card">
             <span class="num">04</span>
             <h3>40 种设计哲学库</h3>
-            <p>10 流派 × 40 种设计哲学——Pentagram 信息建筑、Locomotive 运动诗学、Sottsass 后现代狂欢等，推荐 3 个差异化方向。<a href="#philosophy-library" class="inline-link">查看完整库 →</a></p>
+            <p>17 流派 × 80 种设计哲学——从 Pentagram 信息建筑到 AI 人机共创，覆盖经典设计理论与 2026 前沿趋势，推荐 3 个差异化方向。<a href="#philosophy-library" class="inline-link">查看完整库 →</a></p>
           </article>
           <article class="card">
             <span class="num">05</span>
@@ -1530,16 +1543,54 @@
       </div>
     </section>
 
-    <section id="philosophy-library" class="section" aria-labelledby="phil-title">
+    <section id="monkren-philosophy" class="section" aria-labelledby="monkren-phil-title">
       <div class="section-num" aria-hidden="true">03</div>
       <div class="wrap">
         <div class="section-head">
           <div>
-            <span class="eyebrow">设计哲学库</span>
-            <h2 id="phil-title">10 流派 × 40 种设计哲学。</h2>
+            <span class="eyebrow">自身设计哲学</span>
+            <h2 id="monkren-phil-title">Graphic Monochrome Canvas。</h2>
           </div>
           <p>
-            需要设计方向建议？从 10 流派 40 种哲学中推荐 3 个差异化方向，每个方向含设计师/机构名、标志性视觉特征、气质关键词、最佳执行路径。
+            Monkren 自身的设计语言：黑色画布、白色排版、无圆角几何、1px 边框。所有决策都服务于一个目标——让内容被看见，让审查有依据。
+          </p>
+        </div>
+
+        <div class="grid-4">
+          <article class="card">
+            <span class="num">01</span>
+            <h3>上下文优先</h3>
+            <p>设计从已有 design system / 品牌规范 / 真实资产长出来，拒绝凭空做 hi-fi。</p>
+          </article>
+          <article class="card">
+            <span class="num">02</span>
+            <h3>反 AI slop</h3>
+            <p>识别并剔除训练语料中的视觉最大公约数，只保留有品牌依据的视觉选择。</p>
+          </article>
+          <article class="card">
+            <span class="num">03</span>
+            <h3>系统优先</h3>
+            <p>每个元素必须 earn its place。警惕 data slop、iconography slop、gradient slop。</p>
+          </article>
+          <article class="card">
+            <span class="num">04</span>
+            <h3>Placeholder > 烂实现</h3>
+            <p>没有真实数据时，诚实的占位优于拙劣的伪造。诚实是 hi-fi 的一部分。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="philosophy-library" class="section" aria-labelledby="phil-title">
+      <div class="section-num" aria-hidden="true">04</div>
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">设计哲学库</span>
+            <h2 id="phil-title">17 流派 × 80 种设计哲学。</h2>
+          </div>
+          <p>
+            需要设计方向建议？从 17 流派 80 种哲学中推荐 3 个差异化方向，每个方向含设计师/机构名、标志性视觉特征、气质关键词、最佳执行路径。
           </p>
         </div>
 
@@ -2374,11 +2425,423 @@
             </div>
           </div>
         </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">14</span>
+            <div>
+              <h3>AI人机共创派</h3>
+              <p>AI 不是替代设计师，是设计思维的延伸与放大器。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/53-cursor.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">CURSOR</span>
+                  <span class="monogram-name">CR</span>
+                </div>
+              </div>
+              <h4>Cursor — AI 原生 IDE 设计</h4>
+              <span class="genre">AI人机共创派</span>
+              <p>AI 内联预测、上下文感知、diff 审阅——AI 原生 IDE 的设计原则：AI 不应是弹窗，应是编辑思维流的自然延伸。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/54-github-copilot.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">COPILOT</span>
+                  <span class="monogram-name">CP</span>
+                </div>
+              </div>
+              <h4>GitHub Copilot — 结对编程范式</h4>
+              <span class="genre">AI人机共创派</span>
+              <p>从"写代码"到"描述意图"——AI 设计的关键是预测用户意图而非等待指令，从命令式到声明式交互的范式转移。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/55-replit-agent.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">REPLIT</span>
+                  <span class="monogram-name">RP</span>
+                </div>
+              </div>
+              <h4>Replit Agent — 对话式开发</h4>
+              <span class="genre">AI人机共创派</span>
+              <p>用自然语言对话替代传统 IDE 操作，降低创造门槛——"用你的想法，而非代码来构建"。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/56-perplexity.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">PERPLEXITY</span>
+                  <span class="monogram-name">PX</span>
+                </div>
+              </div>
+              <h4>Perplexity — AI 搜索体验</h4>
+              <span class="genre">AI人机共创派</span>
+              <p>引用溯源、追问式对话、结构化答案——AI 产品设计的核心是建立"可信度信号"，让用户理解 AI 的知识边界。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/69-claude-artifacts.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">ANTHROPIC</span>
+                  <span class="monogram-name">CA</span>
+                </div>
+              </div>
+              <h4>Claude Artifacts — 实时生成设计</h4>
+              <span class="genre">AI人机共创派</span>
+              <p>AI 生成内容的即时预览、迭代、版本对比——设计反馈循环从"天"缩短到"秒"，实时共创成为新常态。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/70-v0-vercel.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">V0</span>
+                  <span class="monogram-name">V0</span>
+                </div>
+              </div>
+              <h4>v0 by Vercel — AI 生成 UI 的质量控制</h4>
+              <span class="genre">AI人机共创派</span>
+              <p>AI 生成的 UI 代码需要设计审查——"提示词即设计稿"时代，设计师的角色从执行者变为质量门禁。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/71-devin.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">DEVIN</span>
+                  <span class="monogram-name">DV</span>
+                </div>
+              </div>
+              <h4>Devin — 自主 Agent 的信任设计</h4>
+              <span class="genre">AI人机共创派</span>
+              <p>当 AI 自主执行任务时，进度可视化、可撤销操作、人工接管点——信任是 Agent UX 的第一设计原则。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/72-chatgpt-canvas.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">CANVAS</span>
+                  <span class="monogram-name">CC</span>
+                </div>
+              </div>
+              <h4>ChatGPT Canvas — 多模态协作界面</h4>
+              <span class="genre">AI人机共创派</span>
+              <p>文本+代码+图像+画布——AI 协作界面从单模态对话走向多模态工作台，设计空间被重新定义。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">15</span>
+            <div>
+              <h3>工具美学派</h3>
+              <p>最好的工具设计让人感受不到工具的存在。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/57-warp.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">WARP</span>
+                  <span class="monogram-name">WD</span>
+                </div>
+              </div>
+              <h4>Warp — 现代化终端设计</h4>
+              <span class="genre">工具美学派</span>
+              <p>块级编辑、AI 内联、可视化输出——CLI 不需要停留在 1970 年代。</p>
+              <span class="path">→ 开发者工具</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/58-linear.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">LINEAR</span>
+                  <span class="monogram-name">LN</span>
+                </div>
+              </div>
+              <h4>Linear — 设计驱动工具美学</h4>
+              <span class="genre">工具美学派</span>
+              <p>键盘优先、毫秒级响应、像素级排版——工具类产品的设计哲学是"消除摩擦"。</p>
+              <span class="path">→ 开发者工具</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/59-vercel.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">VERCEL</span>
+                  <span class="monogram-name">VC</span>
+                </div>
+              </div>
+              <h4>Vercel — 部署即设计</h4>
+              <span class="genre">工具美学派</span>
+              <p>Git push 即部署、预览链接、全球边缘网络——"让复杂的事情简单到一键完成"。</p>
+              <span class="path">→ 开发者工具</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/60-raycast.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">RAYCAST</span>
+                  <span class="monogram-name">RC</span>
+                </div>
+              </div>
+              <h4>Raycast — 效率即美学</h4>
+              <span class="genre">工具美学派</span>
+              <p>轻量、可扩展、键盘流——CLI/工具设计哲学：用最少的交互完成最多的任务。</p>
+              <span class="path">→ 开发者工具</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">16</span>
+            <div>
+              <h3>2026趋势派</h3>
+              <p>2026 年的设计不再是"好看"，而是"好用、可信、可持续"。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/61-spatial-design.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">SPATIAL</span>
+                  <span class="monogram-name">SD</span>
+                </div>
+              </div>
+              <h4>Spatial Design — Apple Vision Pro</h4>
+              <span class="genre">2026趋势派</span>
+              <p>空间计算打破屏幕边界——设计从 2D 平面走向 3D 空间，眼动、手势、语音构成后屏幕时代的交互语法。</p>
+              <span class="path">→ 混合</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/62-ai-native-design.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">AI-NATIVE</span>
+                  <span class="monogram-name">AN</span>
+                </div>
+              </div>
+              <h4>AI-Native Design — 从 AI 出发的设计</h4>
+              <span class="genre">2026趋势派</span>
+              <p>2026 产品设计不再"加入 AI 功能"，而是从 AI 能力出发重新定义产品形态——AI 是设计原点。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/63-calm-tech.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">CALMTECH</span>
+                  <span class="monogram-name">CT</span>
+                </div>
+              </div>
+              <h4>Calm Tech — 平静技术设计</h4>
+              <span class="genre">2026趋势派</span>
+              <p>2026 年屏幕疲劳达到临界点，设计趋势转向"少打扰、多感知"——信息在最合适的时机以最轻量的方式呈现。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/64-design-engineering.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">DESIGNENG</span>
+                  <span class="monogram-name">DE</span>
+                </div>
+              </div>
+              <h4>Design Engineering — 设计工程一体化</h4>
+              <span class="genre">2026趋势派</span>
+              <p>2026 年设计师与工程师的边界加速模糊，AI 辅助设计工程化——设计即代码、代码即设计。</p>
+              <span class="path">→ 混合</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/73-agentic-ux.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">AGENTIC</span>
+                  <span class="monogram-name">AU</span>
+                </div>
+              </div>
+              <h4>Agentic UX — 从操作到监督</h4>
+              <span class="genre">2026趋势派</span>
+              <p>2026 年用户不再直接操作界面，而是监督 AI Agent 执行——设计从"按钮"转向"指令+确认"范式。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/74-ai-generated-ui.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">AIGENUI</span>
+                  <span class="monogram-name">AG</span>
+                </div>
+              </div>
+              <h4>AI-Generated UI — 策划者时代</h4>
+              <span class="genre">2026趋势派</span>
+              <p>2026 年设计师角色从"像素绘制者"转变为"AI 输出的策划者与审核者"——设计品味成为核心竞争力。</p>
+              <span class="path">→ AI 生成</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/75-ethical-design.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">ETHICAL</span>
+                  <span class="monogram-name">ED</span>
+                </div>
+              </div>
+              <h4>Ethical Design 2.0 — AI 时代的伦理设计</h4>
+              <span class="genre">2026趋势派</span>
+              <p>EU AI Act 合规、偏见检测、透明度报告——2026 年设计必须内置伦理考量，不再只是"好看"。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/76-sustainable-design.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">SUSTAIN</span>
+                  <span class="monogram-name">SD</span>
+                </div>
+              </div>
+              <h4>Sustainable Digital Design — 绿色数字设计</h4>
+              <span class="genre">2026趋势派</span>
+              <p>低碳网页、暗色模式默认、减少数据传输——设计的环境责任成为 2026 必须项，可持续即设计原则。</p>
+              <span class="path">→ HTML</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-block">
+          <div class="school-head">
+            <span class="num">17</span>
+            <div>
+              <h3>经典设计派</h3>
+              <p>经典不会过时，它们是设计语言的语法。</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/65-bauhaus.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">BAUHAUS</span>
+                  <span class="monogram-name">BH</span>
+                </div>
+              </div>
+              <h4>Bauhaus — 包豪斯设计原则</h4>
+              <span class="genre">经典设计派</span>
+              <p>形式服从功能，几何纯粹，工业美学——现代设计的源头。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/66-swiss-design.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">SWISS</span>
+                  <span class="monogram-name">SW</span>
+                </div>
+              </div>
+              <h4>Swiss Design — 国际主义风格</h4>
+              <span class="genre">经典设计派</span>
+              <p>网格系统、非对称布局、无衬线字体、客观摄影——影响了整个 20 世纪的设计语言。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/67-vignelli.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">VIGNELLI</span>
+                  <span class="monogram-name">MV</span>
+                </div>
+              </div>
+              <h4>Vignelli — 现代主义极致</h4>
+              <span class="genre">经典设计派</span>
+              <p>"如果你能设计一件事，你就能设计一切"——极致的系统化思维，一生只用 6 种字体。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/68-wim-crouwel.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">CROUWEL</span>
+                  <span class="monogram-name">WC</span>
+                </div>
+              </div>
+              <h4>Wim Crouwel — 像素化字体实验</h4>
+              <span class="genre">经典设计派</span>
+              <p>1960 年代就用像素网格设计字体，预见了数字时代的字体排印——经典也可以激进。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/77-de-stijl.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">DESTIJL</span>
+                  <span class="monogram-name">DS</span>
+                </div>
+              </div>
+              <h4>De Stijl — 荷兰风格派</h4>
+              <span class="genre">经典设计派</span>
+              <p>Mondrian 的红黄蓝+黑白网格——抽象几何是宇宙秩序的视觉表达，影响现代 UI 配色与布局。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/78-brutalist-web.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">BRUTALIST</span>
+                  <span class="monogram-name">BW</span>
+                </div>
+              </div>
+              <h4>Brutalist Web Design — 粗野主义网页</h4>
+              <span class="genre">经典设计派</span>
+              <p>裸露 HTML 结构、系统字体、无装饰——反精致主义的诚实美学，在 AI 生成内容泛滥时代回归真实。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/79-ikko-tanaka.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">TANAKA</span>
+                  <span class="monogram-name">IT</span>
+                </div>
+              </div>
+              <h4>田中一光 — 日本平面设计哲学</h4>
+              <span class="genre">经典设计派</span>
+              <p>空寂、不对称、留白之美——日本传统美学与现代平面设计的完美融合，东方设计哲学的典范。</p>
+              <span class="path">→ HTML</span>
+            </div>
+            <div class="philosophy-card">
+              <div class="signature">
+                <img class="sig-bitmap" src="assets/philosophy-images/80-ulmer-schule.jpg" alt="" aria-hidden="true" />
+                <div class="sig-monogram">
+                  <span class="monogram-org">ULM</span>
+                  <span class="monogram-name">US</span>
+                </div>
+              </div>
+              <h4>Ulmer Schule — 乌尔姆学派</h4>
+              <span class="genre">经典设计派</span>
+              <p>系统设计方法论、跨学科协作——影响 Braun/Apple 设计体系的德国理性主义源头。</p>
+              <span class="path">→ HTML</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="case-gallery" class="section" aria-labelledby="case-title">
-      <div class="section-num" aria-hidden="true">04</div>
+      <div class="section-num" aria-hidden="true">05</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -2499,7 +2962,7 @@
     </section>
 
     <section id="dimensions" class="section" aria-labelledby="dim-title">
-      <div class="section-num" aria-hidden="true">05</div>
+      <div class="section-num" aria-hidden="true">06</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -2546,7 +3009,7 @@
                       <circle cx="100" cy="164" r="3.5" />
                       <circle cx="43.8" cy="124" r="3.5" />
                     </g>
-                    <g font-family="var(--font-lausanne)" style="font-size:var(--text-12px)" fill="var(--color-arctic-white)" font-weight="400" text-anchor="middle">
+                    <g class="radar-axis-label-small" fill="var(--color-arctic-white)" font-weight="400" text-anchor="middle">
                       <text x="100" y="14">9</text>
                       <text x="180" y="60">8</text>
                       <text x="180" y="144">7</text>
@@ -2564,7 +3027,7 @@
                       <div><strong>视觉层级 8/10</strong><span>主次关系清晰，偶有 1-2 处层级模糊</span></div>
                     </div>
                     <div class="radar-legend-item">
-                      <span class="indicator" style="background:var(--color-subtle-gray)"></span>
+                      <span class="indicator indicator-muted"></span>
                       <div><strong>细节执行 7/10</strong><span>基本对齐，但间距不统一，颜色不够系统</span></div>
                     </div>
                     <div class="radar-legend-item">
@@ -2572,7 +3035,7 @@
                       <div><strong>功能性 9/10</strong><span>每个元素都服务于目标，零冗余</span></div>
                     </div>
                     <div class="radar-legend-item">
-                      <span class="indicator" style="background:var(--color-subtle-gray)"></span>
+                      <span class="indicator indicator-muted"></span>
                       <div><strong>创新性 6/10</strong><span>中规中矩，看起来像模板</span></div>
                     </div>
                   </div>
@@ -2648,7 +3111,7 @@
     </section>
 
     <section id="workflow" class="section" aria-labelledby="work-title">
-      <div class="section-num" aria-hidden="true">06</div>
+      <div class="section-num" aria-hidden="true">07</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -2714,7 +3177,7 @@
     </section>
 
     <section id="references" class="section" aria-labelledby="ref-title">
-      <div class="section-num" aria-hidden="true">07</div>
+      <div class="section-num" aria-hidden="true">08</div>
       <div class="wrap">
         <div class="section-head">
           <div>
@@ -2809,7 +3272,7 @@
     </section>
 
     <section id="use" class="section" aria-labelledby="use-title">
-      <div class="section-num" aria-hidden="true">08</div>
+      <div class="section-num" aria-hidden="true">09</div>
       <div class="wrap">
         <div class="section-head">
           <div>

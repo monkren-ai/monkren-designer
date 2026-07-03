@@ -2520,6 +2520,986 @@ Stripe Design / Developer-first:
 
 ---
 
+#### 53. Cursor — AI 原生 IDE 设计
+**哲学**：AI 不应是弹窗，应是编辑思维流的自然延伸——内联预测、上下文感知、diff 审阅构成 AI IDE 的核心设计原则
+
+**核心特征**：
+- 内联 AI 补全（Tab 接受，非弹窗）
+- 聊天侧边栏作为上下文窗口
+- Diff 预览作为 AI 建议的可信度可视化
+- 键盘优先，零鼠标操作
+- 暗色主题原生支持，减少视觉疲劳
+
+**提示词DNA**：
+```
+Cursor AI IDE design: inline code completion, dark code editor, diff preview panel, keyboard-first workflow, minimal UI, context-aware AI suggestions, monospace typography, developer tool interface
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.18 260) → #5B6DFF
+- 辅色: oklch(0.60 0.12 200) → #4A9EAA
+- 强调色: oklch(0.65 0.20 40) → #E8A040
+- 背景: oklch(0.12 0.01 260) → #16162A
+- 文字: oklch(0.90 0.002 250) → #E8E8EC
+
+**参考字体栈**：
+- Display: JetBrains Mono / SF Mono
+- Body: Inter / -apple-system
+- Mono: JetBrains Mono / Fira Code
+
+**布局姿态**：暗色 IDE 面板 / 侧边栏对话 / Diff 对比视图
+
+**代表作**：Cursor IDE
+**搜索关键词**：Cursor AI IDE agent design developer tool UX
+
+---
+
+#### 54. GitHub Copilot — 结对编程范式
+**哲学**：从"写代码"到"描述意图"——AI 设计的关键是预测用户意图而非等待指令，将编程交互从命令式推向声明式
+
+**核心特征**：
+- 幽灵文本（ghost text）作为 AI 建议的轻量呈现
+- 多建议面板（Tab 切换）
+- 内联聊天（Copilot Chat）
+- 代码补全与注释生成一体化
+- 置信度可视化（灰色 vs 高亮建议）
+
+**提示词DNA**：
+```
+GitHub Copilot pair programming: ghost text suggestions, inline chat panel, dark code editor, AI pair programmer, multiple suggestion tabs, intent-driven interaction, developer workflow
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.15 200) → #3A8FA0
+- 辅色: oklch(0.55 0.18 260) → #5B6DFF
+- 强调色: oklch(0.60 0.18 140) → #4CAF50
+- 背景: oklch(0.10 0.01 250) → #0D1117
+- 文字: oklch(0.88 0.002 250) → #E6EDF3
+
+**参考字体栈**：
+- Display: Mona Sans / SF Pro
+- Body: Inter / -apple-system
+- Mono: Cascadia Code / SF Mono
+
+**布局姿态**：暗色编辑器 / 幽灵文本 / 侧边建议面板
+
+**代表作**：GitHub Copilot, Copilot Chat
+**搜索关键词**：GitHub Copilot AI pair programming developer tool
+
+---
+
+#### 55. Replit Agent — 对话式开发
+**哲学**：自然语言对话替代传统 IDE 操作，降低创造门槛——设计服务于"让想法更快变成现实"，Agent 自主性的 UX 表达是核心
+
+**核心特征**：
+- 对话式界面作为主要交互入口
+- Agent 自主执行 + 可人工接管
+- 实时预览窗口（WebContainer）
+- 多文件协作的透明化展示
+- 自然语言→代码→部署的完整链路
+
+**提示词DNA**：
+```
+Replit Agent conversational development: chat-based IDE, real-time preview panel, multi-file workspace, AI agent sidebar, web container, conversational programming interface, browser-based development
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.22 30) → #E86A30
+- 辅色: oklch(0.50 0.12 220) → #3D7EA0
+- 强调色: oklch(0.60 0.25 60) → #D4A020
+- 背景: oklch(0.15 0.01 260) → #1C1C2E
+- 文字: oklch(0.92 0.003 250) → #EEEEF2
+
+**参考字体栈**：
+- Display: Replit Sans / IBM Plex Sans
+- Body: Inter / -apple-system
+- Mono: IBM Plex Mono / SF Mono
+
+**布局姿态**：对话面板 / 实时预览 / 多文件树
+
+**代表作**：Replit Agent
+**搜索关键词**：Replit Agent conversational development AI coding
+
+---
+
+#### 56. Perplexity — AI 搜索体验
+**哲学**：AI 产品设计需要建立"可信度信号"——引用溯源、追问式对话、结构化答案，将学术引用规范融入消费级产品
+
+**核心特征**：
+- 引用溯源（每条答案附来源链接）
+- 追问式对话（Related Questions）
+- 结构化答案（标题+段落+列表）
+- Pro 搜索 vs 快速搜索的模式切换
+- Copilot 辅助深化搜索
+
+**提示词DNA**：
+```
+Perplexity AI search experience: cited sources UI, structured answers, related questions panel, dark search interface, academic citation style, conversational search, knowledge graph visualization
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.20 270) → #6B4FBF
+- 辅色: oklch(0.55 0.10 200) → #4A8A9A
+- 强调色: oklch(0.60 0.15 30) → #D08050
+- 背景: oklch(0.13 0.01 260) → #181828
+- 文字: oklch(0.90 0.003 250) → #E8E8F0
+
+**参考字体栈**：
+- Display: PP Neue Montreal / SF Pro
+- Body: Inter / -apple-system
+- Mono: SF Mono / Menlo
+
+**布局姿态**：搜索框 + 结构化答案 / 引用侧栏 / 追问列表
+
+**代表作**：Perplexity AI
+**搜索关键词**：Perplexity AI search answer engine product design
+
+---
+
+#### 57. Warp — 现代化终端设计
+**哲学**：CLI 不需要停留在 1970 年代——将 IDE 体验带入终端，块级编辑、AI 内联、可视化输出，命令行工具可以同时高效且美观
+**核心特征**：
+- 块级编辑（命令+输出分组为块）
+- AI 内联（自然语言→命令）
+- 可视化输出（图片/图表/富文本）
+- 现代化排版（多字体、语法高亮）
+- 标签页+分屏+工作区管理
+
+**提示词DNA**：
+```
+Warp modern terminal:
+- Block-based editing, AI command suggestions
+- Visual output, syntax highlighting
+- Modern terminal UI, tabbed interface
+- Split panes, Rust-powered terminal
+- GPU-accelerated rendering
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.20 260) → #5B6DFF
+- 辅色: oklch(0.50 0.12 200) → #3D8A9A
+- 强调色: oklch(0.60 0.15 140) → #4CAF60
+- 背景: oklch(0.10 0.01 260) → #0D0D1A
+- 文字: oklch(0.90 0.002 250) → #E8E8F0
+
+**参考字体栈**：
+- Display: Inter / SF Pro
+- Body: Inter / -apple-system
+- Mono: Hack / Fira Code / SF Mono
+
+**布局姿态**：暗色终端 / 块级布局 / AI 建议面板
+**代表作**：Warp terminal
+**搜索关键词**：Warp terminal Rust GPU modern CLI developer tool
+
+---
+
+#### 58. Linear — 设计驱动工具美学
+**哲学**：工具类产品的设计哲学是"消除摩擦"——键盘优先、毫秒级响应、像素级排版，好的工具让用户感受不到工具的存在
+**核心特征**：
+- 键盘快捷键驱动一切操作
+- 毫秒级响应（本地优先架构）
+- 像素级排版（自定义字体+精确间距）
+- 暗色主题原生支持
+- 极简信息层级（无冗余信息）
+
+**提示词DNA**：
+```
+Linear app design:
+- Keyboard-first interface, dark theme
+- Minimalist project management
+- Pixel-perfect typography, instant response
+- Clean layout, command palette
+- Tool aesthetic, friction-free UX
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.22 270) → #7B5BFF
+- 辅色: oklch(0.55 0.12 200) → #4A8A9A
+- 强调色: oklch(0.60 0.18 40) → #D4A040
+- 背景: oklch(0.12 0.01 260) → #161620
+- 文字: oklch(0.90 0.002 250) → #E8E8EC
+
+**参考字体栈**：
+- Display: Inter Display / SF Pro Display
+- Body: Inter / -apple-system
+- Mono: JetBrains Mono / SF Mono
+
+**布局姿态**：暗色面板 / 键盘快捷键提示 / 命令面板
+**代表作**：Linear app
+**搜索关键词**：Linear app design keyboard-first project management tool
+
+---
+
+#### 59. Vercel — 部署即设计
+**哲学**：开发者体验设计要"让复杂的事情简单到一键完成"——预览链接、自动部署、边缘渲染，部署流程本身就是设计的一部分
+**核心特征**：
+- 一键部署（Git Push → 自动构建）
+- 预览链接（每个 PR 自动生成）
+- 边缘渲染（全球 CDN）
+- 框架无关（支持所有前端框架）
+- 设计系统与部署平台深度集成
+
+**提示词DNA**：
+```
+Vercel deployment platform:
+- One-click deploy, preview URLs
+- Edge network, framework integration
+- Dark dashboard, developer experience
+- Build pipeline visualization
+- Serverless functions, instant rollback
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.05 260) → #6A6A8A
+- 辅色: oklch(0.55 0.08 240) → #5A7AAA
+- 强调色: oklch(0.55 0.15 30) → #D08050
+- 背景: oklch(0.08 0.01 250) → #0A0A14
+- 文字: oklch(0.92 0.002 250) → #EEEEF2
+
+**参考字体栈**：
+- Display: Geist / Inter
+- Body: Geist Sans / Inter
+- Mono: Geist Mono / SF Mono
+
+**布局姿态**：暗色仪表盘 / 部署日志 / 预览面板
+**代表作**：Vercel Platform
+**搜索关键词**：Vercel deployment platform frontend developer experience
+
+---
+
+#### 60. Raycast — 效率即美学
+**哲学**：用最少的交互完成最多的任务——CLI/工具设计哲学：轻量、可扩展、键盘流，效率工具的美学在于"消失"
+**核心特征**：
+- 全局快捷键唤起（Command+Space 替代）
+- 插件生态（可扩展命令系统）
+- 浮动面板（非全窗口）
+- AI 集成（自然语言→操作）
+- 快速操作（文件/剪贴板/窗口管理）
+
+**提示词DNA**：
+```
+Raycast productivity tool:
+- Floating command palette, keyboard-driven
+- Extension ecosystem, AI integration
+- Light/dark theme, quick actions
+- Minimalist launcher, macOS native
+- Instant search, clipboard history
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.20 270) → #7B5BFF
+- 辅色: oklch(0.55 0.10 200) → #4A8A9A
+- 强调色: oklch(0.60 0.18 40) → #D4A040
+- 背景: oklch(0.97 0.003 80) → #F5F4F0
+- 文字: oklch(0.15 0.01 260) → #1A1A2A
+
+**参考字体栈**：
+- Display: SF Pro Display
+- Body: SF Pro Text / -apple-system
+- Mono: SF Mono / Menlo
+
+**布局姿态**：浮动命令面板 / 键盘驱动 / 轻量窗口
+**代表作**：Raycast
+**搜索关键词**：Raycast macOS productivity tool launcher keyboard-first
+
+---
+
+#### 69. Claude Artifacts — 实时生成设计
+**哲学**：AI 生成内容的即时预览、迭代、版本对比——设计反馈循环从"天"缩短到"秒"，实时共创成为新常态
+
+**核心特征**：
+- 生成内容与对话并列展示（双栏布局）
+- 实时预览（代码→渲染即时同步）
+- 版本迭代（每次修改生成新版本）
+- 多格式输出（代码/文档/图表/SVG）
+- 一键发布与分享
+
+**提示词DNA**：
+```
+Claude Artifacts real-time generation: dual-panel layout, live preview, version iteration, code rendering, AI content creation, collaborative workspace, instant feedback loop
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.18 40) → #D49550
+- 辅色: oklch(0.50 0.12 260) → #5A5AB0
+- 强调色: oklch(0.55 0.15 180) → #3A9080
+- 背景: oklch(0.97 0.005 80) → #F7F5F0
+- 文字: oklch(0.18 0.01 260) → #1E1E2E
+
+**参考字体栈**：
+- Display: Inter Display / SF Pro
+- Body: Inter / -apple-system
+- Mono: JetBrains Mono / SF Mono
+
+**布局姿态**：双栏对话+预览 / 迭代版本列表 / 多格式输出
+
+**代表作**：Claude Artifacts (Anthropic)
+**搜索关键词**：Claude Artifacts Anthropic AI generation real-time preview design iteration
+
+---
+
+#### 70. v0 by Vercel — AI 生成 UI 的质量控制
+**哲学**："提示词即设计稿"时代的质量门禁——AI 生成的 UI 代码需要设计审查，提示词工程成为新的设计工具
+
+**核心特征**：
+- 自然语言→UI 代码的即时生成
+- 迭代式提示词优化（多轮对话）
+- 生成代码的实时预览与编辑
+- 组件库集成（shadcn/ui 等）
+- 设计系统约束的内置支持
+
+**提示词DNA**：
+```
+v0 Vercel AI UI generation: prompt-to-code interface, real-time UI preview, component library, design system tokens, iterative refinement, code export, minimal chat interface
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.05 260) → #6A6A8A
+- 辅色: oklch(0.55 0.08 240) → #5A7AAA
+- 强调色: oklch(0.55 0.15 30) → #D08050
+- 背景: oklch(0.12 0.01 260) → #161620
+- 文字: oklch(0.90 0.002 250) → #E8E8EC
+
+**参考字体栈**：
+- Display: Geist / Inter
+- Body: Geist Sans / Inter
+- Mono: Geist Mono / SF Mono
+
+**布局姿态**：提示词输入 + 预览面板 / 组件选择器 / 代码导出
+
+**代表作**：v0 by Vercel
+**搜索关键词**：v0 Vercel AI generated UI design quality prompt engineering
+
+---
+
+#### 71. Devin — 自主 Agent 的信任设计
+**哲学**：当 AI 自主执行任务时，进度可视化、可撤销操作、人工接管点成为核心设计要素——信任不是赋予的，是设计出来的
+
+**核心特征**：
+- 任务进度可视化（步骤列表+状态指示）
+- Shell/Browser/Editor 多面板操作展示
+- 可撤销操作（每一步可回退）
+- 人工接管点（关键决策需确认）
+- 完整操作日志（透明度建立信任）
+
+**提示词DNA**：
+```
+Devin autonomous AI agent: task progress visualization, multi-panel workspace, shell terminal, browser preview, editor panel, step-by-step execution, trust design, operation log
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.20 200) → #3A9AB0
+- 辅色: oklch(0.50 0.15 260) → #5B5BB0
+- 强调色: oklch(0.60 0.15 30) → #D08050
+- 背景: oklch(0.10 0.01 250) → #0D1117
+- 文字: oklch(0.90 0.002 250) → #E8E8F0
+
+**参考字体栈**：
+- Display: Inter / SF Pro
+- Body: Inter / -apple-system
+- Mono: JetBrains Mono / SF Mono
+
+**布局姿态**：多面板工作台 / 任务进度条 / Shell + Browser + Editor
+
+**代表作**：Devin (Cognition AI)
+**搜索关键词**：Devin AI agent autonomous coding trust design progress visualization
+
+---
+
+#### 72. ChatGPT Canvas — 多模态协作界面
+**哲学**：AI 协作从单模态对话走向多模态工作台——文本+代码+图像+画布，设计需要同时管理多个内容流
+
+**核心特征**：
+- 对话与画布并列（双栏多模态）
+- 内联编辑（直接在画布上修改）
+- 多格式支持（文本/代码/图表/图像）
+- 版本历史与对比
+- 从对话到画布的拖拽式内容迁移
+
+**提示词DNA**：
+```
+ChatGPT Canvas multimodal collaboration: dual-panel interface, inline editing, text and code canvas, version history, drag-and-drop content, AI workspace, multimodal interaction
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.15 160) → #3A9080
+- 辅色: oklch(0.50 0.12 260) → #5A5AB0
+- 强调色: oklch(0.55 0.18 40) → #D49550
+- 背景: oklch(0.15 0.01 260) → #1E1E30
+- 文字: oklch(0.92 0.003 250) → #EEEEF4
+
+**参考字体栈**：
+- Display: Söhne / SF Pro
+- Body: Inter / -apple-system
+- Mono: Söhne Mono / SF Mono
+
+**布局姿态**：对话+画布双栏 / 内联编辑 / 多格式切换
+
+**代表作**：ChatGPT Canvas (OpenAI)
+**搜索关键词**：ChatGPT Canvas OpenAI multimodal collaboration interface design
+
+---
+
+#### 61. Spatial Design — Apple Vision Pro
+**哲学**：空间计算打破屏幕边界，设计从 2D 平面走向 3D 空间——手势、眼动、语音构成新交互范式，界面不再是矩形，而是环境
+**核心特征**：
+- 眼动追踪作为主要输入（视线=光标）
+- 手势交互（捏合、拖拽、旋转）
+- 空间音频增强沉浸感
+- 玻璃材质（半透明 UI 与环境融合）
+- 无限画布（窗口可任意放置于 3D 空间）
+
+**提示词DNA**：
+```
+Apple Vision Pro spatial design:
+- Glass material UI, eye tracking interface
+- Hand gesture interaction, spatial computing
+- 3D interface, semi-transparent panels
+- Floating windows, immersive environment
+- Spatial audio, depth-aware layering
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.85 0.02 250) → #D8DDE8
+- 辅色: oklch(0.70 0.05 220) → #A0B8C8
+- 强调色: oklch(0.65 0.15 30) → #D8A060
+- 背景: oklch(0.20 0.02 250) → #2A3038
+- 文字: oklch(0.95 0.002 250) → #F2F2F5
+
+**参考字体栈**：
+- Display: SF Pro Display / -apple-system
+- Body: SF Pro Text / -apple-system
+- Mono: SF Mono / Menlo
+
+**布局姿态**：3D 空间布局 / 玻璃面板 / 眼动+手势
+**代表作**：Apple Vision Pro visionOS
+**搜索关键词**：Apple Vision Pro spatial computing design interface
+
+---
+
+#### 62. AI-Native Design — 从 AI 出发的设计
+**哲学**：2026 产品设计不再"加入 AI 功能"，而是从 AI 能力出发重新定义产品形态——AI 是设计原点，不是附加功能
+**核心特征**：
+- AI 能力前置（产品核心流程由 AI 驱动）
+- 生成式 UI（界面根据 AI 输出动态生成）
+- 对话式交互替代传统表单
+- 个性化体验（AI 理解用户意图）
+- 设计系统内建 AI 组件规范
+
+**提示词DNA**：
+```
+AI-native product design:
+- Generative UI, conversational interface
+- AI-driven workflow, dynamic layout
+- Personalized experience, AI component library
+- Intelligent defaults, intent-based navigation
+- Prompt-driven UI generation
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.22 270) → #7B5BFF
+- 辅色: oklch(0.55 0.15 200) → #4A9AAA
+- 强调色: oklch(0.60 0.22 50) → #D8A830
+- 背景: oklch(0.12 0.01 260) → #161620
+- 文字: oklch(0.92 0.003 250) → #EEEEF4
+
+**参考字体栈**：
+- Display: Inter Display / SF Pro
+- Body: Inter / -apple-system
+- Mono: JetBrains Mono / SF Mono
+
+**布局姿态**：AI 驱动面板 / 动态生成 UI / 对话式交互
+**代表作**：2026 行业趋势
+**搜索关键词**：AI native design product trend 2026
+
+---
+
+#### 63. Calm Tech — 平静技术设计
+**哲学**：2026 年屏幕疲劳达到临界点，设计趋势转向"少打扰、多感知"——信息在最合适的时机以最轻量的方式呈现，技术退居背景
+**核心特征**：
+- 注意力最小化（信息通过环境提示而非通知）
+- 外围感知（灯光/声音/振动替代屏幕）
+- 状态指示器（非侵入式状态传达）
+- 静默模式优先（默认不打扰）
+- 触觉反馈（Haptic 替代视觉通知）
+
+**提示词DNA**：
+```
+Calm Technology design:
+- Ambient notifications, peripheral awareness
+- Minimal attention, haptic feedback
+- Status indicators, quiet mode
+- Non-intrusive UI, zen design
+- Light/sound/vibration as information channel
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.05 180) → #5A8A80
+- 辅色: oklch(0.60 0.03 80) → #A0A090
+- 强调色: oklch(0.55 0.08 40) → #B0A080
+- 背景: oklch(0.96 0.005 80) → #F4F2EE
+- 文字: oklch(0.25 0.01 260) → #2A2A3A
+
+**参考字体栈**：
+- Display: Graphik / SF Pro
+- Body: Inter / -apple-system
+- Mono: SF Mono / Menlo
+
+**布局姿态**：环境感知 / 状态指示器 / 静默通知
+**代表作**：Calm Technology (Amber Case)
+**搜索关键词**：Calm Technology Amber Case ambient design attention
+
+---
+
+#### 64. Design Engineering — 设计工程一体化
+**哲学**：2026 年设计师与工程师的边界加速模糊，AI 辅助设计工程化——设计即代码、代码即设计，设计令牌成为共同语言
+**核心特征**：
+- 设计令牌（Design Tokens）作为设计-工程桥梁
+- Figma → Code 自动化
+- 组件级设计系统（Design System as Code）
+- AI 辅助设计→代码转换
+- 双向同步（代码变更反映到设计文件）
+
+**提示词DNA**：
+```
+Design engineering integration:
+- Design tokens, Figma to code
+- Design system as code, AI-assisted design-to-code
+- Component library, developer handoff
+- Token-based workflow, bidirectional sync
+- Design-engineering collaboration
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.15 260) → #5B6DBF
+- 辅色: oklch(0.50 0.12 200) → #3D8A9A
+- 强调色: oklch(0.55 0.18 40) → #D49550
+- 背景: oklch(0.14 0.01 260) → #1A1A2A
+- 文字: oklch(0.90 0.002 250) → #E8E8EC
+
+**参考字体栈**：
+- Display: Inter Display / SF Pro
+- Body: Inter / -apple-system
+- Mono: Fira Code / SF Mono
+
+**布局姿态**：设计+代码双栏 / 设计令牌面板 / 组件预览
+**代表作**：2026 行业趋势
+**搜索关键词**：design engineering integration designer developer 2026
+
+---
+
+#### 73. Agentic UX — 从操作到监督
+**哲学**：2026 年用户不再直接操作界面，而是监督 AI Agent 执行——设计从"按钮"转向"指令+确认"，交互范式迎来根本性转变
+**核心特征**：
+- 意图表达替代逐步操作（自然语言指令）
+- Agent 执行过程可视化（进度+步骤）
+- 确认点设计（关键决策需人工确认）
+- 异常处理（Agent 失败时的优雅降级）
+- 多 Agent 协作界面（监督多个 Agent 并行工作）
+
+**提示词DNA**：
+```
+Agentic UX design:
+- Intent-based interaction, AI agent supervision
+- Progress visualization, confirmation checkpoints
+- Multi-agent dashboard, natural language commands
+- Task orchestration, graceful degradation
+- Human-in-the-loop decision points
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.20 240) → #4A7ABF
+- 辅色: oklch(0.50 0.15 200) → #3D8AA0
+- 强调色: oklch(0.55 0.18 40) → #D49550
+- 背景: oklch(0.12 0.01 260) → #161620
+- 文字: oklch(0.90 0.002 250) → #E8E8EC
+
+**参考字体栈**：
+- Display: Inter Display / SF Pro
+- Body: Inter / -apple-system
+- Mono: JetBrains Mono / SF Mono
+
+**布局姿态**：Agent 仪表盘 / 任务进度 / 确认弹窗
+**代表作**：2026 行业趋势
+**搜索关键词**：Agentic UX AI agent supervision interaction paradigm design 2026
+
+---
+
+#### 74. AI-Generated UI — 策划者时代
+**哲学**：2026 年设计师角色从"像素绘制者"转变为"AI 输出的策划者与审核者"——设计质量不再取决于手速，而取决于品位与判断力
+**核心特征**：
+- 提示词工程（Prompt Engineering）成为设计技能
+- AI 生成多方案对比（A/B 设计变体）
+- 设计审查自动化（AI 检测设计规范违规）
+- 人类决策（AI 生成，人类选择）
+- 设计系统约束 AI 输出质量
+
+**提示词DNA**：
+```
+AI-generated UI design:
+- Prompt engineering, design variants
+- Automated design review, AI output curation
+- Design system constraints, human-in-the-loop
+- Quality control, A/B design comparison
+- AI-assisted design iteration
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.08 260) → #6A6A8A
+- 辅色: oklch(0.55 0.12 240) → #5A7AAA
+- 强调色: oklch(0.55 0.18 30) → #D08050
+- 背景: oklch(0.96 0.005 80) → #F4F2EE
+- 文字: oklch(0.18 0.01 260) → #1E1E2E
+
+**参考字体栈**：
+- Display: Inter Display / SF Pro
+- Body: Inter / -apple-system
+- Mono: JetBrains Mono / SF Mono
+
+**布局姿态**：方案对比面板 / 提示词输入 / 设计审查报告
+**代表作**：2026 行业趋势
+**搜索关键词**：AI generated UI design curator quality control 2026 trend
+
+---
+
+#### 75. Ethical Design 2.0 — AI 时代的伦理设计
+**哲学**：EU AI Act 合规、偏见检测、透明度报告——2026 年设计必须内置伦理考量，伦理不是可选项，是产品上市的基本门槛
+**核心特征**：
+- AI 偏见检测与缓解（数据+算法层面）
+- 透明度报告（AI 决策可解释性）
+- 黑暗模式（Dark Patterns）自动检测
+- 用户数据控制权（知情同意+数据可携带）
+- 合规设计（EU AI Act / GDPR / WCAG 3.0）
+
+**提示词DNA**：
+```
+Ethical design AI era:
+- Bias detection UI, transparency report
+- Dark pattern free, user consent design
+- Accessibility-first, privacy dashboard
+- Compliance checklist, explainable AI
+- Data portability, informed consent
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.15 160) → #3A9080
+- 辅色: oklch(0.55 0.10 200) → #4A8A9A
+- 强调色: oklch(0.55 0.12 40) → #B0A070
+- 背景: oklch(0.97 0.005 80) → #F7F5F0
+- 文字: oklch(0.18 0.01 260) → #1E1E2E
+
+**参考字体栈**：
+- Display: Inter Display / SF Pro
+- Body: Inter / -apple-system
+- Mono: SF Mono / Menlo
+
+**布局姿态**：透明度仪表盘 / 隐私设置 / 合规检查清单
+**代表作**：EU AI Act 合规设计
+**搜索关键词**：Ethical design AI EU AI Act bias detection dark pattern regulation
+
+---
+
+#### 76. Sustainable Digital Design — 绿色数字设计
+**哲学**：低碳网页、暗色模式默认、减少数据传输——设计的环境责任成为 2026 必须项，每个像素都有碳足迹
+**核心特征**：
+- 暗色模式默认（减少 OLED 能耗）
+- 图片优化（WebP/AVIF + 懒加载）
+- 减少 JavaScript 体积（Tree-shaking + 代码分割）
+- 绿色主机（可再生能源数据中心）
+- 碳足迹可视化（网站碳排放计算器）
+
+**提示词DNA**：
+```
+Sustainable digital design:
+- Dark mode default, optimized images
+- Low carbon web, green hosting
+- Minimal JavaScript, carbon footprint badge
+- Energy-efficient UI, lazy loading
+- WebP/AVIF, tree-shaking, code splitting
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.50 0.15 140) → #3A8A50
+- 辅色: oklch(0.55 0.08 180) → #5A9A8A
+- 强调色: oklch(0.50 0.12 80) → #8A8A50
+- 背景: oklch(0.15 0.01 140) → #1A2A1E
+- 文字: oklch(0.90 0.003 140) → #E8ECE8
+
+**参考字体栈**：
+- Display: Inter Display / SF Pro
+- Body: Inter / -apple-system
+- Mono: SF Mono / Menlo
+
+**布局姿态**：暗色生态面板 / 碳足迹仪表盘 / 绿色指标
+**代表作**：Website Carbon Calculator
+**搜索关键词**：Sustainable digital design low carbon web green hosting eco design
+
+---
+
+#### 65. Bauhaus — 包豪斯设计原则
+**哲学**：形式服从功能，几何纯粹，工业美学——现代设计的源头，一切当代设计语言都能追溯到包豪斯的三大基础课程
+**核心特征**：
+- 几何基本形（圆、方、三角）
+- 三原色（红黄蓝）+ 黑白灰
+- 形式服从功能（无装饰）
+- 工业材料（钢、玻璃、混凝土）
+- 跨学科融合（艺术+工艺+技术）
+
+**提示词DNA**：
+```
+Bauhaus design: geometric shapes, primary colors, form follows function, industrial materials, clean lines, minimal decoration, grid-based, modernist architecture
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.25 30) → #E04030
+- 辅色: oklch(0.65 0.22 90) → #E0C830
+- 强调色: oklch(0.50 0.22 260) → #3050C0
+- 背景: oklch(0.95 0.003 80) → #F0EFEC
+- 文字: oklch(0.10 0.01 260) → #0A0A1A
+
+**参考字体栈**：
+- Display: Futura / DIN
+- Body: Futura / Helvetica
+- Mono: Courier / monospace
+
+**布局姿态**：几何网格 / 三原色 + 黑白 / 不对称平衡
+
+**代表作**：Bauhaus Dessau building, Wassily Chair
+**搜索关键词**：Bauhaus Walter Gropius design principle form follows function
+
+---
+
+#### 66. Swiss Design — 国际主义风格
+**哲学**：网格系统、非对称布局、无衬线字体、客观摄影——瑞士设计影响了整个 20 世纪的设计语言，至今仍是 UI 设计的基础语法
+**核心特征**：
+- 数学网格系统（多列精确布局）
+- 非对称平衡（左对齐+右留白）
+- 无衬线字体（Helvetica/Univers）
+- 客观摄影（黑白高对比）
+- 信息层级清晰（标题→副标题→正文）
+
+**提示词DNA**：
+```
+Swiss International Style: grid system, asymmetric layout, Helvetica typography, black and white photography, mathematical spacing, clean hierarchy, sans-serif only
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.45 0.25 30) → #D03020
+- 辅色: oklch(0.50 0.02 260) → #5A5A70
+- 强调色: oklch(0.55 0.20 90) → #C0A020
+- 背景: oklch(0.97 0.003 80) → #F5F5F0
+- 文字: oklch(0.08 0.01 260) → #080818
+
+**参考字体栈**：
+- Display: Helvetica Neue / Univers
+- Body: Helvetica / Arial
+- Mono: Courier / monospace
+
+**布局姿态**：多列网格 / 左对齐 / 黑白摄影
+
+**代表作**：Neue Grafik magazine, Zurich Tonhalle poster
+**搜索关键词**：Swiss design international typographic style grid system
+
+---
+
+#### 67. Vignelli — 现代主义极致
+**哲学**："如果你能设计一件事，你就能设计一切"——极致的系统化思维，一生只用 6 种字体，用有限元素创造无限可能
+**核心特征**：
+- 极致简化（一生只用 6 种字体）
+- 语义化色彩（红色=信息，黑色=正文）
+- 网格系统至上（所有设计基于网格）
+- 跨领域设计（从地铁图到教堂）
+- 永恒性（设计不追随潮流）
+
+**提示词DNA**：
+```
+Massimo Vignelli modernism: limited typefaces, semantic color, strict grid, cross-disciplinary, timeless design, red and black, information hierarchy, New York subway map
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.45 0.25 30) → #D03020
+- 辅色: oklch(0.30 0.01 260) → #2A2A3A
+- 强调色: oklch(0.50 0.20 90) → #B0A020
+- 背景: oklch(0.97 0.003 80) → #F5F5F0
+- 文字: oklch(0.08 0.01 260) → #080818
+
+**参考字体栈**：
+- Display: Bodoni / Garamond
+- Body: Helvetica / Century
+- Mono: Courier / monospace
+
+**布局姿态**：网格至上 / 红黑双色 / 跨领域系统
+
+**代表作**：New York Subway Map (1972), St. Peter's Church
+**搜索关键词**：Massimo Vignelli modernism design New York subway map
+
+---
+
+#### 68. Wim Crouwel — 像素化字体实验
+**哲学**：1960 年代就用像素网格设计字体，预见了数字时代的字体排印——经典也可以激进，限制是创造力的催化剂
+**核心特征**：
+- 像素网格字体（New Alphabet）
+- 数学精确性（所有字形基于网格）
+- 实验性排版（挑战可读性边界）
+- 系统化思维（字体作为系统设计）
+- 极简几何（仅用水平+垂直线条）
+
+**提示词DNA**：
+```
+Wim Crouwel typography: pixel grid font, New Alphabet, mathematical precision, experimental letterforms, horizontal and vertical lines, monospaced grid, digital age prediction
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.45 0.15 260) → #3A4AB0
+- 辅色: oklch(0.50 0.02 260) → #5A5A70
+- 强调色: oklch(0.55 0.20 90) → #C0A020
+- 背景: oklch(0.95 0.003 80) → #F0EFEC
+- 文字: oklch(0.10 0.01 260) → #0A0A1A
+
+**参考字体栈**：
+- Display: New Alphabet / Gridnik
+- Body: Helvetica / Arial
+- Mono: Courier / monospace
+
+**布局姿态**：像素网格 / 实验字体 / 水平+垂直线条
+
+**代表作**：New Alphabet (1967), Stedelijk Museum posters
+**搜索关键词**：Wim Crouwel typography new alphabet grid experimental
+
+---
+
+#### 77. De Stijl — 荷兰风格派
+**哲学**：Mondrian 的红黄蓝+黑白网格——抽象几何是宇宙秩序的视觉表达，将自然形态还原为纯粹的水平与垂直线条，影响现代 UI 配色与布局
+**核心特征**：
+- 原色限定（红黄蓝+黑白灰）
+- 水平与垂直线条（无斜线）
+- 矩形块面分割（非对称平衡）
+- 抽象几何（拒绝自然形态）
+- 普遍性（追求宇宙秩序的表达）
+
+**提示词DNA**：
+```
+De Stijl Mondrian: primary colors red yellow blue, black white grid, horizontal and vertical lines, rectangular blocks, asymmetric balance, pure abstraction, geometric order
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.55 0.25 30) → #E04030
+- 辅色: oklch(0.65 0.22 90) → #E0C830
+- 强调色: oklch(0.50 0.22 260) → #3050C0
+- 背景: oklch(0.96 0.003 80) → #F2F1EE
+- 文字: oklch(0.05 0.01 260) → #050510
+
+**参考字体栈**：
+- Display: Futura / DIN
+- Body: Helvetica / Arial
+- Mono: Courier / monospace
+
+**布局姿态**：网格块面 / 红黄蓝 + 黑白 / 水平垂直线
+
+**代表作**：Composition with Red, Blue and Yellow (Mondrian, 1930)
+**搜索关键词**：De Stijl Mondrian Piet abstract geometric primary colors grid
+
+---
+
+#### 78. Brutalist Web Design — 粗野主义网页
+**哲学**：裸露 HTML 结构、系统字体、无装饰——反精致主义的诚实美学，在 AI 生成内容泛滥的时代回归真实，让网页回归文档本质
+**核心特征**：
+- 裸露 HTML 结构（默认样式优先）
+- 系统字体（Arial/Times/ Courier）
+- 无圆角、无阴影、无渐变
+- 高对比度（黑白+单色强调）
+- 原始交互（默认链接样式、表单样式）
+
+**提示词DNA**：
+```
+Brutalist web design: raw HTML, system fonts, no decoration, high contrast, default styles, honest aesthetic, anti-design, web brutalism
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.40 0.25 30) → #C03020
+- 辅色: oklch(0.35 0.20 260) → #2030A0
+- 强调色: oklch(0.55 0.20 90) → #C0A020
+- 背景: oklch(0.98 0.002 80) → #F8F8F5
+- 文字: oklch(0.05 0.01 260) → #050510
+
+**参考字体栈**：
+- Display: Times New Roman / Arial
+- Body: Arial / Times
+- Mono: Courier New / monospace
+
+**布局姿态**：裸露 HTML / 高对比度 / 系统字体 / 无装饰
+
+**代表作**：Brutalist Websites, Craigslist
+**搜索关键词**：Brutalist web design raw HTML system fonts anti-design honest aesthetic
+
+---
+
+#### 79. 田中一光 — 日本平面设计哲学
+**哲学**：空寂、不对称、留白之美——日本传统美学（能面、浮世绘、禅宗）与现代平面设计的完美融合，以极简形式表达深厚的文化内涵
+**核心特征**：
+- 大面积留白（Ma 间）
+- 不对称平衡（非对称和谐）
+- 传统元素现代化（能面/和服图案→几何抽象）
+- 平面化色彩（扁平色块）
+- 字体排印（日文+英文混排）
+
+**提示词DNA**：
+```
+Ikko Tanaka Japanese design: large whitespace, asymmetric balance, traditional to modern, flat color blocks, Japanese typography, zen minimalism, cultural fusion
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.45 0.25 30) → #D03020
+- 辅色: oklch(0.55 0.08 260) → #5A5A8A
+- 强调色: oklch(0.60 0.18 90) → #C8A830
+- 背景: oklch(0.96 0.005 80) → #F4F2EE
+- 文字: oklch(0.12 0.01 260) → #121222
+
+**参考字体栈**：
+- Display: Hiragino Mincho / Noto Serif JP
+- Body: Hiragino Sans / Noto Sans JP
+- Mono: Osaka Mono / SF Mono
+
+**布局姿态**：大面积留白 / 几何色块 / 日英混排
+
+**代表作**：Nihon Buyo poster (1981), Issey Miyake posters
+**搜索关键词**：Ikko Tanaka Japanese graphic design poster traditional modern fusion
+
+---
+
+#### 80. Ulmer Schule — 乌尔姆学派
+**哲学**：系统设计方法论、跨学科协作——影响 Braun/Apple 设计体系的德国理性主义源头，设计是可复现的科学过程，而非灵感迸发
+**核心特征**：
+- 系统设计方法论（设计=科学过程）
+- 跨学科协作（设计师+工程师+科学家）
+- 模块化产品系统
+- 功能主义（形式完全服从功能）
+- 设计教育体系化（理论+实践+社会）
+
+**提示词DNA**：
+```
+Ulm School HfG design: systematic methodology, interdisciplinary collaboration, modular system, functionalism, design education, rational approach, Braun Apple lineage
+```
+
+**参考色板 (OKLch)**：
+- 主色: oklch(0.45 0.08 260) → #4A4A6A
+- 辅色: oklch(0.50 0.05 200) → #5A7A80
+- 强调色: oklch(0.55 0.15 30) → #C08050
+- 背景: oklch(0.96 0.003 80) → #F2F1EE
+- 文字: oklch(0.15 0.01 260) → #1A1A2A
+
+**参考字体栈**：
+- Display: Helvetica Neue / DIN
+- Body: Helvetica / Arial
+- Mono: Courier / monospace
+
+**布局姿态**：模块化系统 / 理性网格 / 功能优先
+
+**代表作**：Braun SK4 radiogram, Braun T3 pocket radio
+**搜索关键词**：Ulm School HfG Ulm design methodology system thinking Braun Apple
+
+---
+
 ## 3. 品位锚点详细解释
 
 没有 design system 时，审查应参考品位基线。
