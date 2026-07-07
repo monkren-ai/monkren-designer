@@ -6,7 +6,7 @@
   <title>Monkren Design v3.1 | 设计大圣</title>
   <meta
     name="description"
-    content="Monkren Design 是一个设计审查专家 Skill。提交设计产出，拿回一份专业审查报告——10 维度多视角审查、40 种设计哲学库、硬编码值检测、Lazyweb 证据集成。"
+    content="Monkren Design 是一个设计智能体 Skill。提交设计产出，拿回一份专业审查报告——10 维度多视角审查、40 种设计哲学库、硬编码值检测、Lazyweb 证据集成。"
   />
   <meta property="og:title" content="Monkren Design v3.1" />
   <meta property="og:description" content="提交设计，拿回一份专业审查报告。" />
@@ -934,7 +934,30 @@
       color: var(--color-subtle-gray);
       font-size: var(--text-18px);
       line-height: var(--leading-normal);
+    }
+    .skill-card .skill-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-8);
       flex: 1 0 auto;
+    }
+    .skill-card .skill-list li {
+      color: var(--color-subtle-gray);
+      font-size: var(--text-14px);
+      line-height: var(--leading-normal);
+      padding-left: var(--spacing-12);
+      position: relative;
+      border-left: var(--border-width) solid var(--color-arctic-white);
+    }
+    .skill-card .skill-list li strong {
+      color: var(--color-arctic-white);
+      font-weight: var(--font-weight-regular);
+      font-family: var(--font-black-tie);
+      font-size: var(--text-12px);
+      letter-spacing: 0.02em;
     }
     .skill-card .triggers {
       display: flex;
@@ -1275,7 +1298,7 @@
         <span>Monkren Design v3.1</span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
-        <a href="#skills">Sub-skills</a>
+        <a href="#skills">Skill Matrix</a>
         <a href="#capabilities">能力</a>
         <a href="#monkren-philosophy">哲学</a>
         <a href="#philosophy-library">哲学库</a>
@@ -1293,7 +1316,7 @@
       <div class="hero-watermark" aria-hidden="true">10</div>
       <div class="wrap hero-grid">
         <div>
-          <span class="eyebrow">Design Review Expert</span>
+          <span class="eyebrow">Design Agent</span>
           <h1>提交设计，<br />拿回一份专业审查报告。</h1>
           <p class="lead">
             5 维度评审 + 10 视角审查 + 40 种哲学库。每一个问题都有引证、严重度、修复建议——3 分钟跑完，0 拍脑袋。
@@ -1395,88 +1418,116 @@
       <div class="wrap">
         <div class="section-head">
           <div>
-            <span class="eyebrow">Sub-skills</span>
-            <h2 id="skills-title">7 个 Sub-skill，覆盖设计审查全场景。</h2>
+            <span class="eyebrow">Skill Matrix</span>
+            <h2 id="skills-title">五阶段 21 skill，覆盖发现→定义→创作→审查→交付全流程。</h2>
           </div>
           <p>
-            主 skill Monkren Design 协调全流程审查，7 个 sub-skill 在不同场景下独立可调用。查实现细节用 research，脑暴用 brainstorm，改稿用 improve。
+            主 skill Monkren Design 是设计智能体入口，按用户意图路由到对应阶段。Discover 找证据，Define 锁方向，Create 出产出，Review 做审查，Deliver 出报告，Tools 管灵感源。
           </p>
         </div>
 
         <div class="skills-grid">
-          <article class="skill-card" id="skill-visual-taste-lab">
+          <article class="skill-card" id="stage-discover">
             <span class="num">01</span>
-            <h3>visual-taste-lab</h3>
-            <p>把模糊的「好看」请求变成可复用的设计语言工作流——截图蒸馏 → 风格提炼 → 复用规范。</p>
+            <h3>Discover · 发现</h3>
+            <p>调研竞品、找参考截图、跨界脑暴，为设计决策提供真实证据。</p>
+            <ul class="skill-list">
+              <li><strong>design-research</strong> — 深度调研 + 下载参考截图，输出结构化研究报告</li>
+              <li><strong>quick-references</strong> — 快速找参考截图，按模式分组，不写完整报告</li>
+              <li><strong>design-brainstorm</strong> — 跨界联想，从没人看的领域挖可用灵感，输出 3 个差异化方向</li>
+            </ul>
             <div class="triggers">
-              <span class="chip">让 UI 更好看</span>
-              <span class="chip">去 AI 化</span>
-              <span class="chip">品牌系统</span>
-            </div>
-          </article>
-          <article class="skill-card" id="skill-design-brainstorm">
-            <span class="num">02</span>
-            <h3>design-brainstorm</h3>
-            <p>跨界联想，刻意跳出常规品类，从没人看的领域挖可用灵感，输出 3 个差异化方向。</p>
-            <div class="triggers">
-              <span class="chip">创意方案</span>
-              <span class="chip">不走寻常路</span>
-              <span class="chip">差异化</span>
-            </div>
-          </article>
-          <article class="skill-card" id="skill-design-improve">
-            <span class="num">03</span>
-            <h3>design-improve</h3>
-            <p>截图 + Lazyweb 找相似屏，给出有真实产品证据的改进建议，避免拍脑袋的「这样改」。</p>
-            <div class="triggers">
-              <span class="chip">改进这个设计</span>
-              <span class="chip">设计反馈</span>
-              <span class="chip">怎么改</span>
-            </div>
-          </article>
-          <article class="skill-card" id="skill-design-research">
-            <span class="num">04</span>
-            <h3>design-research</h3>
-            <p>深度调研 + 下载参考截图，输出结构化研究报告。竞品分析、最佳实践、行业调研一站完成。</p>
-            <div class="triggers">
-              <span class="chip">最佳实践</span>
               <span class="chip">竞品分析</span>
-              <span class="chip">行业调研</span>
+              <span class="chip">最佳实践</span>
+              <span class="chip">参考截图</span>
             </div>
           </article>
-          <article class="skill-card" id="skill-quick-references">
-            <span class="num">05</span>
-            <h3>quick-references</h3>
-            <p>快速找参考截图，按模式分组，不写完整报告。想看「别人怎么做的」先调它。</p>
+          <article class="skill-card" id="stage-define">
+            <span class="num">02</span>
+            <h3>Define · 定义</h3>
+            <p>项目启动提问、锁定美学方向、把「好看」变成可复用设计语言。</p>
+            <ul class="skill-list">
+              <li><strong>discovery-questions</strong> — 项目启动提问协议，确认目标/用户/约束/品牌/成功标准</li>
+              <li><strong>frontend-aesthetic-direction</strong> — 锁定 7 维度美学承诺（色彩/字体/间距/容器/图像/动效/语调）</li>
+              <li><strong>visual-taste-lab</strong> — 截图蒸馏 → 风格提炼 → 复用规范，把模糊「好看」变成设计语言</li>
+            </ul>
             <div class="triggers">
-              <span class="chip">给我看看例子</span>
-              <span class="chip">参考</span>
-              <span class="chip">UI 截图</span>
+              <span class="chip">什么风格</span>
+              <span class="chip">美学方向</span>
+              <span class="chip">项目启动</span>
             </div>
           </article>
-          <article class="skill-card" id="skill-add-inspo-source">
+          <article class="skill-card" id="stage-create">
+            <span class="num">03</span>
+            <h3>Create · 创作</h3>
+            <p>从低保真线框到可交互原型，从设计系统提取到组件清单，覆盖创作全链路。</p>
+            <ul class="skill-list">
+              <li><strong>wireframe</strong> — 低保真布局探索，快速验证信息架构</li>
+              <li><strong>make-a-prototype</strong> — 可交互原型，真实流程演示</li>
+              <li><strong>make-a-deck</strong> — 设计幻灯片，讲清楚决策脉络</li>
+              <li><strong>make-tweakable</strong> — 调整面板，让用户自助调参</li>
+              <li><strong>generate-variations</strong> — 3+ 风格变体（保守→平衡→激进）</li>
+              <li><strong>design-system-extract</strong> — 从现有产出提取 token 体系</li>
+              <li><strong>component-extract</strong> — 组件清单抽取与归类</li>
+              <li><strong>design-improve</strong> — 截图 + Lazyweb 找相似屏，给有证据的改进建议</li>
+            </ul>
+            <div class="triggers">
+              <span class="chip">做个 wireframe</span>
+              <span class="chip">出个原型</span>
+              <span class="chip">生成变体</span>
+            </div>
+          </article>
+          <article class="skill-card" id="stage-review">
+            <span class="num">04</span>
+            <h3>Review · 审查</h3>
+            <p>可访问性、反 AI slop、视觉层级、交互状态、细节打磨五项专项审查。</p>
+            <ul class="skill-list">
+              <li><strong>accessibility-audit</strong> — WCAG 合规检查，对比度/焦点/语义/键盘</li>
+              <li><strong>ai-slop-check</strong> — 8 类 AI slop 痕迹识别与替换建议</li>
+              <li><strong>hierarchy-rhythm-review</strong> — 视觉层级与节奏，眯眼测试 + 信息流</li>
+              <li><strong>interaction-states-pass</strong> — 交互状态完整性（hover/active/focus/disabled/loading/error）</li>
+              <li><strong>polish-pass</strong> — 像素级细节打磨，对齐/间距/字重/色值</li>
+            </ul>
+            <div class="triggers">
+              <span class="chip">审查一下</span>
+              <span class="chip">好不好看</span>
+              <span class="chip">检测硬编码</span>
+            </div>
+          </article>
+          <article class="skill-card" id="stage-deliver">
+            <span class="num">05</span>
+            <h3>Deliver · 交付</h3>
+            <p>由 execution.md 驱动，输出报告、Demo、评分提升建议。</p>
+            <ul class="skill-list">
+              <li><strong>报告持久化</strong> — .md + .html + SVG 雷达图，保存到 .monkren/reviews/</li>
+              <li><strong>Demo 生成</strong> — 单文件 HTML Demo，保存到 .monkren/demos/</li>
+              <li><strong>评分提升建议</strong> — 按维度给出可操作提升路径</li>
+              <li><strong>设计建议报告</strong> — 8 字段 + 5 铁律 + 3 方向横评</li>
+            </ul>
+            <div class="triggers">
+              <span class="chip">出报告</span>
+              <span class="chip">生成 demo</span>
+              <span class="chip">评分提升</span>
+            </div>
+          </article>
+          <article class="skill-card" id="stage-tools">
             <span class="num">06</span>
-            <h3>add-inspo-source</h3>
-            <p>接入外部灵感源（Mobbin / Savee / Dribbble / Behance），后续所有 lazyweb-* skill 自动纳入。</p>
+            <h3>Tools · 工具</h3>
+            <p>接入/断开外部灵感源，贯穿全流程。</p>
+            <ul class="skill-list">
+              <li><strong>add-inspo-source</strong> — 接入 Mobbin / Savee / Dribbble / Behance</li>
+              <li><strong>remove-inspo-source</strong> — 断开已接入的灵感源</li>
+            </ul>
             <div class="triggers">
               <span class="chip">接 Mobbin</span>
               <span class="chip">连 Dribbble</span>
               <span class="chip">加灵感源</span>
             </div>
           </article>
-          <article class="skill-card" id="skill-remove-inspo-source">
-            <span class="num">07</span>
-            <h3>remove-inspo-source</h3>
-            <p>断开已接入的灵感源，后续 lazyweb-* skill 不再搜索该源。</p>
-            <div class="triggers">
-              <span class="chip">断开 Mobbin</span>
-              <span class="chip">移除参考源</span>
-            </div>
-          </article>
           <article class="skill-card" id="skill-monkren-design">
             <span class="num">★</span>
             <h3>monkren-design</h3>
-            <p>主 skill——5 维度评审 + 硬编码检测 + 合规性检查 + 设计方向顾问 + SwiftLint 规则生成。</p>
+            <p>主 skill——设计智能体入口，识别用户意图路由到对应阶段，协调全流程。</p>
             <div class="triggers">
               <a class="chip" href="#capabilities">查看能力 →</a>
             </div>
@@ -1532,7 +1583,7 @@
           <article class="card">
             <span class="num">07</span>
             <h3>平台类型专项审查</h3>
-            <p>移动端 App、桌面端软件、Web 应用、PPT/演示文稿、插画、角色 IP——每种类型有独立审查要点。<a href="#references" class="inline-link">查看 platform-guides →</a></p>
+            <p>移动端 App、桌面端软件、Web 应用、PPT/演示文稿、插画、角色 IP——每种类型有独立审查要点。<a href="#references" class="inline-link">查看 platforms →</a></p>
           </article>
           <article class="card">
             <span class="num">08</span>
@@ -3182,71 +3233,82 @@
         <div class="section-head">
           <div>
             <span class="eyebrow">Deep Dives</span>
-            <h2 id="ref-title">7 份子文档，按需深入。</h2>
+            <h2 id="ref-title">9 份子文档，按需深入。</h2>
           </div>
           <p>
-            介绍页给的是项目骨架，深层规则、报告模板、平台专项、视角体系在 references/ 下独立维护。装上 skill 后 agent 会按需读，访客可以提前看。
+            介绍页给的是项目骨架，四层知识图谱（信念 / 标准 / 方法 / 执行）在 references/ 下独立维护。装上 skill 后 agent 会按需读，访客可以提前看。
           </p>
         </div>
 
         <div class="ref-grid">
-          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/philosophy.md" target="_blank" rel="noopener">
-            <span class="filename">philosophy.md</span>
-            <h3>40 种设计哲学 + 方向顾问</h3>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/beliefs.md" target="_blank" rel="noopener">
+            <span class="filename">beliefs.md</span>
+            <h3>信念层 · 核心哲学</h3>
             <div class="chapters">
-              <span class="chip">核心哲学</span>
-              <span class="chip">40 哲学库</span>
-              <span class="chip">方向顾问</span>
-              <span class="chip">流派适配</span>
+              <span class="chip">existing context</span>
+              <span class="chip">反 AI slop</span>
+              <span class="chip">品牌被认出来</span>
+              <span class="chip">Placeholder &gt; 烂实现</span>
             </div>
-            <div class="meta"><span>105 KB</span><span>7 章节</span></div>
+            <div class="meta"><span>信念层</span><span>4 信念</span></div>
           </a>
-          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/aesthetics.md" target="_blank" rel="noopener">
-            <span class="filename">aesthetics.md</span>
-            <h3>5 维度评审 + 反 slop</h3>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/standards.md" target="_blank" rel="noopener">
+            <span class="filename">standards.md</span>
+            <h3>标准层 · 5 维度 + 9 段框架</h3>
             <div class="chapters">
-              <span class="chip">5 维度</span>
+              <span class="chip">5 维度评审</span>
               <span class="chip">slop 黑名单</span>
-              <span class="chip">评分纪律</span>
-            </div>
-            <div class="meta"><span>29 KB</span><span>3 章节</span></div>
-          </a>
-          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/design-system.md" target="_blank" rel="noopener">
-            <span class="filename">design-system.md</span>
-            <h3>9 段框架 + 硬编码检测</h3>
-            <div class="chapters">
               <span class="chip">9 段框架</span>
-              <span class="chip">Token 架构</span>
-              <span class="chip">合规性检查</span>
               <span class="chip">SwiftLint</span>
             </div>
-            <div class="meta"><span>22 KB</span><span>4 章节</span></div>
+            <div class="meta"><span>标准层</span><span>18 章节</span></div>
           </a>
-
-          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/implementation.md" target="_blank" rel="noopener">
-            <span class="filename">implementation.md</span>
-            <h3>工作流 + 报告模板 + 报告示例</h3>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/philosophy-library.md" target="_blank" rel="noopener">
+            <span class="filename">philosophy-library.md</span>
+            <h3>40 种设计哲学风格库</h3>
+            <div class="chapters">
+              <span class="chip">40 哲学库</span>
+              <span class="chip">流派适配</span>
+              <span class="chip">落地概念包</span>
+              <span class="chip">基因重组</span>
+            </div>
+            <div class="meta"><span>哲学库</span><span>8 章节</span></div>
+          </a>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/methods-create.md" target="_blank" rel="noopener">
+            <span class="filename">methods-create.md</span>
+            <h3>方法层 · 创作 14 章</h3>
+            <div class="chapters">
+              <span class="chip">创作工作流</span>
+              <span class="chip">美学方向</span>
+              <span class="chip">wireframe</span>
+              <span class="chip">prototype</span>
+            </div>
+            <div class="meta"><span>方法层</span><span>14 章节</span></div>
+          </a>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/methods-review.md" target="_blank" rel="noopener">
+            <span class="filename">methods-review.md</span>
+            <h3>方法层 · 审查 8 章</h3>
             <div class="chapters">
               <span class="chip">审查工作流</span>
-              <span class="chip">报告模板</span>
-              <span class="chip">示例报告</span>
+              <span class="chip">7 触发命令</span>
+              <span class="chip">Polish 流程</span>
               <span class="chip">自检迭代</span>
             </div>
-            <div class="meta"><span>89 KB</span><span>5 章节</span></div>
+            <div class="meta"><span>方法层</span><span>8 章节</span></div>
           </a>
-          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/platform-guides.md" target="_blank" rel="noopener">
-            <span class="filename">platform-guides.md</span>
-            <h3>6 种平台专项审查</h3>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/execution.md" target="_blank" rel="noopener">
+            <span class="filename">execution.md</span>
+            <h3>执行层 · 报告 + Demo</h3>
             <div class="chapters">
-              <span class="chip">移动端</span>
-              <span class="chip">桌面端</span>
-              <span class="chip">Web</span>
-              <span class="chip">PPT / 插画 / IP</span>
+              <span class="chip">报告模板</span>
+              <span class="chip">8 字段建议</span>
+              <span class="chip">Demo 生成</span>
+              <span class="chip">持久化</span>
             </div>
-            <div class="meta"><span>22 KB</span><span>6 章节</span></div>
+            <div class="meta"><span>执行层</span><span>10 章节</span></div>
           </a>
-          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/review-perspectives.md" target="_blank" rel="noopener">
-            <span class="filename">review-perspectives.md</span>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/perspectives.md" target="_blank" rel="noopener">
+            <span class="filename">perspectives.md</span>
             <h3>10 视角审查体系</h3>
             <div class="chapters">
               <span class="chip">视觉审美</span>
@@ -3254,18 +3316,28 @@
               <span class="chip">品牌一致性</span>
               <span class="chip">+ 7 视角</span>
             </div>
-            <div class="meta"><span>41 KB</span><span>10 章节</span></div>
+            <div class="meta"><span>多视角</span><span>10 视角</span></div>
           </a>
-
-          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/lazyweb-integration.md" target="_blank" rel="noopener">
-            <span class="filename">lazyweb-integration.md</span>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/platforms.md" target="_blank" rel="noopener">
+            <span class="filename">platforms.md</span>
+            <h3>6 种平台专项审查</h3>
+            <div class="chapters">
+              <span class="chip">移动端</span>
+              <span class="chip">桌面端</span>
+              <span class="chip">Web</span>
+              <span class="chip">PPT / 插画 / IP</span>
+            </div>
+            <div class="meta"><span>平台</span><span>6 平台</span></div>
+          </a>
+          <a class="ref-card" href="https://github.com/monkren/monkren-design/blob/main/references/integration.md" target="_blank" rel="noopener">
+            <span class="filename">integration.md</span>
             <h3>Lazyweb 真实证据集成</h3>
             <div class="chapters">
               <span class="chip">证据协议</span>
               <span class="chip">Prompt 工程</span>
               <span class="chip">哲学优先</span>
             </div>
-            <div class="meta"><span>27 KB</span><span>3 章节</span></div>
+            <div class="meta"><span>集成</span><span>3 章节</span></div>
           </a>
         </div>
       </div>
@@ -3321,7 +3393,7 @@
 
   <footer class="footer">
     <div class="wrap footer-row">
-      <span>Monkren Design v3.1 — 设计审查专家 Skill。个人使用免费，企业商用需授权。</span>
+      <span>Monkren Design v3.1 — 设计智能体 Skill。个人使用免费，企业商用需授权。</span>
       <span><a href="https://github.com/monkren">GitHub</a></span>
     </div>
   </footer>

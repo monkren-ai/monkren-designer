@@ -196,22 +196,23 @@ monkren-design/
 │   ├── Design Review — Landing Page.html
 │   ├── Score Improvement — Landing Page.html
 │   └── Design Suggestion — Landing Page.html
-├── skills/                  # Sub-skill modules
-│   ├── add-inspo-source/
-│   ├── design-brainstorm/
-│   ├── design-improve/
-│   ├── design-research/
-│   ├── quick-references/
-│   ├── remove-inspo-source/
-│   └── visual-taste-lab/
-└── references/              # Drill-down docs by three layers (Chinese)
-    ├── philosophy.md        # Belief Layer: 40 philosophies + 12-dim project profile + 8-field output + 5 iron rules + Demo spec
-    ├── aesthetics.md        # Standards Layer (Aesthetics): 5 dimensions + slop blacklist + scoring discipline + copy/icon rules
-    ├── design-system.md     # Standards Layer (System): 9-segment framework + hardcoded detection + compliance + SwiftLint + Token architecture
-    ├── implementation.md    # Execution Layer: workflow + report template + persistence + self-check + review examples
-    ├── platform-guides.md   # Platform guides: mobile / desktop / web / PPT / illustration / character IP
-    ├── review-perspectives.md # Multi-perspective review: 10 perspectives (visual / interaction / brand / a11y / conversion / UX / flow / journey / UI / feature presentation)
-    └── lazyweb-integration.md # Lazyweb integration: real product screenshots as evidence + Prompt engineering
+├── skills/                  # Five-stage skill matrix (21 skills)
+│   ├── discover/            # Discover: design-research / quick-references / design-brainstorm
+│   ├── define/              # Define: discovery-questions / frontend-aesthetic-direction / visual-taste-lab
+│   ├── create/              # Create: wireframe / make-a-prototype / make-a-deck / make-tweakable / generate-variations / design-system-extract / component-extract / design-improve
+│   ├── review/              # Review: accessibility-audit / ai-slop-check / hierarchy-rhythm-review / interaction-states-pass / polish-pass
+│   ├── deliver/             # Deliver: driven by execution.md (reports / Demo / score improvement)
+│   └── tools/               # Tools: add-inspo-source / remove-inspo-source
+└── references/              # Four-layer knowledge graph (Chinese)
+    ├── beliefs.md           # Belief Layer: core philosophy + anti-AI-slop beliefs + brand importance + context-first
+    ├── standards.md         # Standards Layer: 5-dim review + scoring discipline + slop blacklist + 9-segment framework + hardcoded detection + compliance + SwiftLint + Token
+    ├── philosophy-library.md # Philosophy Library: 40 design philosophies + project-type matrix + case library + concept package + gene recombination
+    ├── methods-create.md    # Methods · Create: creation workflow + question protocol + aesthetic direction + wireframe + variations + prototype + deck + tweakable + token/component extraction
+    ├── methods-review.md    # Methods · Review: review workflow + 7 trigger commands + page traversal + multi-perspective dispatch + specialized checks + Polish + self-check
+    ├── execution.md         # Execution Layer: report templates + three-layer structure + design suggestion 8 fields + radar chart + persistence + Demo generation
+    ├── perspectives.md      # Multi-perspective review: 10 perspectives (visual / interaction / brand / a11y / conversion / UX / flow / journey / UI / feature presentation)
+    ├── platforms.md         # Platform-specific: mobile / desktop / web / PPT / illustration / character IP
+    └── integration.md       # Integration & reference search: Lazyweb MCP + real product screenshots as evidence + Prompt engineering
 ```
 
 ---

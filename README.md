@@ -194,22 +194,23 @@ monkren-design/
 │   ├── Design Review — Landing Page.html
 │   ├── Score Improvement — Landing Page.html
 │   └── Design Suggestion — Landing Page.html
-├── skills/                  # 子 skill 模块
-│   ├── add-inspo-source/
-│   ├── design-brainstorm/
-│   ├── design-improve/
-│   ├── design-research/
-│   ├── quick-references/
-│   ├── remove-inspo-source/
-│   └── visual-taste-lab/
-└── references/              # 三层深度参考（中文）
-    ├── philosophy.md        # 信念层：40 哲学库 + 12 维度项目画像 + 8 字段 + 5 铁律 + Demo 规范
-    ├── aesthetics.md        # 标准层（美学）：5 维度 + slop 黑名单 + 评分纪律 + 文案/图标规范
-    ├── design-system.md     # 标准层（系统）：9 段框架 + 硬编码 + 合规 + SwiftLint + Token 架构
-    ├── implementation.md    # 执行层：工作流 + 报告模板 + 持久化 + 自检 + 审查示例
-    ├── platform-guides.md   # 平台指南：移动端/桌面端/Web/PPT/插画/角色 IP 专项审查
-    ├── review-perspectives.md # 多视角审查：10 视角（视觉/交互/品牌/可访问性/转化/UX/流程/旅程/UI/功能展示）
-    └── lazyweb-integration.md # Lazyweb 集成：真实产品截图作为证据 + Prompt 工程
+├── skills/                  # 五阶段 skill 矩阵（21 skill）
+│   ├── discover/            # 发现阶段：design-research / quick-references / design-brainstorm
+│   ├── define/              # 定义阶段：discovery-questions / frontend-aesthetic-direction / visual-taste-lab
+│   ├── create/              # 创作阶段：wireframe / make-a-prototype / make-a-deck / make-tweakable / generate-variations / design-system-extract / component-extract / design-improve
+│   ├── review/              # 审查阶段：accessibility-audit / ai-slop-check / hierarchy-rhythm-review / interaction-states-pass / polish-pass
+│   ├── deliver/             # 交付阶段：由 execution.md 驱动（报告/Demo/评分提升）
+│   └── tools/               # 工具阶段：add-inspo-source / remove-inspo-source
+└── references/              # 四层知识图谱（中文）
+    ├── beliefs.md           # 信念层：核心哲学 + 反 AI slop 信念 + 品牌重要性 + 上下文优先
+    ├── standards.md         # 标准层：5 维度评审 + 评分纪律 + 反 slop 黑名单 + 9 段框架 + 硬编码检测 + 合规 + SwiftLint + Token
+    ├── philosophy-library.md # 哲学库：40 种设计哲学风格库 + 项目类型矩阵 + 案例库 + 落地概念包 + 基因重组
+    ├── methods-create.md    # 方法层·创作：创作工作流 + 提问协议 + 美学方向 + wireframe + 变体 + 原型 + deck + tweakable + token/组件提取
+    ├── methods-review.md    # 方法层·审查：审查工作流 + 7 触发命令 + 页面遍历 + 多视角调度 + 专项检测 + Polish + 自检
+    ├── execution.md         # 执行层：报告模板 + 三层结构 + 设计建议 8 字段 + 雷达图 + 持久化 + Demo 生成
+    ├── perspectives.md      # 多视角审查：10 视角（视觉/交互/品牌/可访问性/转化/UX/流程/旅程/UI/功能展示）
+    ├── platforms.md         # 平台专项：移动端/桌面端/Web/PPT/插画/角色 IP 专项审查
+    └── integration.md       # 集成与参考搜索：Lazyweb MCP + 真实产品截图证据 + Prompt 工程
 ```
 
 ---

@@ -289,7 +289,7 @@ Don't add filler content。每个元素必须 earn its place。警惕：
 
 ### 评分纪律
 
-评审时遵循 `references/review-perspectives.md` 的 10 维度框架，并遵守 4 条铁律：
+评审时遵循 `references/perspectives.md` 的 10 维度框架，并遵守 4 条铁律：
 
 1. 禁止评分通胀——全维度 ≥7 时触发自检
 2. 禁止平均上浮——取最差持续段而非平均值
@@ -420,7 +420,7 @@ button, input, textarea, select { font: inherit; }
 
 ### SwiftLint 规则
 
-项目使用 SwiftLint 自定义规则自动检测硬编码值（字体名称/大小、颜色值、间距/尺寸、圆角值），强制使用设计系统 Token。→ 详见 `references/design-system.md`（SwiftLint 规则完整配置 + Design Token 架构）
+项目使用 SwiftLint 自定义规则自动检测硬编码值（字体名称/大小、颜色值、间距/尺寸、圆角值），强制使用设计系统 Token。→ 详见 `references/standards.md`（SwiftLint 规则完整配置 + Design Token 架构）
 
 ***
 
