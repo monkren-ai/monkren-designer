@@ -9,7 +9,7 @@ description: |
   "connect Savee", "add design source", "connect inspiration", "add Dribbble",
   "link Behance".
 allowed-tools:
-  - Bash
+  - RunCommand
   - Read
   - Write
   - AskUserQuestion

@@ -9,7 +9,7 @@ allowed-tools:
   - Glob
   - Grep
   - WebSearch
-  - Agent
+  - Task
 ---
 
 # Polish Pass：设计交付前的质量门

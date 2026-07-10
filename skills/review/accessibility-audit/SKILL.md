@@ -9,7 +9,7 @@ allowed-tools:
   - Glob
   - Grep
   - WebSearch
-  - Agent
+  - Task
 ---
 
 # 可访问性审查：WCAG 与包容性设计评审

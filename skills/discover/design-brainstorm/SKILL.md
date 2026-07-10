@@ -8,14 +8,14 @@ description: |
   "what if we tried", "unconventional approach to", "fresh ideas for",
   "think outside the box", "surprise me".
 allowed-tools:
-  - Bash
+  - RunCommand
   - Read
   - Write
   - Glob
   - Grep
   - WebSearch
   - AskUserQuestion
-  - Agent
+  - Task
 ---
 
 # Lazyweb Design Brainstorm

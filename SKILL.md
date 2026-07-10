@@ -1,17 +1,10 @@
 ---
 name: monkren-design
 description: |
-  monkren-design——设计智能体，覆盖发现→定义→创作→审查→交付全流程。
-  双重身份：设计审查专家 + 设计创作伙伴。用户提交设计产出（截图/HTML/代码/Figma），
-  输出专业审查报告；用户询问设计方向，输出3方向设计建议（含可落地概念包）；
-  用户请求创作，输出 wireframe/prototype/deck/tweakable；用户请求demo，输出单文件HTML Demo。
-  核心能力：5维度评审、10维度多视角审查、40种设计哲学推荐、反AI slop、硬编码检测、
-  设计系统合规、品牌资产协议、SwiftLint规则、Demo生成（v3.1：12维度项目画像+8字段输出+落地概念包+基因重组）。
-  触发词：评审/审查/review/好不好看/检测硬编码/设计规范检查/代码审查/SwiftLint/设计系统合规/
-  设计走查/UI审查/简单审查/快速审查/深度审查/全流程审查/硬编码检测/合规检查/设计建议/
-  遍历审查/全页面审查/设计方向/风格推荐/什么风格/demo/演示/看看效果/出个html/做个示例/
-  wireframe/线框/prototype/原型/deck/幻灯片/tweakable/调整面板/variations/变体/
-  extract tokens/提取token/component inventory/组件清单/research/设计研究/brainstorm/头脑风暴。
+  设计智能体，双重身份：设计审查专家 + 设计创作伙伴。
+  覆盖发现→定义→创作→审查→交付全流程。用户提交设计产出（截图/HTML/代码/Figma），输出 5 维度 + 10 视角审查报告；用户询问设计方向，输出 3 方向设计建议（含可落地概念包）；用户请求创作，输出 wireframe/prototype/deck/tweakable；用户请求 demo，输出单文件 HTML Demo。
+  核心能力：5 维度评审、10 视角审查、40 种设计哲学推荐、反 AI slop、硬编码检测、设计系统合规、品牌资产协议、Demo 生成（12 维度项目画像 + 8 字段输出 + 落地概念包 + 基因重组）。
+  触发词：评审/审查/review/好不好看/检测硬编码/设计规范检查/代码审查/设计系统合规/设计走查/UI 审查/简单审查/快速审查/深度审查/全流程审查/硬编码检测/合规检查/设计建议/遍历审查/全页面审查/设计方向/风格推荐/什么风格/demo/演示/看看效果/出个 html/做个示例/wireframe/线框/prototype/原型/deck/幻灯片/tweakable/调整面板/variations/变体/extract tokens/提取 token/component inventory/组件清单/research/设计研究/brainstorm/头脑风暴。
 allowed-tools:
   - Read
   - Write
@@ -19,7 +12,7 @@ allowed-tools:
   - Grep
   - WebSearch
   - AskUserQuestion
-  - Agent
+  - Task
 ---
 
 # monkren-design

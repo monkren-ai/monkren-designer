@@ -8,14 +8,14 @@ description: |
   "design feedback", "what should I change", "make this look better",
   "compare my design to", "design review".
 allowed-tools:
-  - Bash
+  - RunCommand
   - Read
   - Write
   - Glob
   - Grep
   - WebSearch
   - AskUserQuestion
-  - Agent
+  - Task
 ---
 
 # Lazyweb Design Improve

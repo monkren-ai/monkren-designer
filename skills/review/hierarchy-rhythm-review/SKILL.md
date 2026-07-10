@@ -9,7 +9,7 @@ allowed-tools:
   - Glob
   - Grep
   - WebSearch
-  - Agent
+  - Task
 ---
 
 # 层级与节奏审查

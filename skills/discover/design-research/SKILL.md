@@ -9,14 +9,14 @@ description: |
   "competitive analysis for", "design research on", "what works well for",
   "research how others do".
 allowed-tools:
-  - Bash
+  - RunCommand
   - Read
   - Write
   - Glob
   - Grep
   - WebSearch
   - AskUserQuestion
-  - Agent
+  - Task
 ---
 
 # Lazyweb Design Research

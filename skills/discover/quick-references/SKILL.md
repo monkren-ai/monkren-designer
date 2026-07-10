@@ -8,14 +8,14 @@ description: |
   "UI reference for", "what does X's app look like", "find screenshots of",
   "show me how", "references for".
 allowed-tools:
-  - Bash
+  - RunCommand
   - Read
   - Write
   - Glob
   - Grep
   - WebSearch
   - AskUserQuestion
-  - Agent
+  - Task
 ---
 
 # Lazyweb Quick References

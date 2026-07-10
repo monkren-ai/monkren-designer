@@ -9,7 +9,7 @@ allowed-tools:
   - Glob
   - Grep
   - WebSearch
-  - Agent
+  - Task
 ---
 
 # AI Slop Check：检测并修复通用的 AI 美学痕迹

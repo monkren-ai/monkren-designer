@@ -6,7 +6,7 @@ description: |
   Trigger on: "remove inspo source", "remove inspiration source",
   "disconnect Mobbin", "remove design source", "unlink source".
 allowed-tools:
-  - Bash
+  - RunCommand
   - Read
   - Write
   - AskUserQuestion

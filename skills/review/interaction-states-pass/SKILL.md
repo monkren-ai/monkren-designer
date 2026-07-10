@@ -9,7 +9,7 @@ allowed-tools:
   - Glob
   - Grep
   - WebSearch
-  - Agent
+  - Task
 ---
 
 # 交互状态完整性检查
