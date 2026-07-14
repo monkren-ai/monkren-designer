@@ -12,10 +12,15 @@
 [![License](https://img.shields.io/badge/License-Personal%20Use%20Only-orange.svg)](LICENSE)
 [![Agent-Agnostic](https://img.shields.io/badge/Agent-Agnostic-blueviolet)](https://skills.sh)
 [![Skills](https://img.shields.io/badge/skills.sh-Compatible-green)](https://skills.sh)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://monkren-ai.github.io/monkren-designer/)
 
 <br>
 
 **在你的 agent 里直接说话：审查一个设计、给个方向、做个原型。**
+
+<br>
+
+🌐 **在线预览**：<https://monkren-ai.github.io/monkren-designer/>
 
 <br>
 

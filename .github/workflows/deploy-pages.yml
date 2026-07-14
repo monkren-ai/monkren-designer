@@ -1,0 +1,43 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare public artifact
+        run: |
+          mkdir -p public
+          # 1. 主页
+          cp index.html public/
+          # 2. 资源(80 张哲学图)
+          cp -R assets public/assets
+          # 3. 案例(只复制已存在的 3 个,避免空目录错)
+          if [ -d case ]; then
+            cp -R case public/case
+          fi
+          # 4. 协议
+          cp LICENSE public/
+          # 5. 关闭 Jekyll(防止 _xxx 文件被吞)
+          touch public/.nojekyll
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
+          commit_message: "deploy: ${{ github.event.head_commit.message }}"
+          force_orphan: true
