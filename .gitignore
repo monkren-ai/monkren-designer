@@ -1,20 +1,20 @@
-# OS
-.DS_Store
-Thumbs.db
+# # OS
+# .DS_Store
+# Thumbs.db
 
-# IDE
-.vscode/
-.idea/
+# # IDE
+# .vscode/
+# .idea/
 
-# 归档 / 临时
-归档.zip
-*.zip
-*.tmp
-*.log
+# # 归档 / 临时
+# 归档.zip
+# *.zip
+# *.tmp
+# *.log
 
-# Trae 内部产物
-.trae/
+# # Trae 内部产物
+# .trae/
 
-# 环境
-.env
-.env.local
+# # 环境
+# .env
+# .env.local
