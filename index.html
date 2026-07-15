@@ -92,11 +92,11 @@
     /* Hero */
     .hero {
       min-height: calc(100svh - 64px);
-      display: flex; align-items: center;
-      padding: var(--space-56) 100px;
+      display: flex; align-items: center; justify-content: center;
+      padding: var(--space-56) 0;
       position: relative;
     }
-    .hero-inner { display: grid; gap: var(--space-40); width: 100%; }
+    .hero-inner { display: grid; gap: var(--space-40); }
     .eyebrow { display: inline-flex; align-items: center; gap: var(--space-8); color: var(--color-subtle-gray); font-size: var(--font-size-md); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase; }
     .eyebrow::before { content: ""; width: 28px; height: var(--border-w); background: currentColor; }
     h1 {
@@ -214,6 +214,58 @@
       .discipline-grid { grid-template-columns: 1fr; }
     }
 
+    /* Difference (4 列横向对比) */
+    .diff-grid { display: grid; gap: var(--space-12); }
+    .diff-row {
+      display: grid;
+      grid-template-columns: 60px 180px 1fr 1fr 1.4fr;
+      gap: var(--space-16);
+      align-items: start;
+      border: var(--border-w) solid var(--color-arctic-white);
+      padding: var(--space-20);
+    }
+    .diff-row .num {
+      font-family: var(--font-black-tie);
+      font-size: var(--font-size-xl);
+      letter-spacing: var(--letter-spacing-wide);
+      color: var(--color-warn);
+      flex: 0 0 auto;
+    }
+    .diff-row .cell { font-size: var(--font-size-md); line-height: 1.4; }
+    .diff-row .cell b {
+      display: block;
+      font-family: var(--font-black-tie);
+      font-size: var(--font-size-xs);
+      letter-spacing: var(--letter-spacing-wide);
+      text-transform: uppercase;
+      color: var(--color-subtle-gray);
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .diff-row .cell.is-monkren {
+      border-left: var(--border-w) solid var(--color-warn);
+      padding-left: var(--space-16);
+      margin-left: calc(-1 * var(--space-16));
+      color: var(--color-arctic-white);
+    }
+    .callout {
+      margin-top: var(--space-28);
+      border: var(--border-w) dashed var(--color-arctic-white);
+      padding: var(--space-20);
+      color: var(--color-subtle-gray);
+      font-size: var(--font-size-md);
+      line-height: 1.5;
+    }
+    .callout strong {
+      display: block;
+      font-family: var(--font-black-tie);
+      font-size: var(--font-size-xs);
+      letter-spacing: var(--letter-spacing-xwide);
+      text-transform: uppercase;
+      color: var(--color-warn);
+      margin-bottom: var(--space-8);
+    }
+
     /* Compat agents */
     .compat { display: flex; flex-wrap: wrap; gap: var(--space-12); }
     .compat span {
@@ -235,6 +287,10 @@
       .section { padding: var(--space-56) 0; }
       .hero { min-height: auto; padding: var(--space-40) 0; }
       h1 { font-size: var(--font-size-3xl); }
+      .diff-row { grid-template-columns: auto 1fr; gap: var(--space-12); }
+      .diff-row .cell { grid-column: 2; }
+      .diff-row .cell b { margin-top: var(--space-8); }
+      .diff-row .cell.is-monkren { border-left: none; padding-left: 0; margin-left: 0; }
     }
   </style>
 </head>
@@ -383,6 +439,57 @@
             <span>CodeBuddy</span>
             <span>Workbuddy</span>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="difference" class="section" aria-labelledby="difference-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Difference · 1 个 design agent，不是 1 个 agent</span>
+          <h2 id="difference-title">monkren = 1 个 design agent。通用 agent 是 1 个 coder。</h2>
+          <p>它们回答"怎么做出来"。monkren 额外回答"做出来好不好 · 像不像你 · 怎么修到 9 分"。</p>
+        </div>
+        <div class="diff-grid">
+          <div class="diff-row">
+            <span class="num">01</span>
+            <span class="cell"><b>维度</b>方法论</span>
+            <span class="cell"><b>通用 coding agent</b>按 prompt 实现，能跑就行</span>
+            <span class="cell"><b>AI 设计工具 · Review 工具</b>按组件生成 / 按 checklist 打勾</span>
+            <span class="cell is-monkren"><b>monkren</b>5 维度评审（哲学 / 层级 / 细节 / 功能 / 创新）</span>
+          </div>
+          <div class="diff-row">
+            <span class="num">02</span>
+            <span class="cell"><b>维度</b>反馈形式</span>
+            <span class="cell"><b>通用 coding agent</b>输出代码，无评价</span>
+            <span class="cell"><b>AI 设计工具 · Review 工具</b>输出原型 / 输出"是否通过"二分</span>
+            <span class="cell is-monkren"><b>monkren</b>5 维度分数 + 文件路径 + 行号 + 元素名（强制引证）</span>
+          </div>
+          <div class="diff-row">
+            <span class="num">03</span>
+            <span class="cell"><b>维度</b>诚实底线</span>
+            <span class="cell"><b>通用 coding agent</b>鼓励你"再试一次 prompt"</span>
+            <span class="cell"><b>AI 设计工具 · Review 工具</b>默认打 8/10，让你高兴</span>
+            <span class="cell is-monkren"><b>monkren</b>4 评分纪律：禁通胀 / 禁上浮 / 必须引证 / 创新性允许 5/10</span>
+          </div>
+          <div class="diff-row">
+            <span class="num">04</span>
+            <span class="cell"><b>维度</b>生命周期</span>
+            <span class="cell"><b>通用 coding agent</b>写代码</span>
+            <span class="cell"><b>AI 设计工具 · Review 工具</b>画原型 / 审成品</span>
+            <span class="cell is-monkren"><b>monkren</b>5 阶段可迭代：调研 → 创作 → 执行 → 审查 → 改进（审查不通过回到 02）</span>
+          </div>
+          <div class="diff-row">
+            <span class="num">05</span>
+            <span class="cell"><b>维度</b>人格一致性</span>
+            <span class="cell"><b>通用 coding agent</b>切换 model / persona 不连续</span>
+            <span class="cell"><b>AI 设计工具 · Review 工具</b>工具与 agent 分离，"好品味"分散在 prompt</span>
+            <span class="cell is-monkren"><b>monkren</b>1 个 design taste 贯穿 5 阶段（同一段对话不换人）</span>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>为什么用 "design agent" 不是 "skill bundle"</strong>
+          bolt / v0 / cursor 是工具箱——"好品味"分散在 prompt 和 preset 里，你得自己拼。monkren 是 1 个 agent——"好品味"写进 5 维度 + 4 纪律的硬规则里，每条输出都按它走。
         </div>
       </div>
     </section>
