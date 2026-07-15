@@ -1,15 +1,13 @@
 ---
 name: design-improve
-deprecated: true
-deprecated_since: v5.0
 description: |
-  [DEPRECATED v5.0] Capture a screenshot of the user's current design, find similar screens in Lazyweb,
+  Capture a screenshot of the user's current design, find similar screens in Lazyweb,
   and generate concrete improvement ideas backed by real references. Use when the user
   has an existing design and wants feedback or improvement suggestions.
   Trigger on: "improve this design", "how can I make this better", "critique my design",
   "design feedback", "what should I change", "make this look better",
   "compare my design to", "design review".
-  本 skill 在 v5.0 标 deprecated。6 个月后无用户使用则物理删除。详见 SKILL.md §8。
+  v5.1 撤回 deprecated 标记——本 skill 是 monkren 核心 workflow `5-dim-review → design-improve` 的关键环节。
 allowed-tools:
   - RunCommand
   - Read
@@ -21,9 +19,7 @@ allowed-tools:
   - Task
 ---
 
-> ⚠️ **DEPRECATED · v5.0 起标 deprecated** · 6 个月后无用户使用则物理删除。
-> 砍掉原因：monkren 在 create 领域打不过 Bolt / v0 / Cursor。"design improve" 实际上是 review 工作，应该走 `5-dim-review` 路由。设计改进建议应当基于 5 维度评审 + 4 条纪律，而不是另起一个新 skill。
-> 详细说明：根 [SKILL.md §8](../../../../SKILL.md#8-8-个-create-skilldeprecated)
+> ✅ **v5.1 撤回 deprecated** · 本 skill 是 monkren 核心 workflow `5-dim-review → design-improve` 的修复端——5 维度评审报告生成后，本 skill 输出具体可执行的修复路径。设计品味 applied forward。
 
 # Lazyweb Design Improve
 

@@ -1,13 +1,13 @@
 <sub>🌐 <a href="README.en.md">English</a> · <b>中文</b></sub>
 
-> 当前版本：**v5.0** / 2026-07-15 / 架构：**3 段路由 + 5 维度评审 + 4 条纪律**
+> 当前版本：**v6.0** / 2026-07-15 / 架构：**1 个设计智能体 + 5 阶段设计生命周期** + 5 维度评审 + 4 条评分纪律
 
 <div align="center">
 
 # Monkren
 
-> *「你的 AI 设计的 slop 检测器。」*
-> *"An AI slop detector for your designs."*
+> *「1 个设计智能体 · 5 阶段设计生命周期。」*
+> *"One design agent. Five design stages. Same design taste across the whole arc."*
 
 [![License](https://img.shields.io/badge/License-Personal%20Use%20Only-orange.svg)](LICENSE)
 [![Agent-Agnostic](https://img.shields.io/badge/Agent-Agnostic-blueviolet)](https://skills.sh)
@@ -24,13 +24,14 @@
 
 <br>
 
-提交一个设计——截图、HTML、代码、Figma。Monkren 用 **5 维度评审** + **反 AI slop 黑名单** + **硬编码值检测**，30 秒告诉你是 *insanely great* 还是 *AI 训练语料的最大公约数*。
+1 个设计智能体覆盖 5 阶段设计生命周期：**调研定义 → 创作定义 → 设计执行 → 设计审查 → 设计改进**。**5 阶段可迭代**——审查不通过回到创作定义，改进后产生新需求回到调研定义。**同一个设计品味**贯穿全程。
 
 ```
+
 npx skills add monkren-ai/monkren-designer
 ```
 
-[快速开始](#快速开始) · [3 段路由](#3-段路由) · [5 维度 + 4 纪律](#5-维度--4-纪律) · [v4.0 → v5.0 变更](#v40--v50-变更) · [仓库结构](#仓库结构)
+[快速开始](#快速开始) · [5 阶段路由](#5-阶段路由) · [5 维度 + 4 纪律](#5-维度--4-纪律) · [v5.x → v6.0 变更](#v5x--v60-变更) · [仓库结构](#仓库结构)
 
 </div>
 
@@ -45,35 +46,54 @@ npx skills add monkren-ai/monkren-designer
 装上后，在你的 agent 里直接说：
 
 ```
-> 这个设计是不是 AI slop？
-> 扫描这段代码里的硬编码颜色、字体、间距
-> 5 维度评审这个落地页
+> 帮我调研这个领域的设计方向
+> 给 3 个设计变体方向
+> 5 维度评审这个设计
+> 修复这个设计（基于审查报告）
 ```
 
-Monkren 自动路由到 3 段能力之一，输出可操作的修复建议。
+Monkren 自动路由到 5 阶段之一，输出可操作的产出。
 
 **兼容 agent**：Claude Code · Cursor · Codex · OpenClaw · Hermes · CodeBuddy · Workbuddy
 
 ---
 
-## 3 段路由
+## 5 阶段路由
 
-| 你问 | 路由到 | 输出 |
-|------|-------|------|
-| 「这个设计是不是 AI slop？」 | `slop-check` | 9 类 slop 痕迹逐项检查 + 严重度 |
-| 「扫描硬编码值」 | `hardcode-scan` | 颜色/字体/间距硬编码清单 + token 替换建议 |
-| 「5 维度评审 / 审查这个设计」 | `5-dim-review` | 5 维度雷达图 + 评分纪律 + 修复路径 |
+```
+1 个设计智能体 · 5 阶段生命周期
+═══════════════════════════════════════════
+调研定义 ─→ 创作定义 ─→ 设计执行 ─→ 设计审查 ─→ 设计改进
+   01         02          03          04          05
+═══════════════════════════════════════════
+                                                    ↺ 反馈循环
+```
 
-> 模糊请求默认走 `5-dim-review`（最完整）。
-> 多意图请求：先 `hardcode-scan`（最快），再 `5-dim-review`（最全），`slop-check` 作为补充。
+| # | 阶段 | 问什么 | 主要 skill |
+|---|------|-------|----------|
+| 1 | **调研定义** | 现状 / 约束 / 方向 | design-research · design-brainstorm · visual-taste-lab · discovery-questions · frontend-aesthetic-direction · quick-references |
+| 2 | **创作定义** | 做什么 / 选哪个 | generate-variations · wireframe |
+| 3 | **设计执行** | 怎么做出来 | make-a-prototype |
+| 4 | **设计审查** | 做出来好不好 | 5-dim-review（核心） · ai-slop-check · accessibility-audit · hierarchy-rhythm-review · interaction-states-pass · polish-pass |
+| 5 | **设计改进** | 怎么修 | design-improve |
 
-完整路由逻辑见 [SKILL.md §1](SKILL.md#1-三段路由)。
+| 你说 | 阶段 | 路由到 |
+|------|------|--------|
+| 「调研 / 研究 / 头脑风暴 / 查参考」 | 调研定义 | `01-research/*` |
+| 「线框 / lo-fi 探索 / 3+ 设计方向」 | 创作定义 | `02-create/*` |
+| 「做个原型 / 高保真 / 可交互 demo」 | 设计执行 | `03-execute/*` |
+| 「5 维度评审 / 审查 / 反 slop / 无障碍 / 节奏 / 交互状态 / polish」 | 设计审查 | `04-review/*` |
+| 「修复 / 改进这个设计」 | 设计改进 | `05-improve/design-improve` |
+
+> **5 阶段可迭代**：审查不通过 → 回到创作定义。改进后产生新需求 → 回到调研定义。线性是默认，迭代是常态。
+
+完整路由逻辑见 [SKILL.md §2](SKILL.md#2-5-阶段路由表)。
 
 ---
 
 ## 5 维度 + 4 纪律
 
-### 5 维度评审
+### 5 维度评审（贯穿全阶段）
 
 | 维度 | 问什么 |
 |------|-------|
@@ -83,7 +103,7 @@ Monkren 自动路由到 3 段能力之一，输出可操作的修复建议。
 | **功能性** | 每个元素是否服务于目标 |
 | **创新性** | 是否避免了 cliché |
 
-### 4 条评分纪律（铁律）
+### 4 条评分纪律（铁律 · 贯穿全阶段）
 
 1. **禁止评分通胀**——全维度 ≥7 时强制自检
 2. **禁止平均上浮**——取最差持续段而非平均值
@@ -96,16 +116,20 @@ Monkren 自动路由到 3 段能力之一，输出可操作的修复建议。
 
 ---
 
-## v4.0 → v5.0 变更
+## v5.x → v6.0 变更
 
-| 维度 | v4.0 | v5.0 |
-|------|------|------|
-| **架构** | 5 阶段 21-skill 矩阵 | 3 段路由 + 5 维度评审 |
-| **定位** | 双重身份（审查员 + 创作者） | 单一身份（AI slop 检测器） |
-| **Create skill** | 8 个（wireframe / 原型 / 变体 / deck / tweakable / token / 组件 / improve） | **DEPRECATED**——打不过 Bolt / v0 / Cursor，6 个月后无使用则删除 |
-| **Reference** | 9 份 | 3 份公开（beliefs / standards / methods-review） + 6 份 INTERNAL |
-| **Landing page** | 9 个 section / 3401 行 / 140KB | 4 个 section / 362 行 / 16.7KB |
-| **Tagline** | "设计智能体" | "AI 设计的 slop 检测器" |
+| 维度 | v5.0 | v5.1 | v5.1.1 | **v6.0** |
+|------|------|------|--------|----------|
+| **架构** | 3 段路由 | 2 大类（审查 + 创作） | 2 大类 + slop framing 修正 | **1 智能体 + 5 阶段生命周期** |
+| **阶段数** | 3 段 | 2 大类 | 2 大类 | **5 阶段**（调研 / 创作 / 执行 / 审查 / 改进） |
+| **物理结构** | skills/{create, discover, define, review, deliver, tools} | 同 v5.0 | 同 v5.0 | **skills/{01-research, 02-create, 03-execute, 04-review, 05-improve, tools, _deprecated}** |
+| **活跃 skill** | 3 个 | 6 个 | 6 个 | **15 个**（6 + 2 + 1 + 5 + 1） |
+| **Wireframe** | DEPRECATED | DEPRECATED | DEPRECATED | **复活（创作定义阶段）** |
+| **DEPRECATED** | 8 个 | 5 个 | 5 个 | **4 个**（移入 _deprecated/） |
+| **Tagline** | "AI 设计的 slop 检测器" | "设计审查与创作改进" | 同 v5.1 | **"1 个设计智能体 · 5 阶段设计生命周期"** |
+| **Unifying principle** | "反 slop" | "设计品味 applied forward and backward" | 同 v5.1 | **"1 智能体 + 5 阶段，1 个 taste 贯穿"** |
+
+> **v6.0 关键转变**：v5.x 把项目当作 "工具集合"（2 大类 / 3 段路由）——用户进来不知道下一步。v6.0 把它当作 **1 个完整的设计智能体**——用户提交需求，monkren 走完 5 阶段，每阶段调用对应 skill。**5 阶段可迭代**而非纯线性。
 
 完整策略见 [case/Project Strategy — Design Review.html](case/Project%20Strategy%20%E2%80%94%20Design%20Review.html)。
 
@@ -116,8 +140,8 @@ Monkren 自动路由到 3 段能力之一，输出可操作的修复建议。
 ```
 monkren-designer/
 ├── README.md                  ← 你在这里
-├── SKILL.md                   ← agent 入口（3 段路由 + 5 维度 + 4 纪律）
-├── index.html                 ← 在线预览（v5.0，4 section）
+├── SKILL.md                   ← agent 入口（1 智能体 + 5 阶段 + 5 维度 + 4 纪律）
+├── index.html                 ← 在线预览（v6.0）
 ├── LICENSE
 ├── case/                      ← 真实审查报告（4 份）
 │   ├── Design Review — Landing Page.html
@@ -134,13 +158,43 @@ monkren-designer/
 │   ├── philosophy-library.md  ← INTERNAL
 │   ├── methods-create.md      ← INTERNAL
 │   └── execution.md           ← INTERNAL
-├── skills/                    ← skill 矩阵
-│   ├── discover/              ← 调研阶段
-│   ├── define/                ← 定义阶段
-│   ├── create/                ← [DEPRECATED] 创作阶段
-│   ├── review/                ← 审查阶段
-│   ├── deliver/               ← 交付阶段
-│   └── tools/                 ← 工具
+├── skills/                    ← skill 矩阵（v6.0 · 5 阶段）
+│   ├── 01-research/           ← 调研定义（6 skills）
+│   │   ├── design-research/
+│   │   ├── design-brainstorm/
+│   │   ├── quick-references/
+│   │   ├── discovery-questions/
+│   │   ├── frontend-aesthetic-direction/
+│   │   ├── visual-taste-lab/
+│   │   └── README.md
+│   ├── 02-create/             ← 创作定义（2 skills）
+│   │   ├── generate-variations/
+│   │   ├── wireframe/         ← v6.0 复活
+│   │   └── README.md
+│   ├── 03-execute/            ← 设计执行（1 skill）
+│   │   ├── make-a-prototype/
+│   │   └── README.md
+│   ├── 04-review/             ← 设计审查（5 skills）
+│   │   ├── 5-dim-review/      ← （main method，方法层定义在 references/）
+│   │   ├── ai-slop-check/
+│   │   ├── accessibility-audit/
+│   │   ├── hierarchy-rhythm-review/
+│   │   ├── interaction-states-pass/
+│   │   ├── polish-pass/
+│   │   └── README.md
+│   ├── 05-improve/            ← 设计改进（1 skill）
+│   │   ├── design-improve/
+│   │   └── README.md
+│   ├── tools/                 ← 跨阶段工具
+│   │   ├── add-inspo-source/
+│   │   ├── remove-inspo-source/
+│   │   └── README.md
+│   └── _deprecated/           ← 4 个边缘 create skill（DEPRECATED）
+│       ├── component-extract/
+│       ├── design-system-extract/
+│       ├── make-a-deck/
+│       ├── make-tweakable/
+│       └── README-create-v5.md
 └── assets/
     └── philosophy-images/     ← 80 张设计哲学参考图
 ```
@@ -154,4 +208,4 @@ monkren-designer/
 
 ---
 
-**v5.0 · 2026-07-15** · 砍 80%，做 1,000 songs in your pocket。
+**v6.0 · 2026-07-15** · 1 个设计智能体 · 5 阶段设计生命周期 · 同一个 taste 贯穿全程。

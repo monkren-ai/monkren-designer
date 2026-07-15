@@ -888,7 +888,7 @@ button:focus-visible {
 - 必填字段明确标记(用文字,不只颜色)
 - 用 `type="email"`、`type="tel"`、`autocomplete` 属性获得更好的移动键盘和自动填充
 
-**可访问性审查流程** → `references/methods-review.md`(可访问性检测)+ `skills/review/accessibility-audit/`
+**可访问性审查流程** → `references/methods-review.md`(可访问性检测)+ `skills/04-review/accessibility-audit/`
 
 ---
 
@@ -925,7 +925,7 @@ button {
 ### 16.4 状态可见性
 当前页面、tab、选中、过滤器必须视觉上区分。如果一切都一样,用户不知道他在哪或选了什么。
 
-**交互状态审查流程** → `references/methods-review.md`(交互状态检测)+ `skills/review/interaction-states-pass/`
+**交互状态审查流程** → `references/methods-review.md`(交互状态检测)+ `skills/04-review/interaction-states-pass/`
 
 ---
 
@@ -986,7 +986,7 @@ Tokens 是系统构建的原子单元:
 
 这是把 UI 变成设计系统的关键——其他人可以基于此构建,不用每次问你。
 
-**组件提取方法** → `references/methods-create.md`(组件提取)+ `skills/create/component-extract/`
+**组件提取方法** → `references/methods-create.md`(组件提取)+ `skills/_deprecated/component-extract/`
 
 ---
 

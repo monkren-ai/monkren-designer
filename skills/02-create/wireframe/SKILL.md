@@ -1,10 +1,8 @@
 ---
 name: wireframe
-deprecated: true
-deprecated_since: v5.0
 description: |
-  [DEPRECATED v5.0] 低保真线框探索。在 hi-fi 之前用纯黑白线框快速探索布局方案，5 个 phase 覆盖目标确认/布局骨架/内容优先级/变体对比/方向锁定。触发词：「线框」「wireframe」「低保真」「布局探索」「lo-fi」「草图」「layout sketch」。
-  本 skill 在 v5.0 标 deprecated。6 个月后无用户使用则物理删除。详见 SKILL.md §8。
+  低保真线框探索。在 hi-fi 之前用纯黑白线框快速探索布局方案，5 个 phase 覆盖目标确认/布局骨架/内容优先级/变体对比/方向锁定。属于 monkren v6.0 设计生命周期的**第 2 阶段（创作定义）**。触发词：「线框」「wireframe」「低保真」「布局探索」「lo-fi」「草图」「layout sketch」。
+  v6.0 撤回 v5.0 的 DEPRECATED 标记——本 skill 是 02 创作定义阶段的核心能力。
 allowed-tools:
   - Read
   - Write
@@ -14,9 +12,7 @@ allowed-tools:
   - AskUserQuestion
 ---
 
-> ⚠️ **DEPRECATED · v5.0 起标 deprecated** · 6 个月后无用户使用则物理删除。
-> 砍掉原因：monkren 在 create 领域打不过 Bolt / v0 / Cursor。如果你的需求是「线框探索」，建议使用 Bolt 或 v0；如果你需要「5 维度评审已有的线框/原型」，用 `5-dim-review` 路由。
-> 详细说明：根 [SKILL.md §8](../SKILL.md#8-8-个-create-skilldeprecated)
+> ✅ **v6.0 复活** · 本 skill 是 monkren 设计生命周期第 2 阶段（创作定义）的核心能力。lo-fi 探索不需要"打得过 Bolt / v0"——它服务于"先用最便宜的方式探索方向"这个 workflow 目的。
 
 # Wireframe：快速探索多种想法
 

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Project Strategy — Monkren Design v5.0 (Executed)</title>
-  <meta name="description" content="基于乔布斯视角审查的 Monkren Design 完整方案。v5.0 已执行：3 段路由 + 80 哲学库砍掉 / 8 create skill deprecated / landing page 16.7KB / SKILL.md 137 行。" />
+  <title>Project Strategy — Monkren Design v6.0 (Executed)</title>
+  <meta name="description" content="Monkren Design 完整方案。v6.0 已执行：1 智能体 + 5 阶段设计生命周期（调研定义 / 创作定义 / 设计执行 / 设计审查 / 设计改进）+ skills 物理重组到 5 阶段新结构。" />
   <style>
     :root {
       --color-canvas-black: #000000;
@@ -108,7 +108,7 @@
   <a class="skip-link" href="#main">跳到主要内容</a>
   <header class="top">
     <div class="wrap top-row">
-      <a class="brand" href="#top"><span class="mark">M</span><span>Monkren Design v4.0</span></a>
+      <a class="brand" href="#top"><span class="mark">M</span><span>Monkren Design v5.1.1</span></a>
       <span class="panel-label">Project Strategy</span>
     </div>
   </header>
@@ -698,11 +698,146 @@
         </tbody>
       </table>
     </section>
+
+    <!-- 10. v5.1 微调（用户反馈"核心定义偏移"） -->
+    <section>
+      <h2>10. v5.1 微调（2026-07-15 · 同日）</h2>
+      <p>v5.0 执行后用户反馈："核心定义稍微有点偏移。核心不是反 AI slop，核心是创作与设计审查。"</p>
+      <p>v5.1 修正：</p>
+      <ul>
+        <li>identity 从 "AI slop 检测器" 改回 "设计审查与创作改进"</li>
+        <li>新 unifying principle：<strong>设计品味 applied forward and backward</strong>——审查是品味 applied backward（5 维度评审），创作是品味 applied forward（修复 / 变体 / 原型）</li>
+        <li>SKILL.md routing 从 3 段 → 2 大类（审查 + 创作）</li>
+        <li>8 个 create skill 中 3 个核心（design-improve / generate-variations / make-a-prototype）撤回 deprecated</li>
+        <li>Landing page Method section 改为 2 列：审查 + 创作</li>
+        <li>README tagline 改为 "设计审查与创作改进"</li>
+      </ul>
+
+      <div class="quote">
+        我砍过头了。"Slop 检测器" 是个 1 功能的工具标签，不是 1 个产品的 identity。monkren 的核心从来不是反 AI。monkren 的核心是<strong>设计品味</strong>。创作需要 taste 做决策。审查需要 taste 做判断。同一个 taste，两个时间点。
+        <span class="who">— v5.1 自我修正 · 同 persona</span>
+      </div>
+
+      <h3>10.1 v5.0 → v5.1 改动清单（6 处）</h3>
+      <table>
+        <thead><tr><th style="width: 12%">文件</th><th style="width: 44%">改动</th><th style="width: 44%">结果</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/SKILL.md">SKILL.md</a></td><td>§1 routing 从 3 段 → 2 大类（审查 + 创作）；§8 create skill 状态从 "8 个 DEPRECATED" → "3 撤回 + 5 DEPRECATED"</td><td>2 大类 routing · 3+5 拆分</td></tr>
+          <tr><td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/index.html">index.html</a></td><td>title / hero tagline / 3 queries / Method section 改 2 列 / footer</td><td>Tagline "设计审查与创作改进"</td></tr>
+          <tr><td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/README.md">README.md</a></td><td>hero / 2 大类 routing / v4.0→v5.1 变更表 / 仓库结构</td><td>Dual identity 统一</td></tr>
+          <tr><td>skills/create/design-improve/SKILL.md</td><td>撤回 deprecated · 顶部加 ✅ 激活 banner</td><td>活跃 skill</td></tr>
+          <tr><td>skills/create/generate-variations/SKILL.md</td><td>撤回 deprecated · 顶部加 ✅ 激活 banner</td><td>活跃 skill</td></tr>
+          <tr><td>skills/create/make-a-prototype/SKILL.md</td><td>撤回 deprecated · 顶部加 ✅ 激活 banner</td><td>活跃 skill</td></tr>
+          <tr><td>skills/create/README.md</td><td>从 "全部 DEPRECATED" → "3 活跃 + 5 DEPRECATED"</td><td>3+5 拆分</td></tr>
+        </tbody>
+      </table>
+
+      <h3>10.2 v5.1 新身份 · 最终版</h3>
+      <div class="quote">
+        <strong>Monkren = 设计审查与创作改进。</strong><br>
+        同一段对话里既当审查员，也当创作教练。<br>
+        同一个设计品味，<em>applied forward and backward</em>。
+        <span class="who">— v5.1 tagline · 2026-07-15</span>
+      </div>
+    </section>
+
+    <!-- 10.3 v5.1.1 微调（同日 · framing 修正） -->
+    <section>
+      <h3>10.3 v5.1.1 framing 微调（2026-07-15 · 同日）</h3>
+      <p>v5.1 改回 "设计审查与创作改进" 双重身份后，**SKILL.md 的 description / 路由表 / §4 仍在 framing 上把 slop-check 放在与 5 维度评审并列的位置**——容易让用户把 monkren 误读为"反 slop 工具"。</p>
+
+      <h4>问题诊断：v5.1 framing 残留</h4>
+      <table>
+        <thead><tr><th style="width: 30%">位置</th><th style="width: 35%">v5.1 framing（误读风险）</th><th style="width: 35%">v5.1.1 修正</th></tr></thead>
+        <tbody>
+          <tr><td>SKILL.md description</td><td>"5 维度评审 + 反 AI slop 黑名单 + 硬编码值检测" 三个并列</td><td>5 维度评审 + 4 纪律 为主，反 AI 化信号 / 硬编码 显式标"辅助工具"</td></tr>
+          <tr><td>SKILL.md §1 路由表</td><td>"这个设计是不是 AI slop？" 排第一</td><td>5-dim-review 排第一（核心 · 默认），slop-check 移到底部并标"辅助"</td></tr>
+          <tr><td>SKILL.md §4</td><td>"反 AI slop 黑名单（9 类）" 独立大章节</td><td>改名为"辅助工具 A · 反 AI 化信号"，明确是 5 维度的补充</td></tr>
+          <tr><td>README hero</td><td>"5 维度评审 + 反 AI slop + 硬编码值检测" 三并列</td><td>"5 维度评审 + 4 条评分纪律" 为核心，明确"辅助"层级</td></tr>
+          <tr><td>index.html method section</td><td>"反 AI slop 黑名单 · 9 类" 与 5 维度平级</td><td>改名"反 AI 化信号 · 辅助 · 9 类"</td></tr>
+          <tr><td>index.html 顶部进度条</td><td>"SLOP · 0%" 视觉签名</td><td>改名为"DEPTH · 0%"（进度指示）</td></tr>
+        </tbody>
+      </table>
+
+      <h4>v5.1.1 改动清单（6 处）</h4>
+      <table>
+        <thead><tr><th style="width: 14%">文件</th><th style="width: 50%">改动</th><th style="width: 36%">结果</th></tr></thead>
+        <tbody>
+          <tr><td>SKILL.md</td><td>description 重写（5 维度 + 4 纪律为主）；§1 路由表 5-dim-review 排第一、slop-check 标"辅助"；§4 改名"辅助工具 A · 反 AI 化信号"；§5 改名"辅助工具 B"；§7/§9 同步；版本 v5.1 → v5.1.1</td><td>核心 = 5 维度评审；slop-check 显式降为辅助</td></tr>
+          <tr><td>README.md</td><td>hero 段落 reframe；变更表加 v5.1.1 列 + 新增"Slop-check 定位"行；"v5.1.1 关键纠正"段落</td><td>变更表记录 framing 修正</td></tr>
+          <tr><td>index.html</td><td>meta description 重写；method section 4 条纪律升到第二位，slop-check 标"辅助"；顶部"SLOP" 进度条改"DEPTH"；版本号</td><td>视觉层不再有"反 slop"信号</td></tr>
+        </tbody>
+      </table>
+
+      <div class="quote">
+        v5.1 把 tagline 改对了，但文件的 framing 还没改对。description / 路由表 / §4 / landing page 视觉签名——四处在反复告诉用户"我们主要是反 slop 的"。<strong>tagline 和 framing 必须同时改，否则 tagline 是谎言。</strong>
+        <span class="who">— v5.1.1 framing 修正 · 同 persona</span>
+      </div>
+    </section>
+
+    <!-- 11. v6.0 5 阶段设计生命周期重组（同日） -->
+    <section>
+      <h2>11. v6.0 5 阶段设计生命周期（2026-07-15 · 同日）</h2>
+      <p>v5.1.1 framing 修正后，用户给出新方向："调研定义优化整合为一个设计智能体，会使用设计阶段各种技能，创作定义、设计执行、设计审查、设计改进。"</p>
+
+      <h3>11.1 关键判断</h3>
+      <p>v5.x 的根本问题：<strong>把项目当"工具集合"</strong>（2 大类 / 3 段路由）——用户进来不知道 monkren 是什么、不知道下一步。v6.0 把它当 <strong>1 个完整的设计智能体</strong>——用户提交需求，monkren 走完 5 阶段，每阶段调用对应 skill。</p>
+
+      <p>5 阶段设计生命周期：</p>
+      <table>
+        <thead><tr><th style="width: 8%">#</th><th style="width: 20%">阶段</th><th style="width: 28%">问什么</th><th style="width: 44%">主要 skill</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td><strong>调研定义</strong></td><td>现状 / 约束 / 方向</td><td>design-research · design-brainstorm · quick-references · discovery-questions · frontend-aesthetic-direction · visual-taste-lab</td></tr>
+          <tr><td>02</td><td><strong>创作定义</strong></td><td>做什么 / 选哪个方向</td><td>wireframe · generate-variations</td></tr>
+          <tr><td>03</td><td><strong>设计执行</strong></td><td>怎么做出来</td><td>make-a-prototype</td></tr>
+          <tr><td>04</td><td><strong>设计审查</strong></td><td>做出来好不好</td><td>5-dim-review（核心） · ai-slop-check · accessibility-audit · hierarchy-rhythm-review · interaction-states-pass · polish-pass</td></tr>
+          <tr><td>05</td><td><strong>设计改进</strong></td><td>怎么修</td><td>design-improve</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>5 阶段可迭代</strong>：线性是默认，迭代是常态。审查不通过 → 回到创作定义。改进后产生新需求 → 回到调研定义。</p>
+
+      <h3>11.2 物理重组</h3>
+      <table>
+        <thead><tr><th style="width: 30%">v5.x（旧）</th><th style="width: 30%">v6.0（新）</th><th style="width: 40%">说明</th></tr></thead>
+        <tbody>
+          <tr><td><code>discover/</code> + <code>define/</code></td><td><code>01-research/</code></td><td>调研 + 定义 合并为第 1 阶段</td></tr>
+          <tr><td><code>create/</code>（部分）</td><td><code>02-create/</code></td><td>wireframe + generate-variations → 创作定义</td></tr>
+          <tr><td><code>create/</code>（部分）</td><td><code>03-execute/</code></td><td>make-a-prototype → 设计执行</td></tr>
+          <tr><td><code>create/</code>（部分）</td><td><code>05-improve/</code></td><td>design-improve → 设计改进</td></tr>
+          <tr><td><code>review/</code></td><td><code>04-review/</code></td><td>5 个 review skill（5-dim-review 是核心方法）</td></tr>
+          <tr><td><code>deliver/</code>（空）</td><td>（删除）</td><td>v5.0 砍空，v6.0 不再需要</td></tr>
+          <tr><td><code>create/</code>（4 个 DEPRECATED）</td><td><code>_deprecated/</code></td><td>移到下划线前缀目录，记录而非删除</td></tr>
+          <tr><td><code>tools/</code></td><td><code>tools/</code></td><td>不变</td></tr>
+        </tbody>
+      </table>
+
+      <h3>11.3 wireframe 复活</h3>
+      <p>v5.0 把 wireframe（lo-fi 探索）标 DEPRECATED 的理由是"打不过 Bolt / v0"。v6.0 重新评估：lo-fi 探索属于"创作定义"阶段的合理能力，monkren 的 lo-fi 不需要"打得过 Bolt"——它服务于"先用最便宜的方式探索方向"这个 workflow 目的。</p>
+      <p>v6.0 撤回 wireframe 的 DEPRECATED 标记，迁入 <code>02-create/</code>。</p>
+
+      <h3>11.4 改动清单（v5.1.1 → v6.0）</h3>
+      <table>
+        <thead><tr><th style="width: 14%">文件 / 目录</th><th style="width: 50%">改动</th><th style="width: 36%">结果</th></tr></thead>
+        <tbody>
+          <tr><td>skills/ 物理结构</td><td>discover/define/create/review/deliver 重组为 01-research/02-create/03-execute/04-review/05-improve/；4 个 DEPRECATED 移入 _deprecated/</td><td>5 阶段物理结构清晰</td></tr>
+          <tr><td>SKILL.md</td><td>重写：1 智能体 + 5 阶段生命周期；路由表按 5 阶段组织；5 维度贯穿全阶段；4 个 deprecated skill 移入 _deprecated/</td><td>入口反映 5 阶段</td></tr>
+          <tr><td>README.md</td><td>tagline → "1 个设计智能体 · 5 阶段设计生命周期"；5 阶段路由表；v5.x → v6.0 变更表</td><td>对外文档同步</td></tr>
+          <tr><td>index.html</td><td>title / meta / 进度指示 DEPTH / method section 5 阶段卡片 / 4 阶段 queries</td><td>landing page 反映 5 阶段</td></tr>
+          <tr><td>wireframe/SKILL.md</td><td>撤回 DEPRECATED 标记 · 迁入 02-create/</td><td>复活为活跃 skill</td></tr>
+        </tbody>
+      </table>
+
+      <div class="quote">
+        v5.x 是一组工具。v6.0 是一台机器。用户进来看到的是 1 个 monkren，不是 21 个 skill 各自飞。<strong>同一段对话里 monkren 走完 5 阶段，输出设计。</strong>工具集合是 component；设计智能体是 product。乔布斯说"product 让用户行动"——v6.0 才开始是 product。
+        <span class="who">— v6.0 5 阶段生命周期 · 同 persona</span>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <div class="wrap footer-row">
-      <span>Project Strategy — Monkren Design v5.0 · 2026-07-15</span>
+      <span>Project Strategy — Monkren Design v6.0 · 2026-07-15</span>
       <span><a href="https://github.com/monkren-ai/monkren-designer">GitHub</a> · <a href="https://monkren-ai.github.io/monkren-designer/">Live Page</a></span>
     </div>
   </footer>

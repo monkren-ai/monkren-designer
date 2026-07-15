@@ -307,7 +307,7 @@
 
 ### 6.1 可访问性检测流程(Accessibility Audit)
 
-> 对应 skill: `skills/review/accessibility-audit/` | 标准: `references/standards.md` §11
+> 对应 skill: `skills/04-review/accessibility-audit/` | 标准: `references/standards.md` §11
 
 **Phase 1:识别要审的 surface**——审用户刚编辑或问到的 HTML 文件;否则最近修改的设计文件;不清楚就问。读全文,note 框架、期望级别(默认 WCAG AA)、用户声明的约束。
 
@@ -351,7 +351,7 @@
 
 ### 6.2 反 AI slop 检测流程(AI Slop Check)
 
-> 对应 skill: `skills/review/ai-slop-check/` | 标准: `references/standards.md` §3
+> 对应 skill: `skills/04-review/ai-slop-check/` | 标准: `references/standards.md` §3
 
 **Phase 1:识别 surface**——审用户刚编辑或问到的 HTML/CSS 文件;否则本 session 修改的文件;不清楚就问。读文件并 skim 引用的 CSS、token、组件文件,以便解析实际值。
 
@@ -373,7 +373,7 @@
 
 ### 6.3 视觉层级和节奏检测流程(Hierarchy & Rhythm Review)
 
-> 对应 skill: `skills/review/hierarchy-rhythm-review/` | 标准: `references/standards.md` §8
+> 对应 skill: `skills/04-review/hierarchy-rhythm-review/` | 标准: `references/standards.md` §8
 
 **Phase 1:识别 surface**——审用户刚编辑或问到的 HTML/CSS 文件;否则最近修改的设计文件;不清楚就问。读文件和引用的 style,note medium(slide/page/mobile/dashboard)——规则按上下文不同。
 
@@ -415,7 +415,7 @@
 
 ### 6.4 交互状态检测流程(Interaction States Pass)
 
-> 对应 skill: `skills/review/interaction-states-pass/` | 标准: `references/standards.md` §12
+> 对应 skill: `skills/04-review/interaction-states-pass/` | 标准: `references/standards.md` §12
 
 **Phase 1:清单化交互元素**——走设计,列出每个交互元素:button(含 `role="button"` 和任何带 click handler 的)、link、form input、toggle(checkbox、radio、switch)、可点击 card/row、导航 item(tab、sidebar link、breadcrumb)、自定义 widget(dropdown、accordion、modal、popover)。
 
@@ -454,7 +454,7 @@
 
 ## 7. Polish 流程编排(Polish Pass)
 
-> 对应 skill: `skills/review/polish-pass/` | 这是 4 个审查 skill 的总编排,设计展示给 stakeholder 或 ship 前的最终质量门。
+> 对应 skill: `skills/04-review/polish-pass/` | 这是 4 个审查 skill 的总编排,设计展示给 stakeholder 或 ship 前的最终质量门。
 
 **核心命题**:**打磨过和没打磨的设计是同一个 idea 在不同 care 级别的执行——差距是人们实际看到的**。这是 4 个更窄审查 skill 的 umbrella;交付前作为最终 gate 用。
 
