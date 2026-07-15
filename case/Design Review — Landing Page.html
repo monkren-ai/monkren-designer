@@ -136,6 +136,12 @@
   .keep-list li { position: relative; padding: 0 0 var(--spacing-8) var(--spacing-28); color: var(--color-subtle-gray); font-size: var(--text-16px); line-height: var(--leading-snug); }
   .keep-list li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border: var(--border-width) solid var(--color-arctic-white); border-radius: 50%; }
 
+  .perspective-grid { display: grid; gap: var(--spacing-8); }
+  .perspective-card { border: var(--border-width) solid var(--color-arctic-white); border-radius: 0; padding: var(--spacing-12); }
+  .perspective-label { font-family: var(--font-black-tie); font-size: var(--text-11px); text-transform: uppercase; letter-spacing: .04em; color: var(--color-warn); margin-bottom: var(--spacing-8); }
+  .perspective-verdict { font-size: var(--text-16px); line-height: var(--leading-body); margin-bottom: var(--spacing-8); }
+  .perspective-evidence { font-family: var(--font-black-tie); font-size: var(--text-13px); color: var(--color-subtle-gray); }
+
   footer { margin-top: var(--spacing-56); border-top: var(--border-width) solid var(--color-arctic-white); padding-top: var(--spacing-28); font-family: var(--font-black-tie); font-size: var(--text-13px); color: var(--color-subtle-gray); }
   .section-eyebrow { margin-bottom: var(--spacing-8); font-family: var(--font-black-tie); font-size: var(--text-13px); text-transform: uppercase; letter-spacing: .04em; color: var(--color-subtle-gray); }
 
@@ -181,8 +187,12 @@
         <div class="stat-label">P0 ⚠️</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num">3</div>
+        <div class="stat-num">4</div>
         <div class="stat-label">P1 ⚡</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">P2 💡</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">8</div>
@@ -311,6 +321,28 @@
   </section>
 
   <section>
+    <h2>Multi-Perspective</h2>
+    <hr class="rule">
+    <div class="perspective-grid">
+      <div class="perspective-card">
+        <div class="perspective-label">P1 · 用户体验</div>
+        <div class="perspective-verdict">5 秒测试通过；hero 信息层级自然；但 hero 4 query 漏 03 设计执行阶段，预期落空</div>
+        <div class="perspective-evidence">index.html#L324-L327 query 数量与 #L376-L400 5 stage 不对应</div>
+      </div>
+      <div class="perspective-card">
+        <div class="perspective-label">P1 · UI 设计</div>
+        <div class="perspective-verdict">3 case 卡片是页面最"通用"区块，hover 翻色模式未与 .discipline / .stage 视觉语言统一</div>
+        <div class="perspective-evidence">index.html#L167-L181 .case 仅有 border + padding，缺 --color-warn 强调</div>
+      </div>
+      <div class="perspective-card">
+        <div class="perspective-label">P2 · 功能展示</div>
+        <div class="perspective-verdict">DEPTH meter 是 monkren 独有视觉签名，0 装饰；Method section 5 stage 完整覆盖</div>
+        <div class="perspective-evidence">index.html#L138-L154 .depth-meter 滚动驱动；#L376-L400 .stage-grid 5 行</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
     <h2>Detection</h2>
     <hr class="rule">
     <div class="detect-grid">
@@ -319,7 +351,7 @@
       <div class="detect-card"><span>⚠️</span><div><div class="detect-name">内容一致性</div><div class="detect-issue">2 处不一致</div></div></div>
       <div class="detect-card"><span>✓</span><div><div class="detect-name">文案审查</div><div class="detect-issue">通过</div></div></div>
       <div class="detect-card"><span>✓</span><div><div class="detect-name">图标审查</div><div class="detect-issue">通过（无图标）</div></div></div>
-      <div class="detect-card"><span>⚠️</span><div><div class="detect-name">用户体验</div><div class="detect-issue">1 处需改进</div></div></div>
+      <div class="detect-card"><span>⚠️</span><div><div class="detect-name">单维度 UX</div><div class="detect-issue">1 处需改进</div></div></div>
     </div>
   </section>
 
