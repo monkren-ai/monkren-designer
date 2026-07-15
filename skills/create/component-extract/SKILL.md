@@ -1,7 +1,10 @@
 ---
 name: component-extract
+deprecated: true
+deprecated_since: v5.0
 description: |
-  组件清单提取。5 个 phase 覆盖组件扫描/分类（原子/分子/组织/模板/页面）/属性提取/变体记录/文档生成，从现有代码建立组件 inventory。触发词：「组件清单」「component extract」「组件提取」「component inventory」「组件梳理」。
+  [DEPRECATED v5.0] 组件清单提取。5 个 phase 覆盖组件扫描/分类（原子/分子/组织/模板/页面）/属性提取/变体记录/文档生成，从现有代码建立组件 inventory。触发词：「组件清单」「component extract」「组件提取」「component inventory」「组件梳理」。
+  本 skill 在 v5.0 标 deprecated。6 个月后无用户使用则物理删除。详见 SKILL.md §8。
 allowed-tools:
   - Read
   - Write
@@ -10,6 +13,10 @@ allowed-tools:
   - WebSearch
   - AskUserQuestion
 ---
+
+> ⚠️ **DEPRECATED · v5.0 起标 deprecated** · 6 个月后无用户使用则物理删除。
+> 砍掉原因：monkren 在 create 领域打不过 Bolt / v0 / Cursor。如果你的需求是「组件清单」，建议用 Storybook 自动生成或 Figma Code Connect；如果需要「5 维度评审已有组件库」，用 `5-dim-review` 路由。
+> 详细说明：根 [SKILL.md §8](../../../../SKILL.md#8-8-个-create-skilldeprecated)
 
 # Component Extract：从设计里识别可复用组件
 

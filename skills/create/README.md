@@ -1,22 +1,26 @@
 # Create · 创作阶段
 
-> 回答「怎么做？」——从 wireframe 到 hi-fi，输出可运行的设计产出。
+> ⚠️ **DEPRECATED · v5.0 起整段标 deprecated** · 6 个月后无用户使用则物理删除。
+> 砍掉原因：monkren 在 create 领域打不过 Bolt / v0 / Cursor。详细策略见根 [SKILL.md §8](../../../../SKILL.md#8-8-个-create-skilldeprecated)。
+> 本目录下的 8 个 skill 仍可调用，但会在每个文件顶部显示 deprecation 警告。
 
-## 本阶段 skill
+回答「怎么做？」——从 wireframe 到 hi-fi，输出可运行的设计产出。
 
-| Skill | 用途 |
-|-------|------|
-| [wireframe](./wireframe/) | 低保真线框探索，5 个 phase 快速探索布局方案 |
-| [generate-variations](./generate-variations/) | 设计变体生成，6 个 phase 产出 3+ 风格方向 |
-| [make-a-prototype](./make-a-prototype/) | 可交互原型制作，7 个 phase 输出单文件 HTML 原型 |
-| [make-a-deck](./make-a-deck/) | HTML 幻灯片制作，6 个 phase 输出浏览器演示 deck |
-| [make-tweakable](./make-tweakable/) | 实时调整面板，7 个 phase 输出带控件的 tweakable 面板 |
-| [design-system-extract](./design-system-extract/) | 设计 token 提取，4 个 phase 从代码提取 design system |
-| [component-extract](./component-extract/) | 组件清单提取，5 个 phase 建立组件 inventory |
-| [design-improve](./design-improve/) | 设计改进，基于审查报告修复问题 |
+## 本阶段 skill（全部 DEPRECATED）
+
+| Skill | 状态 | 替代方案 |
+|-------|------|---------|
+| [wireframe](./wireframe/) | DEPRECATED | Bolt / v0 |
+| [generate-variations](./generate-variations/) | DEPRECATED | v0 design gallery |
+| [make-a-prototype](./make-a-prototype/) | DEPRECATED | Bolt / v0 |
+| [make-a-deck](./make-a-deck/) | DEPRECATED | Slidev / reveal.js |
+| [make-tweakable](./make-tweakable/) | DEPRECATED | Figma Plugin / tldraw |
+| [design-system-extract](./design-system-extract/) | DEPRECATED | Style Dictionary / Figma Variables |
+| [component-extract](./component-extract/) | DEPRECATED | Storybook / Figma Code Connect |
+| [design-improve](./design-improve/) | DEPRECATED | 用 5-dim-review 路由 |
 
 ## 与 references 的关系
 
-- 完整创作工作流（14 章） → `references/methods-create.md`
-- 创作产出标准（文件组织/状态持久化/交付摘要） → `references/execution.md`（创作产出文件组织）
+- 完整创作工作流（14 章） → `references/methods-create.md`（标 INTERNAL）
+- 创作产出标准（文件组织/状态持久化/交付摘要） → `references/execution.md`（标 INTERNAL）
 - 设计标准（色彩/排版/间距/组件/动效） → `references/standards.md`

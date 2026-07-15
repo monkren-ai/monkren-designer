@@ -1,6 +1,9 @@
 # 设计哲学库
 
-> 回答「选哪种风格？」——40 种设计哲学完整风格库 + 项目适配矩阵 + 落地概念包。信念层论述见 beliefs.md，落地概念包模板与 Demo 规范见 execution.md。
+> ⚠️ **INTERNAL · v5.0 起标 internal** · 不对外展示，仅供 agent 内部使用。
+> 公开 reference：beliefs / standards / methods-review。详细策略见根 [SKILL.md §7](../../SKILL.md#7-三层边界) / [§9](../../SKILL.md#9-完整-reference-索引9-份)。
+>
+> 回答「选哪种风格？」——80 种设计哲学完整风格库 + 项目适配矩阵 + 落地概念包。信念层论述见 beliefs.md，落地概念包模板与 Demo 规范见 execution.md。
 
 ---
 

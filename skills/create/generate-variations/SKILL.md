@@ -1,7 +1,10 @@
 ---
 name: generate-variations
+deprecated: true
+deprecated_since: v5.0
 description: |
-  设计变体生成。6 个 phase 覆盖方向确认/基线版/3+ 变体（保守→大胆）/对比评估/方向选择/精修，同一设计产出多个风格方向。触发词：「变体」「variations」「多个方案」「design options」「风格对比」「3个方案」。
+  [DEPRECATED v5.0] 设计变体生成。6 个 phase 覆盖方向确认/基线版/3+ 变体（保守→大胆）/对比评估/方向选择/精修，同一设计产出多个风格方向。触发词：「变体」「variations」「多个方案」「design options」「风格对比」「3个方案」。
+  本 skill 在 v5.0 标 deprecated。6 个月后无用户使用则物理删除。详见 SKILL.md §8。
 allowed-tools:
   - Read
   - Write
@@ -10,6 +13,10 @@ allowed-tools:
   - WebSearch
   - AskUserQuestion
 ---
+
+> ⚠️ **DEPRECATED · v5.0 起标 deprecated** · 6 个月后无用户使用则物理删除。
+> 砍掉原因：monkren 在 create 领域打不过 Bolt / v0 / Cursor。如果你的需求是「多方向对比」，建议用 v0 的 design gallery；如果需要「5 维度评审已有变体」，用 `5-dim-review` 路由。
+> 详细说明：根 [SKILL.md §8](../../../../SKILL.md#8-8-个-create-skilldeprecated)
 
 # Generate Variations：产出 3+ 个设计方案
 

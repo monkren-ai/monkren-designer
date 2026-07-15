@@ -1,5 +1,8 @@
 # 方法层·创作:我怎么把设计做出来?
 
+> ⚠️ **INTERNAL · v5.0 起标 internal** · 不对外展示，仅供 agent 内部使用。
+> 公开 reference：beliefs / standards / methods-review。详细策略见根 [SKILL.md §7](../../SKILL.md#7-三层边界) / [§9](../../SKILL.md#9-完整-reference-索引9-份)。
+>
 > 设计创作的工作流与方法。从「理解需求 → 获取上下文 → 计划 → 骨架先行 → 迭代 → 简要总结」六步工作流,到 wireframe / 原型 / 幻灯片 / 变体 / tweakable / token 提取 / 组件提取的具体方法。审查方法见 `methods-review.md`。
 
 ---

@@ -1,7 +1,10 @@
 ---
 name: design-system-extract
+deprecated: true
+deprecated_since: v5.0
 description: |
-  设计 token 提取。4 个 phase 覆盖源文件扫描/变量分类（色彩/字体/间距/圆角/阴影/动效）/命名规范化/token 文件生成，从现有代码提取 design system。触发词：「提取 token」「design system extract」「token 提取」「设计系统提取」「extract tokens」。
+  [DEPRECATED v5.0] 设计 token 提取。4 个 phase 覆盖源文件扫描/变量分类（色彩/字体/间距/圆角/阴影/动效）/命名规范化/token 文件生成，从现有代码提取 design system。触发词：「提取 token」「design system extract」「token 提取」「设计系统提取」「extract tokens」。
+  本 skill 在 v5.0 标 deprecated。6 个月后无用户使用则物理删除。详见 SKILL.md §8。
 allowed-tools:
   - Read
   - Write
@@ -10,6 +13,10 @@ allowed-tools:
   - WebSearch
   - AskUserQuestion
 ---
+
+> ⚠️ **DEPRECATED · v5.0 起标 deprecated** · 6 个月后无用户使用则物理删除。
+> 砍掉原因：monkren 在 create 领域打不过 Bolt / v0 / Cursor。如果你的需求是「提取 token」，建议用 Style Dictionary 或 Figma Variables 导出；如果需要「5 维度评审已有 design system」，用 `5-dim-review` 路由。
+> 详细说明：根 [SKILL.md §8](../../../../SKILL.md#8-8-个-create-skilldeprecated)
 
 # Design System Extract：从源文件提取 token
 

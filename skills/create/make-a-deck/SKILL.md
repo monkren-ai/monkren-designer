@@ -1,7 +1,10 @@
 ---
 name: make-a-deck
+deprecated: true
+deprecated_since: v5.0
 description: |
-  HTML 幻灯片制作。6 个 phase 覆盖叙事结构/版式系统/单页设计/键盘导航/响应式适配/打磨，输出可在浏览器全屏演示的 HTML deck。触发词：「幻灯片」「deck」「slides」「演示文稿」「HTML PPT」「做slides」。
+  [DEPRECATED v5.0] HTML 幻灯片制作。6 个 phase 覆盖叙事结构/版式系统/单页设计/键盘导航/响应式适配/打磨，输出可在浏览器全屏演示的 HTML deck。触发词：「幻灯片」「deck」「slides」「演示文稿」「HTML PPT」「做slides」。
+  本 skill 在 v5.0 标 deprecated。6 个月后无用户使用则物理删除。详见 SKILL.md §8。
 allowed-tools:
   - Read
   - Write
@@ -10,6 +13,10 @@ allowed-tools:
   - WebSearch
   - AskUserQuestion
 ---
+
+> ⚠️ **DEPRECATED · v5.0 起标 deprecated** · 6 个月后无用户使用则物理删除。
+> 砍掉原因：monkren 在 create 领域打不过 Bolt / v0 / Cursor。如果你的需求是「HTML 幻灯片」，建议使用 Slidev 或 reveal.js；如果需要「5 维度评审已有 deck」，用 `5-dim-review` 路由。
+> 详细说明：根 [SKILL.md §8](../../../../SKILL.md#8-8-个-create-skilldeprecated)
 
 # Make a Deck：HTML 幻灯片演示
 

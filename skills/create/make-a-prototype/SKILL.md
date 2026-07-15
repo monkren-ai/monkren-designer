@@ -1,7 +1,10 @@
 ---
 name: make-a-prototype
+deprecated: true
+deprecated_since: v5.0
 description: |
-  可交互原型制作。7 个 phase 覆盖交互目标确认/技术选型/核心流程搭建/状态管理/响应式适配/可访问性/打磨交付，输出单文件 HTML 原型。触发词：「原型」「prototype」「交互原型」「可点击」「interactive demo」「做个原型」。
+  [DEPRECATED v5.0] 可交互原型制作。7 个 phase 覆盖交互目标确认/技术选型/核心流程搭建/状态管理/响应式适配/可访问性/打磨交付，输出单文件 HTML 原型。触发词：「原型」「prototype」「交互原型」「可点击」「interactive demo」「做个原型」。
+  本 skill 在 v5.0 标 deprecated。6 个月后无用户使用则物理删除。详见 SKILL.md §8。
 allowed-tools:
   - Read
   - Write
@@ -10,6 +13,10 @@ allowed-tools:
   - WebSearch
   - AskUserQuestion
 ---
+
+> ⚠️ **DEPRECATED · v5.0 起标 deprecated** · 6 个月后无用户使用则物理删除。
+> 砍掉原因：monkren 在 create 领域打不过 Bolt / v0 / Cursor。如果你的需求是「交互原型」，建议使用 Bolt 或 v0；如果需要「5 维度评审已有原型」，用 `5-dim-review` 路由。
+> 详细说明：根 [SKILL.md §8](../../../../SKILL.md#8-8-个-create-skilldeprecated)
 
 # Make a Prototype：可交互 clickable prototype
 

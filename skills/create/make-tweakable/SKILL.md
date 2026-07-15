@@ -1,7 +1,10 @@
 ---
 name: make-tweakable
+deprecated: true
+deprecated_since: v5.0
 description: |
-  实时调整面板制作。7 个 phase 覆盖可调参数识别/host 协议/控件选型/默认值加载/实时联动/导出/持久化，输出带 slider/input/toggle 的控制面板。触发词：「tweakable」「调整面板」「实时调参」「control panel」「参数面板」。
+  [DEPRECATED v5.0] 实时调整面板制作。7 个 phase 覆盖可调参数识别/host 协议/控件选型/默认值加载/实时联动/导出/持久化，输出带 slider/input/toggle 的控制面板。触发词：「tweakable」「调整面板」「实时调参」「control panel」「参数面板」。
+  本 skill 在 v5.0 标 deprecated。6 个月后无用户使用则物理删除。详见 SKILL.md §8。
 allowed-tools:
   - Read
   - Write
@@ -10,6 +13,10 @@ allowed-tools:
   - WebSearch
   - AskUserQuestion
 ---
+
+> ⚠️ **DEPRECATED · v5.0 起标 deprecated** · 6 个月后无用户使用则物理删除。
+> 砍掉原因：monkren 在 create 领域打不过 Bolt / v0 / Cursor。如果你的需求是「实时调整面板」，建议用 Figma Plugin 或 tldraw；如果需要「5 维度评审已有面板」，用 `5-dim-review` 路由。
+> 详细说明：根 [SKILL.md §8](../../../../SKILL.md#8-8-个-create-skilldeprecated)
 
 # Make Tweakable：在设计中加入 tweak 控件
 

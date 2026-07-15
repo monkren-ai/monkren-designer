@@ -1,5 +1,8 @@
 # 多视角审查体系
 
+> ⚠️ **INTERNAL · v5.0 起标 internal** · 不对外展示，仅供 agent 内部使用。
+> 公开 reference：beliefs / standards / methods-review。详细策略见根 [SKILL.md §7](../../SKILL.md#7-三层边界) / [§9](../../SKILL.md#9-完整-reference-索引9-份)。
+>
 > 10 维度审查框架、场景权重配置、S/W/F 输出格式。作为设计审查的系统化基线，确保不同审查者对同一产出有一致的判断标准。
 
 ---

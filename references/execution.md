@@ -1,5 +1,8 @@
 # 执行层:产出长什么样?
 
+> ⚠️ **INTERNAL · v5.0 起标 internal** · 不对外展示，仅供 agent 内部使用。
+> 公开 reference：beliefs / standards / methods-review。详细策略见根 [SKILL.md §7](../../SKILL.md#7-三层边界) / [§9](../../SKILL.md#9-完整-reference-索引9-份)。
+>
 > 产出规范、报告模板、持久化、Demo 生成。审查报告三层递进结构、4 种报告类型、设计建议报告 8 字段模板、SVG 雷达图规范、报告持久化路径、Demo 生成规范、创作产出文件组织。审查执行流程见 `methods-review.md`,创作执行流程见 `methods-create.md`。
 
 ---
