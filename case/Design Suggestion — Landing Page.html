@@ -70,6 +70,12 @@
   .dir-changes li { position: relative; padding-left: var(--spacing-28); font-size: var(--text-16px); color: var(--color-subtle-gray); margin-bottom: var(--spacing-8); line-height: var(--leading-snug); }
   .dir-changes li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border: var(--border-width) solid var(--color-arctic-white); border-radius: 50%; }
   .dir-qw { font-size: var(--text-14px); color: var(--color-subtle-gray); padding-top: var(--spacing-12); border-top: var(--border-width) solid var(--surface-muted); font-family: var(--font-black-tie); }
+  .dir-package { margin-top: var(--spacing-12); padding-top: var(--spacing-12); border-top: var(--border-width) solid var(--surface-muted); }
+  .dir-package h4 { font-family: var(--font-black-tie); font-size: var(--text-11px); text-transform: uppercase; letter-spacing: .04em; color: var(--color-warn); margin-bottom: var(--spacing-8); font-weight: 400; }
+  .dir-package .pkg-row { display: grid; grid-template-columns: 80px 1fr; gap: var(--spacing-8); font-size: var(--text-13px); margin-bottom: 4px; align-items: baseline; }
+  .dir-package .pkg-key { font-family: var(--font-black-tie); color: var(--color-subtle-gray); text-transform: uppercase; letter-spacing: .04em; }
+  .dir-package .pkg-val { color: var(--color-arctic-white); }
+  .dir-package .pkg-val code { font-family: var(--font-black-tie); font-size: var(--text-13px); color: var(--color-arctic-white); }
   .rec-section { border: var(--border-width) solid var(--color-arctic-white); border-radius: 0; padding: var(--spacing-28); }
   .rec-section h3 { font-family: var(--font-victor-serif); font-size: var(--text-24px); font-weight: 400; margin-bottom: var(--spacing-8); }
   .rec-section p { color: var(--color-subtle-gray); font-size: var(--text-18px); line-height: var(--leading-snug); }
@@ -119,6 +125,13 @@
           <li>--color-warn 用法收窄：仅 1 个 query 边框 + discipline num + stage num 3 处，删除多余（强化"唯一强调色"原则）</li>
         </ul>
         <div class="dir-qw">Quick Win：hover case card 显示 warn left border → 5 min</div>
+        <div class="dir-package">
+          <h4>Concept Package</h4>
+          <div class="pkg-row"><span class="pkg-key">Files</span><span class="pkg-val">index.html (L82 · L139-L150 · L167-L181)</span></div>
+          <div class="pkg-row"><span class="pkg-key">Tokens</span><span class="pkg-val">新增 <code>--top-h: 64px</code> · <code>--depth-track-h: 2px</code> · <code>--focus-offset: 2px</code></span></div>
+          <div class="pkg-row"><span class="pkg-key">Code</span><span class="pkg-val"><code>.case { border-left: 2px solid var(--color-warn); padding-left: calc(var(--spacing-20) - 2px); } .case:hover { border-left-width: 4px; }</code></span></div>
+          <div class="pkg-row"><span class="pkg-key">Verify</span><span class="pkg-val">3 case card 默认显示 2px warn 左 border；hover 时宽度 4px；DEPTH meter click smooth scroll 到 #top</span></div>
+        </div>
       </div>
 
       <div class="dir-card">
@@ -137,6 +150,13 @@
           <li>Method section stage 间隔增加 1px slate 横线（仅视觉分隔，弱化纯白噪点）</li>
         </ul>
         <div class="dir-qw">Quick Win：query hover 加 --surface-muted 背景 → 5 min</div>
+        <div class="dir-package">
+          <h4>Concept Package</h4>
+          <div class="pkg-row"><span class="pkg-key">Files</span><span class="pkg-val">index.html (L13 · L115-L120 · L375-L400)</span></div>
+          <div class="pkg-row"><span class="pkg-key">Tokens</span><span class="pkg-val">新增 <code>--color-slate: #6B6B6B</code> · 复用 <code>--surface-muted</code></span></div>
+          <div class="pkg-row"><span class="pkg-key">Code</span><span class="pkg-val"><code>.query:hover { background: var(--surface-muted); transition: background var(--transition-fast); } .stage + .stage { border-top: 1px solid var(--color-slate); }</code></span></div>
+          <div class="pkg-row"><span class="pkg-key">Verify</span><span class="pkg-val">query hover 出现 muted 灰底（rgba 0.12）；stage 卡片之间有 1px slate 横线；--color-slate 出现在 :root</span></div>
+        </div>
       </div>
 
       <div class="dir-card">
@@ -155,6 +175,13 @@
           <li>Method section stage 卡片加 1px slate 底边作"渐进深度"暗示（与 DEPTH meter 呼应）</li>
         </ul>
         <div class="dir-qw">Quick Win：body 背景加 SVG noise (0.04 opacity) → 5 min</div>
+        <div class="dir-package">
+          <h4>Concept Package</h4>
+          <div class="pkg-row"><span class="pkg-key">Files</span><span class="pkg-val">index.html (L46-L55 · L138-L154 · L375-L400)</span></div>
+          <div class="pkg-row"><span class="pkg-key">Tokens</span><span class="pkg-val">新增 <code>--color-deep: #1A1A1A</code> · <code>--noise-opacity: .04</code></span></div>
+          <div class="pkg-row"><span class="pkg-key">Code</span><span class="pkg-val"><code>body { background: var(--color-deep) url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"); }</code></span></div>
+          <div class="pkg-row"><span class="pkg-key">Verify</span><span class="pkg-val">页面有 4% 透明度噪点纹理；DEPTH meter 从 #1A1A1A 填到 #FFF；Method section stage 底部 1px deep 横线</span></div>
+        </div>
       </div>
 
     </div>
