@@ -3,18 +3,11 @@ name: interaction-states-pass
 description: |
   交互状态完整性检查。逐个 interactive element 检查 6 种状态（default/hover/active/disabled/focus/loading）+ transition + action feedback，补全缺失状态。
   触发词：「交互状态」「interaction states」「状态检查」「hover/active/focus」「状态完整性」。
-allowed-tools:
-  - Read
-  - Write
-  - Glob
-  - Grep
-  - WebSearch
-  - Task
 ---
 
 # 交互状态完整性检查
 
-验证每个 interactive element 都有完整的状态集合（default、hover、active、disabled、focus、loading）外加 transition 和反馈；补全缺失项。**没有状态反馈的 interactive element 看起来是坏的**——没有 hover 的按钮看起来像 label；被移除的 focus ring 会把键盘用户锁在外面。这是设计展示给用户前的安全网。
+验证 interactive element 是否具备与其行为相关的状态、transition 和反馈。默认只报告；仅在用户明确要求修复时补全缺失项。并非每个元素都需要 disabled 或 loading，只有存在对应业务状态时才检查它们。
 
 ## Phase 1：盘点 interactive element
 
@@ -45,8 +38,8 @@ allowed-tools:
 
 当前状态也要可见：当前页面或 tab、选中项、激活的筛选或排序都要在视觉上有区别。
 
-## Phase 5：应用修复并总结
+## Phase 5：报告或修复
 
-使用 design system 的 token 补全每个缺失的状态或反馈元素。当系统未定义某状态时，使用：hover 加深 10–15%（或 `color-mix`）；active 再加深 10% 或 `scale(0.98)`；disabled 用 opacity 0.6 + `cursor: not-allowed`；focus 用 `outline: 2px solid var(--color-primary); outline-offset: 2px`；transition 用 `0.2s ease`。当正确状态不明显时（例如 toggle 按钮在 active 状态下的 hover），做出判断取舍并记录。
+默认报告每个缺失或不清晰的状态，并引用现有 design system。用户明确要求修复时才使用系统 token 补全；系统未定义状态时，优先延续已有视觉语言，而不是机械套用 transform、opacity 或固定时长。无障碍 focus 必须清晰可见，并尊重 `prefers-reduced-motion`。
 
 总结：盘点的元素、按类别添加的状态、添加或规范化的 transition、添加的反馈、用户应复审的判断取舍。

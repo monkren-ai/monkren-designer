@@ -1,20 +1,9 @@
 ---
 name: generate-variations
-description: |
-  设计变体生成。6 个 phase 覆盖方向确认/基线版/3+ 变体（保守→大胆）/对比评估/方向选择/精修，同一设计产出多个风格方向。触发词：「变体」「variations」「多个方案」「design options」「风格对比」「3个方案」。
-  v5.1 撤回 deprecated 标记——本 skill 是 monkren 创作阶段的招牌能力。
-allowed-tools:
-  - Read
-  - Write
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
+description: 生成三个以上实质不同的设计变体，并通过布局、层级、交互或视觉语言的对比帮助用户选择方向。用于“多个方案”“设计变体”“不同 take”“风格对比”等请求。
 ---
 
-> ✅ **v5.1 撤回 deprecated** · 本 skill 是 monkren 创作阶段的招牌能力——同一设计产出 3+ 个风格方向。设计品味 applied forward。
->
-> 详细说明：根 [SKILL.md §8](../../../../SKILL.md#8-create-skill-状态v51-调整)
+> 生命周期与路由见根 [SKILL.md](../../../SKILL.md)。
 
 # Generate Variations：产出 3+ 个设计方案
 
@@ -47,12 +36,14 @@ allowed-tools:
 
 ## Phase 5：放在单个文件里
 
-静态变体并排用 `design_canvas.jsx` starter；若变体共享结构、只在几条轴上不同，则用 **tweak**（`make-tweakable`）。对流程，在 canvas 内把每个变体做成小故事板。**不要产出 v1.html / v2.html / v3.html**——一个文件，所有变体可见或可 toggle。
+默认输出一个自包含 HTML 文件：用语义 HTML、CSS Grid 和少量原生 JavaScript并排展示或切换全部变体。若目标项目已有框架，则在现有组件体系内实现同等结构。不要依赖仓库外的 starter，也不要产出散落的 `v1.html / v2.html / v3.html`。
 
 ## Phase 6：标注并推荐
 
 每个变体用一两句话配文（「变体 2——精炼。同样结构，更有表现力的 headline 字体，更暖的色板。」）。配文是思考工具：如果你写不出清楚的一句，变体就还不够独立。
 
+如果选定方向会造成重大产品承诺、高成本实现、难逆品牌或架构影响，先读取 `../../advisors/design-decision-council/SKILL.md` 获取只读第二意见。普通样式变体直接推荐，不增加流程。
+
 结尾给一个明确推荐——用户拍板，但设计师要给意见（「我选变体 2——有 1 的稳妥，又多一点视觉自信」）。别含糊说所有方案一样好；并不是。
 
-然后建议下一步：在选定方向上做一轮精修、在另一条轴上再来一轮变体、`make-a-prototype` 走交互，或用户准备发布时 `polish-pass`。
+然后建议下一步：在选定方向上做一轮精修、在另一条轴上再来一轮变体、读取 `../../03-execute/make-a-prototype/SKILL.md` 验证交互，或在发布前读取 `../../04-review/polish-pass/SKILL.md`。

@@ -1,7 +1,7 @@
 # 执行层:产出长什么样?
 
 > ⚠️ **INTERNAL · v5.0 起标 internal** · 不对外展示，仅供 agent 内部使用。
-> 公开 reference：beliefs / standards / methods-review。详细策略见根 [SKILL.md §7](../../SKILL.md#7-三层边界) / [§9](../../SKILL.md#9-完整-reference-索引9-份)。
+> 公开 reference：beliefs / standards / methods-review。入口与路由见根 [SKILL.md](../SKILL.md)。
 >
 > 产出规范、报告模板、持久化、Demo 生成。审查报告三层递进结构、4 种报告类型、设计建议报告 8 字段模板、SVG 雷达图规范、报告持久化路径、Demo 生成规范、创作产出文件组织。审查执行流程见 `methods-review.md`,创作执行流程见 `methods-create.md`。
 
@@ -77,11 +77,11 @@
 
 #### 参考证据(条件性展示)
 
-> 仅当审查过程中获取了 Lazyweb 参考截图时展示此区块。
+> 仅当审查过程中获取并验证了外部参考截图时展示此区块。
 
 | 参考截图 | 来源 | 佐证建议 |
 |---------|------|---------|
-| ![描述](references/company-screen.png) | {公司名} [{Lazyweb\|Web}] | {1 行说明该参考如何佐证哪条建议} |
+| ![描述](references/{company}-screen.png) | {公司名} [{来源}] | {1 行说明该参考如何佐证哪条建议} |
 
 ### 2.3 行动层(按需深入修复)
 
@@ -99,7 +99,7 @@
 - 修复:[具体操作,含数值]
 - 依赖:[可选,如"依赖 #2 完成后执行"]
 - 哲学特异性修复建议:[可选,当问题属于某哲学特有反模式时,提供该哲学的专属修复方向]
-- 参考:[可选,附带真实产品截图佐证] ![描述](references/company-screen.png) *{公司名} — {1 行说明} [{Lazyweb\|Web}]*
+- 参考:[可选,附带真实产品截图佐证] ![描述](references/{company}-screen.png) *{公司名} — {1 行说明} [{来源}]*
 
 #### Keep(保持)
 
@@ -316,7 +316,7 @@
 - 每方向至少 1 个真实产品案例(`references/philosophy-library.md` §6 中已映射)
 - 引用格式:`[公司/项目] — [1 行说明]`
 - 无 evidence = 不构成推荐,只是猜测
-- 不知道的案例 → 标"待 WebSearch 验证"占位
+- 不知道的案例 → 标"待外部验证"占位
 
 **铁律 4:互斥自检**(用 `references/philosophy-library.md` §2 末尾的兼容性矩阵)
 - 3 个方向必须横跨至少 3 个不同流派
@@ -344,20 +344,20 @@
 
 每个方向建议可附带 1-2 张真实产品截图,展示该方向在业界产品中的实际应用。
 
-**触发条件**:Lazyweb MCP 可用(`lazyweb_health` 返回成功)
+**触发条件**:当前环境有用户授权且可用的外部搜索能力。
 
 **搜索策略**:
 - 搜索该哲学方向的代表性产品/公司(可参考 §6 真实产品案例库中的搜索关键词)
-- 使用 `lazyweb_search` 搜索,`limit: 10`
-- 通过 `visionDescription` 验证截图与该哲学方向匹配
+- 用当前环境可用的搜索或浏览能力查找
+- 目视或读取页面内容,验证截图与该哲学方向匹配
 - 每个方向最多 2 张截图
 
 **输出格式**:
 ```
-- 视觉参考:![描述](references/company-screen.png) *{公司名} — {1 行说明该产品如何体现此哲学方向} [{Lazyweb|Web}]*
+- 视觉参考:![描述](references/{company}-screen.png) *{公司名} — {1 行说明该产品如何体现此哲学方向} [{来源}]*
 ```
 
-**降级处理**:MCP 不可用时,方向建议仅包含文字描述,不附带视觉参考。方向建议的有效性不依赖视觉参考。完整搜索规则 → `references/integration.md`
+**降级处理**:外部访问不可用时,方向建议仅包含文字描述,不附带视觉参考。方向建议的有效性不依赖视觉参考。完整规则见 `references/integration.md`。
 
 ---
 
@@ -704,7 +704,7 @@
 
 ## 9. 创作产出文件组织
 
-> 创作类产出(原型、幻灯片、变体、tweakable)的文件组织规范。详见 `references/methods-create.md`。
+> 活跃创作产出(线框、变体、原型和改进记录)的文件组织规范。详见 `references/methods-create.md`。
 
 ### 9.1 核心原则:一个文件,多个 variant
 
@@ -715,24 +715,21 @@
 | 产出类型 | 保存路径 | 命名规则 |
 |---------|---------|---------|
 | 原型 | `.monkren/prototypes/` | `{project-slug}-prototype-{YYYY-MM-DD}.html` |
-| 幻灯片 | `.monkren/decks/` | `{project-slug}-deck-{YYYY-MM-DD}.html` |
+| 线框 | `.monkren/wireframes/` | `{project-slug}-wireframe-{YYYY-MM-DD}.html` |
 | 变体探索 | `.monkren/variations/` | `{project-slug}-variations-{YYYY-MM-DD}.html` |
-| Tweakable | `.monkren/tweakable/` | `{project-slug}-tweakable-{YYYY-MM-DD}.html` |
-| Demo | `.monkren/demos/` | `{philosophy-slug}-{page-type}-{YYYY-MM-DD}.html` |
-| Tokens 文件 | 项目根或 `src/styles/` | `tokens.css` / `tokens.ts` / `tokens.json` |
-| 组件清单 | 项目根或 `docs/` | `component-inventory.md` |
+| 改进记录 | `.monkren/improvements/` | `{project-slug}-improvement-{YYYY-MM-DD}.md` |
 
 ### 9.3 创作产出的状态持久化
 
-- 原型的当前屏、form 草稿、tweak 值通过 `localStorage` 持久化
-- 幻灯片的当前 index 通过 `localStorage` 持久化
-- Tweakable 的默认值包在 `/*EDITMODE-BEGIN*/.../*EDITMODE-END*/` 注释 marker 里,host 可重写
+- 仅把非敏感、确有演示价值的状态放进 `localStorage`
+- 邮箱、电话、凭据和身份信息默认只保留在内存
+- 无持久化需求时不要为了“完整”引入本地存储
 
 ### 9.4 创作产出的交付总结
 
-完成时只总结 **caveats 和 next steps**(见 `references/methods-create.md` §14.2):
+完成时只总结 **产出、验证、caveats 和 next steps**(见 `references/methods-create.md` §8):
 
-✅ "存为 `Hero v2.html`。Logo placeholder 还需真实资产;tweak 面板暴露 headline 文案。"
+✅ "存为 `hero-variations.html`。三个方向可切换；Logo 仍是明确 placeholder。"
 
 ❌ "我创建了一个新文件,加了 hero section,加了 headline,加了 CTA button,style 了背景……"
 
@@ -757,11 +754,9 @@
 ### 10.2 创作产出总结
 
 ```markdown
-✅ [原型/幻灯片/变体/Demo] 已生成:[文件名]
+✅ [线框/原型/变体/改进记录] 已生成:[文件名]
 
 **文件路径**: [完整路径]
-**快速打开**: `open [路径]`
-
 **产出展示**:
 - [1-2 句话核心内容]
 

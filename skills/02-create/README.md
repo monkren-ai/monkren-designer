@@ -7,7 +7,7 @@
 | Skill | 状态 | 用途 |
 |-------|------|------|
 | [generate-variations](./generate-variations/) | ✅ 活跃 | 同一设计产出 3+ 风格方向 |
-| [wireframe](./wireframe/) | ✅ 活跃（v6.0 复活） | 低保真线框探索布局方案 |
+| [wireframe](./wireframe/) | ✅ 活跃 | 低保真线框探索布局方案 |
 
 ## 阶段问什么
 

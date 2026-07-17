@@ -1,43 +1,13 @@
 ---
 name: remove-inspo-source
-description: |
-  Disconnect an inspiration source from Lazyweb design skills.
-  Lists connected sources and removes the selected one.
-  Trigger on: "remove inspo source", "remove inspiration source",
-  "disconnect Mobbin", "remove design source", "unlink source".
-allowed-tools:
-  - RunCommand
-  - Read
-  - Write
-  - AskUserQuestion
+description: 从 `~/.lazyweb/libraries.json` 中移除已登记的外部设计灵感源。用于删除、断开或清理 Mobbin、Savee、Dribbble、Behance 等来源；只修改用户明确指定的条目。
 ---
 
-# Remove Inspiration Library
+# 移除灵感源
 
-Disconnect an external inspiration library so Lazyweb design skills no longer search it.
+1. 读取 `~/.lazyweb/libraries.json`；不存在或列表为空时说明没有已登记来源。
+2. 用户未指定名称时显示简短列表并询问。只有一个来源时也要确认名称，避免误删。
+3. 移除匹配条目并保留其余 JSON 结构。默认保留空的 `libraries` 数组，不删除整个文件。
+4. 报告已移除的名称；不要声称这会撤销第三方网站账户授权或清除浏览器 cookie。
 
-## Workflow
-
-### 1. List Connected Libraries
-
-```bash
-cat ~/.lazyweb/libraries.json 2>/dev/null || echo '{"libraries":[]}'
-```
-
-If no libraries are connected, tell the user: "No inspiration libraries are connected.
-Use `/lazyweb-add-inspo-source` to connect one."
-
-### 2. Ask Which to Remove
-
-If the user didn't specify, show the list and ask which library to disconnect.
-If only one library is connected, confirm they want to remove it.
-
-### 3. Remove from Config
-
-Read `~/.lazyweb/libraries.json`, remove the selected library from the `libraries`
-array, write back. If the array is now empty, you can either leave the empty array
-or delete the file.
-
-### 4. Confirm
-
-Tell the user: "{Name} has been disconnected. Lazyweb design skills will no longer search it."
+写入用户目录需要当前环境允许；权限受限时，给出建议修改内容，不绕过沙箱。

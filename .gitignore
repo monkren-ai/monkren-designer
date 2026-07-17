@@ -1,20 +1,20 @@
-# # OS
-# .DS_Store
-# Thumbs.db
+# Operating systems
+.DS_Store
+Thumbs.db
 
-# # IDE
-# .vscode/
-# .idea/
+# Editors
+.vscode/
+.idea/
+.trae/
 
-# # 归档 / 临时
-# 归档.zip
-# *.zip
-# *.tmp
-# *.log
+# Environment and generated output
+.env
+.env.*
+!.env.example
+.monkren/
+.lazyweb/
 
-# # Trae 内部产物
-# .trae/
-
-# # 环境
-# .env
-# .env.local
+# Archives and temporary files
+*.zip
+*.tmp
+*.log

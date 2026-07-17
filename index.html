@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Monkren — 1 个设计智能体 · 5 阶段设计生命周期</title>
-  <meta name="description" content="Monkren v6.0。1 个设计智能体覆盖 5 阶段设计生命周期 — 调研定义 → 创作定义 → 设计执行 → 设计审查 → 设计改进。5 阶段可迭代。同一个设计品味贯穿全程。" />
+  <title>Monkren — 5 阶段设计生命周期 · 第一性原理 × 产品品味</title>
+  <meta name="description" content="Monkren v6.2。1 个设计智能体覆盖 5 阶段生命周期，并用“第一性原理 × 产品品味”次设计 agent 为重大产品设计取舍提供只读第二意见。" />
   <meta property="og:title" content="Monkren — 1 个设计智能体 · 5 阶段设计生命周期" />
-  <meta property="og:description" content="5 阶段：调研 / 创作 / 执行 / 审查 / 改进。可迭代。" />
+  <meta property="og:description" content="5 阶段：调研 / 创作 / 执行 / 审查 / 改进。重大取舍再加一份不讨好的第二意见。" />
   <style>
     :root {
       --color-canvas-black: #000000;
@@ -55,7 +55,7 @@
     }
     a { color: inherit; text-decoration: none; }
     button, code { font: inherit; }
-    :focus-visible { outline: var(--border-w) solid var(--color-arctic-white); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--color-arctic-white); outline-offset: 2px; }
     .skip-link {
       position: absolute; top: -100px; left: var(--space-12);
       background: var(--color-arctic-white); color: var(--color-canvas-black);
@@ -199,6 +199,44 @@
       .stage .ask { display: none; }
     }
 
+    /* Decision council — cross-stage second opinion */
+    .council-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-12); }
+    .lens {
+      border: var(--border-w) solid var(--color-arctic-white);
+      padding: var(--space-20);
+      display: grid; gap: var(--space-12);
+    }
+    .lens .label {
+      font-family: var(--font-black-tie); font-size: var(--font-size-xs);
+      letter-spacing: var(--letter-spacing-xwide); text-transform: uppercase;
+      color: var(--color-warn);
+    }
+    .lens h3 { margin: 0; font-size: var(--font-size-2xl); font-weight: 400; }
+    .lens p { margin: 0; color: var(--color-subtle-gray); font-size: var(--font-size-md); }
+    .decision-flow {
+      grid-column: 1 / -1;
+      margin: 0; padding: 0; list-style: none;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-12);
+    }
+    .decision-flow li {
+      border-top: var(--border-w) solid var(--color-arctic-white);
+      padding-top: var(--space-12);
+      color: var(--color-subtle-gray); font-size: var(--font-size-sm);
+    }
+    .decision-flow b {
+      display: block; color: var(--color-arctic-white); font-weight: 400;
+      font-family: var(--font-black-tie); font-size: var(--font-size-md); margin-bottom: var(--space-8);
+    }
+    .advisor-query {
+      grid-column: 1 / -1;
+      border: var(--border-w) solid var(--color-warn);
+      padding: var(--space-16) var(--space-20);
+      display: flex; align-items: center; gap: var(--space-12);
+      font-family: var(--font-black-tie); font-size: var(--font-size-md);
+    }
+    .advisor-query .prompt { color: var(--color-warn); }
+    .advisor-query .meta { margin-left: auto; color: var(--color-subtle-gray); font-size: var(--font-size-xs); letter-spacing: var(--letter-spacing-xwide); text-transform: uppercase; }
+
     /* Discipline (4 评分纪律) */
     .discipline-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-12); }
     .discipline {
@@ -283,6 +321,10 @@
     /* Mobile */
     @media (max-width: 720px) {
       .cases { grid-template-columns: 1fr; }
+      .council-grid { grid-template-columns: 1fr; }
+      .decision-flow { grid-column: 1; grid-template-columns: 1fr; }
+      .advisor-query { grid-column: 1; align-items: flex-start; }
+      .advisor-query .meta { display: none; }
       .method-grid { grid-template-columns: 1fr; gap: var(--space-28); }
       .section { padding: var(--space-56) 0; }
       .hero { min-height: auto; padding: var(--space-40) 0; }
@@ -291,6 +333,14 @@
       .diff-row .cell { grid-column: 2; }
       .diff-row .cell b { margin-top: var(--space-8); }
       .diff-row .cell.is-monkren { border-left: none; padding-left: 0; margin-left: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
     }
   </style>
 </head>
@@ -305,24 +355,25 @@
         <span class="mark">M</span>
         <span>Monkren</span>
       </a>
-      <span class="version">v6.0 · 2026-07-15</span>
+      <span class="version">v6.2 · 2026-07-17</span>
     </div>
   </header>
 
   <main id="main">
     <section class="hero">
       <div class="wrap hero-inner">
-        <span class="eyebrow">Design Agent · v6.0</span>
+        <span class="eyebrow">Design Agent · v6.2</span>
         <h1>Monkren.</h1>
         <p class="tagline">
           <strong>1 个设计智能体 · 5 阶段设计生命周期</strong>。
           调研定义 → 创作定义 → 设计执行 → 设计审查 → 设计改进。
-          <em>5 阶段可迭代</em>，<strong>同一个设计品味</strong>贯穿全程。
+          <em>5 阶段可迭代</em>，重大取舍再加一份<strong>不讨好的第二意见</strong>。
         </p>
 
         <div class="queries" aria-label="5 阶段招牌 query">
           <div class="query"><span class="prompt">&gt;</span><span>调研这个领域的设计方向</span></div>
           <div class="query"><span class="prompt">&gt;</span><span>给 3 个设计变体方向</span></div>
+          <div class="query"><span class="prompt">&gt;</span><span>做一个可交互原型</span></div>
           <div class="query is-featured"><span class="prompt">&gt;</span><span>5 维度评审这个设计</span><span class="star">★ Most Used</span></div>
           <div class="query"><span class="prompt">&gt;</span><span>改进这个设计（基于审查报告）</span></div>
         </div>
@@ -397,6 +448,43 @@
             <span class="num">05</span>
             <span class="name">设计改进<b>Design Improvement</b></span>
             <span class="ask">怎么修</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="council" class="section" aria-labelledby="council-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Second Opinion · Cross-stage Advisor</span>
+          <h2 id="council-title">先判断该不该做，再判断怎么把它做好。</h2>
+          <p>第一性原理负责质疑需求、删除浪费和识别硬约束；产品品味负责守住用户承诺、端到端体验和真正值得做到极致的时刻。不是双人格表演，是一个可执行裁决。</p>
+        </div>
+
+        <div class="council-grid">
+          <article class="lens">
+            <span class="label">01 · First Principles</span>
+            <h3>它为什么必须存在？</h3>
+            <p>逐项追问需求来源，区分硬约束与习惯，先删除，再简化；只对低风险、可逆决策快速试验。</p>
+          </article>
+          <article class="lens">
+            <span class="label">02 · Product Taste</span>
+            <h3>用户为什么会在乎？</h3>
+            <p>把产品压缩成一句承诺，保护核心旅程和端到端体验，把质量集中在决定产品是否成立的时刻。</p>
+          </article>
+
+          <ol class="decision-flow" aria-label="冲突裁决优先级">
+            <li><b>01</b>安全与真实性</li>
+            <li><b>02</b>核心用户价值</li>
+            <li><b>03</b>技术可行性</li>
+            <li><b>04</b>体验一致性</li>
+            <li><b>05</b>速度与成本</li>
+          </ol>
+
+          <div class="advisor-query">
+            <span class="prompt">&gt;</span>
+            <span>让次设计 agent 判断这个方向该不该做</span>
+            <span class="meta">Read-only · One decision · Two dissents</span>
           </div>
         </div>
       </div>
@@ -497,7 +585,7 @@
 
   <footer class="footer">
     <div class="wrap footer-row">
-      <span>Monkren v6.0 — 1 个设计智能体 · 5 阶段设计生命周期。个人使用免费，企业商用需授权。</span>
+      <span>Monkren v6.2 — 5 阶段设计生命周期 · 第一性原理 × 产品品味。个人使用免费，企业商用需授权。</span>
       <span>
         <a href="https://github.com/monkren-ai/monkren-designer">GitHub</a> ·
         <a href="https://github.com/monkren-ai/monkren-designer/blob/main/references/standards.md">9 份 reference →</a> ·

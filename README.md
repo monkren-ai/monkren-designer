@@ -1,211 +1,112 @@
 <sub>🌐 <a href="README.en.md">English</a> · <b>中文</b></sub>
 
-> 当前版本：**v6.0** / 2026-07-15 / 架构：**1 个设计智能体 + 5 阶段设计生命周期** + 5 维度评审 + 4 条评分纪律
+> 当前版本：**v6.2** / 2026-07-17 / 架构：**1 个可安装设计智能体 + 5 阶段生命周期 + 1 个跨阶段次设计 agent**
 
 <div align="center">
 
 # Monkren
 
-> *「1 个设计智能体 · 5 阶段设计生命周期。」*
-> *"One design agent. Five design stages. Same design taste across the whole arc."*
+> *1 个设计智能体，5 个设计阶段，再加一份不讨好的第二意见。*
 
 [![License](https://img.shields.io/badge/License-Personal%20Use%20Only-orange.svg)](LICENSE)
 [![Agent-Agnostic](https://img.shields.io/badge/Agent-Agnostic-blueviolet)](https://skills.sh)
-[![Skills](https://img.shields.io/badge/skills.sh-Compatible-green)](https://skills.sh)
+[![skills.sh](https://img.shields.io/badge/skills.sh-Compatible-green)](https://skills.sh)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://monkren-ai.github.io/monkren-designer/)
-
-<br>
-
-**在你的 agent 里直接说话。**
-
-<br>
-
-🌐 **在线预览**：<https://monkren-ai.github.io/monkren-designer/>
-
-<br>
-
-1 个设计智能体覆盖 5 阶段设计生命周期：**调研定义 → 创作定义 → 设计执行 → 设计审查 → 设计改进**。**5 阶段可迭代**——审查不通过回到创作定义，改进后产生新需求回到调研定义。**同一个设计品味**贯穿全程。
-
-```
-
-npx skills add monkren-ai/monkren-designer
-```
-
-[快速开始](#快速开始) · [5 阶段路由](#5-阶段路由) · [5 维度 + 4 纪律](#5-维度--4-纪律) · [v5.x → v6.0 变更](#v5x--v60-变更) · [仓库结构](#仓库结构)
-
-</div>
-
----
-
-## 快速开始
 
 ```bash
 npx skills add monkren-ai/monkren-designer
 ```
 
-装上后，在你的 agent 里直接说：
+[在线预览](https://monkren-ai.github.io/monkren-designer/) · [快速开始](#快速开始) · [路由](#5-阶段路由) · [结构](#仓库结构)
 
+</div>
+
+## 快速开始
+
+安装后直接描述任务：
+
+```text
+调研这个领域的设计方向
+给我 3 个设计变体
+做一个可交互原型
+深度审查这个项目
+根据审查报告修复全部问题
+让次设计 agent 判断这个方向该不该做
 ```
-> 帮我调研这个领域的设计方向
-> 给 3 个设计变体方向
-> 5 维度评审这个设计
-> 修复这个设计（基于审查报告）
-```
 
-Monkren 自动路由到 5 阶段之一，输出可操作的产出。
+标准安装只暴露根目录的 `monkren-design`。它是唯一入口，会按意图读取仓库内相应阶段模块。16 个阶段模块、1 个 advisor 和 2 个工具不是要求用户分别安装的独立产品。
 
-**兼容 agent**：Claude Code · Cursor · Codex · OpenClaw · Hermes · CodeBuddy · Workbuddy
-
----
+审查、评审、audit、review 默认只读；只有用户明确要求“修复、改进、实现、制作”时才修改文件。浏览器、MCP 或子代理是可选增强，不是完成核心任务的前置条件。
 
 ## 5 阶段路由
 
-```
-1 个设计智能体 · 5 阶段生命周期
-═══════════════════════════════════════════
-调研定义 ─→ 创作定义 ─→ 设计执行 ─→ 设计审查 ─→ 设计改进
-   01         02          03          04          05
-═══════════════════════════════════════════
-                                                    ↺ 反馈循环
-```
+| # | 阶段 | 典型问题 | 活跃模块 |
+|---|---|---|---:|
+| 01 | 调研定义 | 现状、约束、方向是什么？ | 6 |
+| 02 | 创作定义 | 做什么、选哪个方向？ | 2 |
+| 03 | 设计执行 | 如何做成可交互产出？ | 1 |
+| 04 | 设计审查 | 做得好不好、问题在哪？ | 6 |
+| 05 | 设计改进 | 如何修复并复验？ | 1 |
 
-| # | 阶段 | 问什么 | 主要 skill |
-|---|------|-------|----------|
-| 1 | **调研定义** | 现状 / 约束 / 方向 | design-research · design-brainstorm · visual-taste-lab · discovery-questions · frontend-aesthetic-direction · quick-references |
-| 2 | **创作定义** | 做什么 / 选哪个 | generate-variations · wireframe |
-| 3 | **设计执行** | 怎么做出来 | make-a-prototype |
-| 4 | **设计审查** | 做出来好不好 | 5-dim-review（核心） · ai-slop-check · accessibility-audit · hierarchy-rhythm-review · interaction-states-pass · polish-pass |
-| 5 | **设计改进** | 怎么修 | design-improve |
+另有 1 个跨阶段次设计 agent 和 2 个灵感源工具。完整且可执行的路由表见 [SKILL.md](SKILL.md)。
 
-| 你说 | 阶段 | 路由到 |
-|------|------|--------|
-| 「调研 / 研究 / 头脑风暴 / 查参考」 | 调研定义 | `01-research/*` |
-| 「线框 / lo-fi 探索 / 3+ 设计方向」 | 创作定义 | `02-create/*` |
-| 「做个原型 / 高保真 / 可交互 demo」 | 设计执行 | `03-execute/*` |
-| 「5 维度评审 / 审查 / 反 slop / 无障碍 / 节奏 / 交互状态 / polish」 | 设计审查 | `04-review/*` |
-| 「修复 / 改进这个设计」 | 设计改进 | `05-improve/design-improve` |
+## 次设计 agent
 
-> **5 阶段可迭代**：审查不通过 → 回到创作定义。改进后产生新需求 → 回到调研定义。线性是默认，迭代是常态。
+“第一性原理 × 产品品味”只在重大方向、高成本实现、难逆品牌或架构决策、修复冲突和交付前关键取舍时介入，也可由用户点名调用。它先质疑需求、做减法、识别硬约束，再保护核心用户承诺和端到端体验。
 
-完整路由逻辑见 [SKILL.md §2](SKILL.md#2-5-阶段路由表)。
+输出只有一个统一结论，同时保留工程异议与体验异议。它始终只读，不模拟真实人物；需要实现时把结论交回五阶段中的对应模块。
 
----
+## 评审标尺
 
-## 5 维度 + 4 纪律
+Monkren 用五个维度评价设计：哲学一致性、视觉层级、细节执行、功能性、创新性。
 
-### 5 维度评审（贯穿全阶段）
+四条评分纪律：
 
-| 维度 | 问什么 |
-|------|-------|
-| **哲学一致性** | 设计是否体现了明确的视觉哲学 |
-| **视觉层级** | 用户视线是否自然流动 |
-| **细节执行** | 对齐/间距/颜色是否像素级精确 |
-| **功能性** | 每个元素是否服务于目标 |
-| **创新性** | 是否避免了 cliché |
-
-### 4 条评分纪律（铁律 · 贯穿全阶段）
-
-1. **禁止评分通胀**——全维度 ≥7 时强制自检
-2. **禁止平均上浮**——取最差持续段而非平均值
-3. **评分必须引证**——必须引用文件 / 行号 / 元素
-4. **创新性允许低分**——5/10 对生产交付物合理
-
-> 这 4 条是 monkren 的诚实底线。**99% 的 review tool 是 checklist，monkren 是 judgment。**
+1. 全维度均不低于 7 时强制寻找反证。
+2. 按最差的持续体验评分，不用平均值掩盖问题。
+3. 每个分数必须引用文件、行号、元素或可观察证据。
+4. 生产型设计的创新性 5/10 可以合理，不为好看而抬分。
 
 完整标准见 [references/standards.md](references/standards.md)。
 
----
-
-## v5.x → v6.0 变更
-
-| 维度 | v5.0 | v5.1 | v5.1.1 | **v6.0** |
-|------|------|------|--------|----------|
-| **架构** | 3 段路由 | 2 大类（审查 + 创作） | 2 大类 + slop framing 修正 | **1 智能体 + 5 阶段生命周期** |
-| **阶段数** | 3 段 | 2 大类 | 2 大类 | **5 阶段**（调研 / 创作 / 执行 / 审查 / 改进） |
-| **物理结构** | skills/{create, discover, define, review, deliver, tools} | 同 v5.0 | 同 v5.0 | **skills/{01-research, 02-create, 03-execute, 04-review, 05-improve, tools, _deprecated}** |
-| **活跃 skill** | 3 个 | 6 个 | 6 个 | **15 个**（6 + 2 + 1 + 5 + 1） |
-| **Wireframe** | DEPRECATED | DEPRECATED | DEPRECATED | **复活（创作定义阶段）** |
-| **DEPRECATED** | 8 个 | 5 个 | 5 个 | **4 个**（移入 _deprecated/） |
-| **Tagline** | "AI 设计的 slop 检测器" | "设计审查与创作改进" | 同 v5.1 | **"1 个设计智能体 · 5 阶段设计生命周期"** |
-| **Unifying principle** | "反 slop" | "设计品味 applied forward and backward" | 同 v5.1 | **"1 智能体 + 5 阶段，1 个 taste 贯穿"** |
-
-> **v6.0 关键转变**：v5.x 把项目当作 "工具集合"（2 大类 / 3 段路由）——用户进来不知道下一步。v6.0 把它当作 **1 个完整的设计智能体**——用户提交需求，monkren 走完 5 阶段，每阶段调用对应 skill。**5 阶段可迭代**而非纯线性。
-
-完整策略见 [case/Project Strategy — Design Review.html](case/Project%20Strategy%20%E2%80%94%20Design%20Review.html)。
-
----
-
 ## 仓库结构
 
-```
+```text
 monkren-designer/
-├── README.md                  ← 你在这里
-├── SKILL.md                   ← agent 入口（1 智能体 + 5 阶段 + 5 维度 + 4 纪律）
-├── index.html                 ← 在线预览（v6.0）
-├── LICENSE
-├── case/                      ← 真实审查报告（4 份）
-│   ├── Design Review — Landing Page.html
-│   ├── Score Improvement — Landing Page.html
-│   ├── Design Suggestion — Landing Page.html
-│   └── Project Strategy — Design Review.html
-├── references/                ← 知识图谱（9 份）
-│   ├── beliefs.md             ← 公开
-│   ├── standards.md           ← 公开
-│   ├── methods-review.md      ← 公开
-│   ├── integration.md         ← INTERNAL
-│   ├── perspectives.md        ← INTERNAL
-│   ├── platforms.md           ← INTERNAL
-│   ├── philosophy-library.md  ← INTERNAL
-│   ├── methods-create.md      ← INTERNAL
-│   └── execution.md           ← INTERNAL
-├── skills/                    ← skill 矩阵（v6.0 · 5 阶段）
-│   ├── 01-research/           ← 调研定义（6 skills）
-│   │   ├── design-research/
-│   │   ├── design-brainstorm/
-│   │   ├── quick-references/
-│   │   ├── discovery-questions/
-│   │   ├── frontend-aesthetic-direction/
-│   │   ├── visual-taste-lab/
-│   │   └── README.md
-│   ├── 02-create/             ← 创作定义（2 skills）
-│   │   ├── generate-variations/
-│   │   ├── wireframe/         ← v6.0 复活
-│   │   └── README.md
-│   ├── 03-execute/            ← 设计执行（1 skill）
-│   │   ├── make-a-prototype/
-│   │   └── README.md
-│   ├── 04-review/             ← 设计审查（5 skills）
-│   │   ├── 5-dim-review/      ← （main method，方法层定义在 references/）
-│   │   ├── ai-slop-check/
-│   │   ├── accessibility-audit/
-│   │   ├── hierarchy-rhythm-review/
-│   │   ├── interaction-states-pass/
-│   │   ├── polish-pass/
-│   │   └── README.md
-│   ├── 05-improve/            ← 设计改进（1 skill）
-│   │   ├── design-improve/
-│   │   └── README.md
-│   ├── tools/                 ← 跨阶段工具
-│   │   ├── add-inspo-source/
-│   │   ├── remove-inspo-source/
-│   │   └── README.md
-│   └── _deprecated/           ← 4 个边缘 create skill（DEPRECATED）
-│       ├── component-extract/
-│       ├── design-system-extract/
-│       ├── make-a-deck/
-│       ├── make-tweakable/
-│       └── README-create-v5.md
-└── assets/
-    └── philosophy-images/     ← 80 张设计哲学参考图
+├── SKILL.md                 # 唯一安装入口与路由器
+├── skills/
+│   ├── 01-research/         # 6 个调研模块
+│   ├── 02-create/           # 2 个创作模块
+│   ├── 03-execute/          # 1 个执行模块
+│   ├── 04-review/           # 6 个审查模块，含 5-dim-review
+│   ├── 05-improve/          # 1 个改进模块
+│   ├── advisors/            # 1 个跨阶段只读次设计 agent
+│   ├── tools/               # 2 个跨阶段工具
+│   └── _deprecated/         # 不参与路由的历史模块
+├── references/              # 按需加载的方法与标准
+├── assets/philosophy-images/# 80 张本地参考图及索引
+├── case/                    # 4 份案例产出
+├── scripts/                 # 仓库校验脚本
+├── THIRD_PARTY_NOTICES.md   # 第三方来源与 MIT 归属
+└── index.html               # GitHub Pages 展示页
 ```
 
----
+## 兼容性
+
+根技能不依赖某个专有 agent 路径或工具名。支持 skills.sh 的 agent 可直接安装；其他环境也可读取 `SKILL.md` 使用。某项增强能力不可用时，流程会降级为本地、顺序或文本方式。
+
+## 开发校验
+
+```bash
+ruby scripts/validate_repo.rb
+```
+
+该检查覆盖技能 frontmatter、根路由、advisor 边界、相对链接、展示页本地资源以及 80 张哲学图片索引。GitHub Pages 部署也会先运行同一检查。
 
 ## 许可证
 
-本仓库采用 **Personal Use Only License**——个人使用免费，企业商用需获得书面授权。
-详见 [LICENSE](LICENSE)。
+个人使用免费；企业或商业用途需要书面授权。详见 [LICENSE](LICENSE)。
 
----
+“第一性原理 × 产品品味”参考的第三方材料与许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
-**v6.0 · 2026-07-15** · 1 个设计智能体 · 5 阶段设计生命周期 · 同一个 taste 贯穿全程。
+**v6.2 · 2026-07-17**

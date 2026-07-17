@@ -2,13 +2,6 @@
 name: discovery-questions
 description: |
   启动前的提问协议。在项目 kickoff 时系统化提问，避免基于假设开工。5 个必问项覆盖目标/用户/约束/品牌/成功标准。触发词：「kickoff」「项目启动」「开始新项目」「问什么问题」「discovery」「需求澄清」。
-allowed-tools:
-  - Read
-  - Write
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # Discovery Questions：Kickoff 提问协议
@@ -61,7 +54,7 @@ allowed-tools:
 
 - 简要复述对设计影响最大的几个选择
 - 标出你想反驳的答案（温和地 —— 用户是 manager）
-- 进入合适的构建 skill（`make-a-deck`、`make-a-prototype`、`wireframe` 等）并自主执行。这一轮是你提问的机会 —— 不要再为小决策回来追问；自己定下来，列在 summary 里。
+- 进入合适的活跃模块（原型、线框或变体）并自主执行。这一轮是你提问的机会——不要再为小决策回来追问；自己定下来，列在 summary 里。
 
 如果后来发现早期答案错了（比如用户说"不要新奇点子"但反馈却想要更大胆的选择），把矛盾摆出来重新提问，而不是带着错误假设继续。
 

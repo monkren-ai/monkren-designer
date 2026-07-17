@@ -2,13 +2,6 @@
 name: frontend-aesthetic-direction
 description: |
   无品牌时的美学方向承诺。当项目没有既有品牌规范时，按 5 个 phase 系统化锁定美学方向（7 个维度：色彩/字体/间距/容器/图像/动效/语调），避免生成 generic 作品。触发词：「美学方向」「视觉风格选择」「no brand」「aesthetic direction」「风格方向」「视觉调性」。
-allowed-tools:
-  - Read
-  - Write
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # Frontend Aesthetic Direction：没有 brand 时锁定一种视觉
@@ -84,6 +77,6 @@ allowed-tools:
 
 用这个方向搭一个小表面（一个 hero、一张卡片、一组按钮），尽早拿给用户看。问："这个读起来像不像 [那三个形容词]？" 如果不像 —— 或者用户在某个轴上 push back —— 在铺开之前先改。小尺度上失败的方向，放大只会更糟，不会更好。
 
-后续每个设计都引用方向里的 token，不要用新的 inline 值。如果新设计需要一个未定义的值，**先把它加进方向里**，再用。当方向成熟后，把它抽到一个 tokens 文件里（`design-system-extract`）。
+后续每个设计都引用方向里的 token，不要用新的 inline 值。如果新设计需要一个未定义的值，**先把它加进方向里**，再用。当方向成熟后，将它整理为项目本地的 tokens 文件或现有设计系统变量。
 
 总结：三个形容词、每个轴上锁定的选择、铺开之前用户应该 review 的轴、以及用这个方向搭出来的第一个表面。

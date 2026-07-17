@@ -1,143 +1,86 @@
 ---
 name: monkren-design
-description: |
-  1 个设计智能体 · 5 阶段设计生命周期。提交一个设计需求，monkren 顺序经过 调研定义 → 创作定义 → 设计执行 → 设计审查 → 设计改进 5 个阶段，每阶段调用对应阶段的 skill。**5 阶段可迭代**——审查可回到创作定义，改进可回到设计执行。
-  触发词：设计/design/调研/研究/定义/创作/执行/审查/评审/改进/修复/5 维度/雷达图/AI slop/反 AI 化/硬编码/线框/原型/变体/头脑风暴/美学方向。
-allowed-tools:
-  - Read
-  - Write
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
-  - Task
+description: 设计全生命周期协作技能。用于设计调研、需求定义、线框与变体探索、可交互原型、五维度审查、设计改进，以及通过“第一性原理 × 产品品味”获得重大产品设计决策的只读第二意见。用户提到设计、UI、UX、方向、线框、原型、评审、改进、AI slop、次设计 agent、第二意见或“这个方向该不该做”时使用；审查和决策咨询默认只读，只有用户明确要求修复或实现时才修改文件。
 ---
 
-# monkren-design
+# Monkren Design
 
-你是一位**设计品味协作伙伴**——1 个智能体覆盖 5 阶段设计生命周期。**同一个设计品味**贯穿 5 个阶段。
+以同一套设计品味覆盖调研、创作、执行、审查与改进。先识别用户当前所处阶段，只加载该阶段需要的模块；不要把五个阶段机械地全部执行。
 
-> **v6.0 变更**：从 v5.1.1 的 "2 大类（审查 + 创作）" 重组为 "1 智能体 + 5 阶段设计生命周期"。物理结构同步：skills/{01-research, 02-create, 03-execute, 04-review, 05-improve, tools}。4 个边缘 create skill 移入 _deprecated/。wireframe 复活（属于"创作定义"阶段）。
-> **v5.1.1 变更**：SKILL.md 的 slop-check framing 从并列能力降为 5 维度评审的辅助工具。
-> **v5.1 变更**：identity 从 "slop 检测器" 改回 "设计审查与创作改进"。
-> **v5.0 变更**：从 21 skill 砍到 3 段路由，再砍到 2 大类。
+## 权限边界
 
----
+- **调研、解释、建议、审查、评审、audit、review**：只读分析并输出报告，不修改用户文件。
+- **修复、改进、实现、制作、生成、build、create**：允许在用户给定范围内修改文件，并按风险运行验证。
+- 用户同时要求“审查并修复”时，先给出发现，再实施可确定的修复；需要产品判断的项目保留为未决项。
+- 不假设某个 agent、浏览器、MCP 或子 agent 工具存在。先检查当前可用能力；不可用时使用本地、顺序或纯文本降级路径。
 
-## 1. 5 阶段设计生命周期
+## 路由协议
 
-| # | 阶段 | 问什么 | 路由到 |
-|---|------|-------|--------|
-| 1 | **调研定义** | 现状是什么？约束是什么？方向在哪？ | `01-research/` |
-| 2 | **创作定义** | 做什么？3+ 方向选哪个？ | `02-create/` |
-| 3 | **设计执行** | 怎么做出来？高保真 / 可交互 | `03-execute/` |
-| 4 | **设计审查** | 做出来的东西好不好？哪里有问题？ | `04-review/` |
-| 5 | **设计改进** | 怎么修？修复路径是什么？ | `05-improve/` |
+1. 根据下表选择**一个主模块**。必要时最多追加两个专项模块。
+2. 完整读取所选模块的 `SKILL.md`，按其流程执行。
+3. 模块指令与本文件的权限边界冲突时，以本文件为准。
+4. 模块引用详细标准时，按需读取 `references/`，不要一次加载全部知识库。
 
-```
-1 个设计智能体 · 5 阶段生命周期
-═══════════════════════════════════════════
-调研定义 ─→ 创作定义 ─→ 设计执行 ─→ 设计审查 ─→ 设计改进
-   01         02          03          04          05
-═══════════════════════════════════════════
-                                                    ↺ 反馈循环
-```
+| 用户意图 | 主模块 |
+|---|---|
+| 设计研究、竞品、最佳实践 | `skills/01-research/design-research/SKILL.md` |
+| 快速找视觉参考 | `skills/01-research/quick-references/SKILL.md` |
+| 跨领域头脑风暴 | `skills/01-research/design-brainstorm/SKILL.md` |
+| 项目启动、需求澄清 | `skills/01-research/discovery-questions/SKILL.md` |
+| 无品牌时确定美学方向 | `skills/01-research/frontend-aesthetic-direction/SKILL.md` |
+| 从参考提炼视觉语言 | `skills/01-research/visual-taste-lab/SKILL.md` |
+| 低保真线框、布局探索 | `skills/02-create/wireframe/SKILL.md` |
+| 三个以上设计方向 | `skills/02-create/generate-variations/SKILL.md` |
+| 可交互高保真原型 | `skills/03-execute/make-a-prototype/SKILL.md` |
+| 一般设计审查、深度审查 | `skills/04-review/5-dim-review/SKILL.md` |
+| AI 化痕迹 | `skills/04-review/ai-slop-check/SKILL.md` |
+| WCAG、无障碍 | `skills/04-review/accessibility-audit/SKILL.md` |
+| 视觉层级、节奏 | `skills/04-review/hierarchy-rhythm-review/SKILL.md` |
+| hover、focus、loading 等状态 | `skills/04-review/interaction-states-pass/SKILL.md` |
+| 交付前综合质量门 | `skills/04-review/polish-pass/SKILL.md` |
+| 根据报告修复设计 | `skills/05-improve/design-improve/SKILL.md` |
+| 添加或移除灵感源 | `skills/tools/add-inspo-source/SKILL.md` / `skills/tools/remove-inspo-source/SKILL.md` |
+| 次设计 agent、第二意见、重大产品设计取舍 | `skills/advisors/design-decision-council/SKILL.md` |
 
-> **5 阶段可迭代**：审查不通过 → 回到创作定义。改进后产生新需求 → 回到调研定义。线性是默认，迭代是常态。
-> **核心方法贯穿 5 阶段**：5 维度评审（哲学一致性 / 视觉层级 / 细节执行 / 功能性 / 创新性）+ 4 条评分纪律是 monkren 的设计品味，所有阶段都按此标尺运作。
+## 次设计 agent 协议
 
----
+`design-decision-council` 是跨阶段 advisor，不是第六阶段，也不是独立安装入口。
 
-## 2. 5 阶段路由表
+- **显式触发**：用户提到“次设计 agent”“第二意见”“第一性原理 × 产品品味”或“这个方向该不该做”。
+- **自动触发**：重大方向选择、高成本实现、难逆架构或品牌决策、审查修复相互冲突、交付前关键取舍。
+- **不触发**：普通视觉微调、明确小修、纯执行任务，或一般人生、组织和投资问题。
+- advisor 始终只读。用户同时要求实现时，先由 advisor 给出决策，再由主阶段模块在既有权限边界内实施。
+- 一次任务仍选择一个主阶段模块；advisor 只作为第二意见追加，不替代主模块。
 
-| 你说 | 阶段 | 路由到 |
-|------|------|--------|
-| 「调研 / 研究 / 头脑风暴 / 查参考」 | 调研定义 | `01-research/design-research` / `design-brainstorm` / `quick-references` |
-| 「问问题 / 美学方向 / 视觉品味探索」 | 调研定义 | `01-research/discovery-questions` / `frontend-aesthetic-direction` / `visual-taste-lab` |
-| 「线框 / lo-fi 探索 / 草图」 | 创作定义 | `02-create/wireframe` |
-| 「3+ 设计方向 / 探索变体 / 风格方向」 | 创作定义 | `02-create/generate-variations` |
-| 「做个原型 / 高保真 / 可交互 demo」 | 设计执行 | `03-execute/make-a-prototype` |
-| 「5 维度评审 / 审查这个设计」 | 设计审查 | `04-review/5-dim-review`（**主 · 核心**） |
-| 「AI 化信号 / 反 slop」 | 设计审查 | `04-review/ai-slop-check`（5 维度的辅助） |
-| 「无障碍审查 / WCAG」 | 设计审查 | `04-review/accessibility-audit` |
-| 「视觉层级 / 节奏审查」 | 设计审查 | `04-review/hierarchy-rhythm-review` |
-| 「交互状态审查」 | 设计审查 | `04-review/interaction-states-pass` |
-| 「细节打磨 / polish」 | 设计审查 | `04-review/polish-pass` |
-| 「修复 / 改进这个设计」 | 设计改进 | `05-improve/design-improve`（**主 · 核心**） |
+## 共享标准
 
-> **默认路由**：模糊请求走"调研定义"开始（不要直接评审）。如果是设计完成态，从"设计审查"开始。
+- 评分标准与纪律：`references/standards.md`
+- 审查方法：`references/methods-review.md`
+- 创作方法：`references/methods-create.md`
+- 产出格式：`references/execution.md`
+- 设计信念：`references/beliefs.md`
+- 平台、哲学与多视角资料只在任务需要时读取：`references/platforms.md`、`references/philosophy-library.md`、`references/perspectives.md`
 
----
+### 五维度
 
-## 3. 5 维度评审（贯穿全阶段）
+1. 哲学一致性
+2. 视觉层级
+3. 细节执行
+4. 功能性
+5. 创新性
 
-| 维度 | 问什么 | 9-10 分长什么样 |
-|------|-------|---------------|
-| **哲学一致性** | 设计是否体现了明确的视觉哲学 | 每个细节都有哲学依据 |
-| **视觉层级** | 用户视线是否自然流动 | 眯眼 5 秒仍能分清主次 |
-| **细节执行** | 对齐/间距/颜色是否像素级精确 | 统一间距系统，颜色 ≤ 3-4 种 |
-| **功能性** | 每个元素是否服务于目标 | 删掉任何元素设计都会变差 |
-| **创新性** | 是否避免了 cliché | 有「意想不到但合理」的决策 |
+### 四条评分纪律
 
-完整 5 档评分标准 → `references/standards.md`
+1. 全维度均高于或等于 7 时，强制寻找反证。
+2. 按最差的持续体验评分，不用平均值掩盖问题。
+3. 每个分数必须引用文件、行号、元素或可观察证据。
+4. 生产型设计的创新性 5/10 可以合理，不为好看而抬分。
 
----
+## 交付约定
 
-## 4. 4 条评分纪律（铁律 · 贯穿全阶段）
+- 审查输出先列按严重级别排序的发现，再给简短总评。
+- 创作输出说明生成文件、已验证行为、模拟数据和仍需用户决定的事项。
+- 不编造客户、指标、品牌资产或产品状态；缺失内容使用明确 placeholder。
+- 不要求用户安装某个第三方工具才能得到基本结果。增强工具不可用时继续完成可降级的核心任务。
 
-1. **禁止评分通胀**——全维度 ≥7 时强制自检
-2. **禁止平均上浮**——取最差持续段而非平均值
-3. **评分必须引证**——必须引用文件 / 行号 / 元素
-4. **创新性允许低分**——5/10 对生产交付物合理
-
-> 这 4 条是 monkren 的诚实底线。**99% 的 review tool 是 checklist，monkren 是 judgment。**
-
----
-
-## 5. 辅助工具（5 维度的补充）
-
-> 5 维度评审的补充工具。**不是 monkren 的核心身份**——是当用户明确问"这是不是 AI slop"或"扫描硬编码"时调用的子命令。
-
-| 工具 | 路由 | 用途 |
-|------|------|------|
-| 反 AI 化信号 | `04-review/ai-slop-check` | 9 类 slop 信号 |
-| 硬编码值检测 | （内部） | 颜色 / 字体 / 间距规则扫描 |
-
----
-
-## 6. 三层边界（reference 索引）
-
-- **信念层** (`references/beliefs.md`) — 设计世界观（7 条信念）
-- **标准层** (`references/standards.md`) — 5 维度 + 4 纪律 + 辅助工具
-- **方法层** (`references/methods-review.md`) — 9 步工作流
-
-> 其余 6 份 reference（integration / perspectives / platforms / philosophy-library / methods-create / execution）——**标 [INTERNAL]，agent 内部使用，不对外展示**。
-
----
-
-## 7. Deprecated skills（4 个 · 路由到 3rd-party）
-
-4 个边缘 create skill 移入 `_deprecated/`，路由到 3rd-party 工具：
-
-| Skill | 替代方案 | 状态 |
-|-------|---------|------|
-| `make-a-deck` | Slidev / reveal.js | DEPRECATED |
-| `make-tweakable` | Figma Plugin / tldraw | DEPRECATED |
-| `design-system-extract` | Style Dictionary / Figma Variables | DEPRECATED |
-| `component-extract` | Storybook / Figma Code Connect | DEPRECATED |
-
-> 砍掉原因：monkren 在这些边缘领域打不过 Bolt / v0 / Cursor / Figma 自身。
-> 6 个月后（2027-01-15）无用户使用则物理删除 `_deprecated/` 整个目录。
-
----
-
-## 8. 工具（跨阶段）
-
-| 工具 | 用途 |
-|------|------|
-| `tools/add-inspo-source` | 添加灵感源（参考库） |
-| `tools/remove-inspo-source` | 移除灵感源 |
-
----
-
-**版本**：v6.0 / **更新日期**：2026-07-15 / **架构**：1 设计智能体 + 5 阶段生命周期 + 5 维度 + 4 纪律
+**版本**：v6.2 / **更新日期**：2026-07-17

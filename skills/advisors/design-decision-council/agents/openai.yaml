@@ -1,0 +1,4 @@
+interface:
+  display_name: "第一性原理 × 产品品味"
+  short_description: "融合第一性原理与产品品味，为重大产品设计取舍提供只读第二意见"
+  default_prompt: "使用第一性原理与产品品味审视这个决策，给出统一结论、工程异议、体验异议和下一次可逆实验。"

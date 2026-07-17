@@ -1,7 +1,7 @@
 # 设计哲学库
 
 > ⚠️ **INTERNAL · v5.0 起标 internal** · 不对外展示，仅供 agent 内部使用。
-> 公开 reference：beliefs / standards / methods-review。详细策略见根 [SKILL.md §7](../../SKILL.md#7-三层边界) / [§9](../../SKILL.md#9-完整-reference-索引9-份)。
+> 公开 reference：beliefs / standards / methods-review。入口与路由见根 [SKILL.md](../SKILL.md)。
 >
 > 回答「选哪种风格？」——80 种设计哲学完整风格库 + 项目适配矩阵 + 落地概念包。信念层论述见 beliefs.md，落地概念包模板与 Demo 规范见 execution.md。
 
@@ -3528,8 +3528,8 @@ Ulm School HfG design: systematic methodology, interdisciplinary collaboration, 
 ### 6.1 Evidence 规则
 
 - ✅ 只列真实存在的、被广泛认可的产品/项目
-- ⚠️ 不确定或小众 → 标注"需 WebSearch 验证"
-- 📷 搜索关键词保留(与 §2 同步),用于 Lazyweb 搜索视觉参考
+- ⚠️ 不确定或小众 → 标注"需外部搜索验证"
+- 📷 搜索关键词保留(与 §2 同步),用于可用的外部搜索能力查找视觉参考
 - ❌ 不编造产品,不编造客户案例
 
 ### 6.2 案例表(40 哲学 × 2-3 案例)
@@ -3580,7 +3580,7 @@ Ulm School HfG design: systematic methodology, interdisciplinary collaboration, 
 ### 6.3 案例的 4 类用法
 
 1. **作为推荐依据**:`方向 2 适合你,因为 Stripe 用的就是这种风格`
-2. **作为搜索关键词**:沿用 §2 的搜索关键词,做 Lazyweb 视觉参考
+2. **作为搜索关键词**:沿用 §2 的搜索关键词,通过当前可用能力查找视觉参考
 3. **作为反模式检查**:`如果你的产品不是高端品牌,不适合模仿 Bergdorf Goodman`
 4. **作为可行性证据**:`已经有 5+ 真实产品用此风格,证明可落地`
 

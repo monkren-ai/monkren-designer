@@ -1,18 +1,9 @@
 ---
 name: wireframe
-description: |
-  低保真线框探索。在 hi-fi 之前用纯黑白线框快速探索布局方案，5 个 phase 覆盖目标确认/布局骨架/内容优先级/变体对比/方向锁定。属于 monkren v6.0 设计生命周期的**第 2 阶段（创作定义）**。触发词：「线框」「wireframe」「低保真」「布局探索」「lo-fi」「草图」「layout sketch」。
-  v6.0 撤回 v5.0 的 DEPRECATED 标记——本 skill 是 02 创作定义阶段的核心能力。
-allowed-tools:
-  - Read
-  - Write
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
+description: 在高保真实现前用灰度线框探索布局、流程、内容优先级和交互模型。用于线框、wireframe、lo-fi、布局探索、草图或需要先比较多个低成本方向的请求。
 ---
 
-> ✅ **v6.0 复活** · 本 skill 是 monkren 设计生命周期第 2 阶段（创作定义）的核心能力。lo-fi 探索不需要"打得过 Bolt / v0"——它服务于"先用最便宜的方式探索方向"这个 workflow 目的。
+> 生命周期与路由见根 [SKILL.md](../../../SKILL.md)。
 
 # Wireframe：快速探索多种想法
 
@@ -39,7 +30,7 @@ allowed-tools:
 
 ## Phase 3：画出变体
 
-产出**至少 3 个**在既定轴上有差异的变体。单屏变体用 `design_canvas.jsx` starter 并排放置；流程变体做成小故事板（每个 3–5 屏）。
+产出**至少 3 个**在既定轴上有差异的变体。默认用一个自包含 HTML/SVG 文件并排放置单屏变体；流程变体在同一文件中做成每个 3–5 屏的小故事板。不要依赖未随仓库提供的 starter。
 
 在布局（居中 / 分屏 / 网格）、信息密度、流程结构（单页 / 多步 / 渐进披露）、CTA 位置或导航模式上变化。按从最循规蹈矩到最新颖的顺序排列——当稳妥方案挨着冒险方案时，用户更容易挑出有意思的东西。
 
@@ -59,6 +50,6 @@ allowed-tools:
 
 用户选定方向后，记录：选中的变体（或混合方案）、什么吸引了他们、他们明确拒绝了什么、过程中浮现的新约束。这会成为后续 hi-fi 工作的 brief。
 
-然后建议 `make-a-prototype`（hi-fi 可交互）、`make-a-deck`（如果 wireframe 是为演示准备的）或再来一轮 lo-fi。不要在 wireframe 本身上投入 hi-fi 打磨——它们已经完成了使命。
+然后建议读取 `../../03-execute/make-a-prototype/SKILL.md` 制作 hi-fi 可交互版本、把选中线框导入用户已有的演示工具，或再来一轮 lo-fi。不要在 wireframe 本身上投入 hi-fi 打磨——它们已经完成了使命。
 
 总结：产出的变体、变体轴、建议的下一步、浮现的开放问题。

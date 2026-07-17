@@ -15,6 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate repository
+        run: ruby scripts/validate_repo.rb
+
       - name: Prepare public artifact
         run: |
           mkdir -p public
@@ -28,6 +31,7 @@ jobs:
           fi
           # 4. 协议
           cp LICENSE public/
+          cp THIRD_PARTY_NOTICES.md public/
           # 5. 关闭 Jekyll(防止 _xxx 文件被吞)
           touch public/.nojekyll
 

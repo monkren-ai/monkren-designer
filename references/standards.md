@@ -986,7 +986,7 @@ Tokens 是系统构建的原子单元:
 
 这是把 UI 变成设计系统的关键——其他人可以基于此构建,不用每次问你。
 
-**组件提取方法** → `references/methods-create.md`(组件提取)+ `skills/_deprecated/component-extract/`
+**组件清单建议** → 从项目真实组件目录、token 和文档系统生成 inventory；不要依据视觉猜测组件 API。
 
 ---
 

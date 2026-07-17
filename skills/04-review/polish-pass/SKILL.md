@@ -3,13 +3,6 @@ name: polish-pass
 description: |
   交付前质量门禁。编排 4 个并行审查 agent（accessibility-audit + ai-slop-check + hierarchy-rhythm-review + interaction-states-pass），聚合去重后按 blocker/quality/polish 三级优先级修复，作为交付前的最终质量门。
   触发词：「polish」「打磨」「交付前检查」「final check」「质量门」「polish pass」。
-allowed-tools:
-  - Read
-  - Write
-  - Glob
-  - Grep
-  - WebSearch
-  - Task
 ---
 
 # Polish Pass：设计交付前的质量门
@@ -24,7 +17,7 @@ allowed-tools:
 
 ## Phase 2：并行启动四个审查 agent
 
-使用 ${AGENT_TOOL_NAME} 工具在一条消息中并发启动全部四个 agent。每个 agent 运行相当于一个独立审查 skill 的工作，范围限定到这个文件。
+当前环境支持子 agent 时，在一轮中并行启动四个独立审查者；否则由当前 agent 顺序完成四个检查面。不要因为缺少并行能力而中止质量门。
 
 明确指示每个 agent：**报告发现的每一个问题，包括不确定和低严重度的情况，并为每条给出置信度和严重度估计。** 覆盖是 agent 的职责；过滤和优先级排序在 Phase 3 进行。一个自我审查掉"次要"发现的 agent 会默默降低召回率。
 
@@ -41,9 +34,9 @@ allowed-tools:
 2. **质量问题**——AI slop 套路、层级破损、缺失交互状态。这些会让设计显得廉价；全部修复。
 3. **打磨建议**——更微妙的改进（色调微调、间距刻度收紧）。在范围内时应用；超出范围时标记。
 
-## Phase 4：修复并重新验证
+## Phase 4：报告，或在授权后修复
 
-直接修复每个 blocker 和质量问题。对于模棱两可的修复（例如设计用了 Inter 但没有声明 brand 字体），挑一个站得住脚的默认值并记录，以便用户能覆盖。对明显的误报（例如第三方嵌入的对比度），记录并跳过。
+默认输出去重后的质量门报告，不修改文件。只有用户明确要求“打磨并修复”时，才修复确定的 blocker 和质量问题。模棱两可的品牌、字体和视觉方向保留为未决项；对明显误报或第三方限制记录原因。
 
 然后重新检查高风险区域：对比度修复是否冲淡了 brand 色？新的 focus ring 是否与相邻内容重叠？primary CTA 现在是否真的显得是 primary？修复看起来不对的地方；标记你不确定的地方。
 

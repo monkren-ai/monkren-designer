@@ -13,7 +13,7 @@
 > 当审查涉及具体产品/品牌/技术时,审查前必须执行事实验证。信念层论述 → `references/beliefs.md` §0(事实验证先于假设)
 
 **硬流程(审查前执行,优先于审查动作)**:
-1. `WebSearch` 产品名 + 最新时间词("2026 latest"、"launch date"、"release"、"specs")
+1. 用当前环境可用的网页搜索能力查询产品名 + 最新时间词("2026 latest"、"launch date"、"release"、"specs")
 2. 读 1-3 条权威结果,确认:**存在性 / 发布状态 / 最新版本号 / 关键规格**
 3. 把事实写进审查上下文,不靠记忆
 4. 搜不到或结果模糊 → 问用户,而不是自行假设
@@ -23,7 +23,7 @@
 - ❌ "X 目前是 vN 版本"(未经搜索的断言)
 - ❌ "X 这个产品可能不存在"
 - ❌ "据我所知 X 的规格是..."
-- ✅ "我 `WebSearch` 一下 X 最新状态"
+- ✅ "我先搜索并核对 X 的最新状态"
 - ✅ "搜到的权威来源说 X 是 ..."
 
 ### 1.1 Step 0:审查前发现
@@ -134,20 +134,20 @@
 
 ### 1.6 Step 3.5:参考搜索(条件性)
 
-> 审查时搜索真实产品截图作为视觉佐证。此步骤为可选增强——MCP 不可用时跳过,不影响审查完整性。完整搜索规则、降级策略和冲突处理 → `references/integration.md`
+> 审查时可搜索真实产品截图作为视觉佐证。此步骤为可选增强——外部访问不可用时跳过,不影响审查完整性。完整规则见 `references/integration.md`。
 
-**触发条件**:Lazyweb MCP 可用(`lazyweb_health` 返回成功)
+**触发条件**:当前环境有用户授权且可用的网页、浏览器或资料库搜索能力。
 
 **执行要点**:
-1. MCP 健康检查(5 秒超时)→ 失败则跳过
+1. 轻量探测相关能力 → 失败则跳过
 2. 至少 3 次不同角度搜索(按屏幕类型/按竞品公司/按设计模式)
-3. visionDescription 质量门控验证相关性
+3. 目视或文本检查验证每条结果确实相关
 4. 最多下载 15 张截图
 5. 截图与哲学判断冲突时哲学判断优先
 
 **禁止行为**:
-- ❌ MCP 不可用时阻塞审查流程
-- ❌ 引用未经 visionDescription 验证的截图
+- ❌ 外部能力不可用时阻塞审查流程
+- ❌ 引用未经内容验证的截图
 - ❌ 截图模式与哲学判断冲突时以截图为准
 
 ### 1.7 Step 4:执行审查
@@ -311,7 +311,7 @@
 
 **Phase 1:识别要审的 surface**——审用户刚编辑或问到的 HTML 文件;否则最近修改的设计文件;不清楚就问。读全文,note 框架、期望级别(默认 WCAG AA)、用户声明的约束。
 
-**Phase 2:并行启动 4 个审查 agent**——用 `${AGENT_TOOL_NAME}` 在单条消息里并发启动 4 个 agent,每个拿完整文件内容。**显式指令每个 agent**:报告找到的每个问题,包括边界和低严重度的,带置信度和严重度估计。覆盖是 agent 的工作;过滤在 Phase 3 聚合时做。
+**Phase 2:并行审查(可选)**——环境支持子代理时,可并行启动 4 个审查任务;否则按同一清单顺序执行。每个任务都应报告边界和低严重度问题,并给出置信度与严重度估计。覆盖在本阶段完成,过滤在 Phase 3 聚合时做。
 
 #### Agent 1:对比度和色彩
 
@@ -345,7 +345,7 @@
 5. **Input type 和 autocomplete**——`type="email"`、`type="tel"`、`autocomplete` 属性给 autofill 和移动键盘
 6. **Hit target** 触摸面至少 44×44px
 
-**Phase 3:聚合和修复**——等 4 个 agent 完成。聚合 finding 到单一去重列表,直接修每个问题。边界情况(如对比度 4.4:1)也应用修复——可访问性是地板,不是天花板。明确假阳性或 out-of-scope(如 agent 标记了第三方 embed 你改不了),note 并跳过。
+**Phase 3:聚合和处置**——聚合 finding 到单一去重列表。默认只报告证据、影响与建议;用户明确授权修改后,才修复已确认的问题并复验。边界情况(如对比度 4.4:1)也应报告——可访问性是地板,不是天花板。明确假阳性或 out-of-scope(如第三方 embed),说明原因并跳过。
 
 **总结**:按类别(contrast / semantic / keyboard / motion-forms)找到的问题、修复的问题、留给用户的。
 
@@ -369,7 +369,7 @@
 8. **间距**——默认 spacing token(4px 或 8px 倍数);检测 off-scale 值(`padding: 7px 15px`、`gap: 13px`)
 9. **editorial-warm house style**——默认为 brief 选的方向;检测无品牌理由的 cream/warm off-white 背景 + serif display silent 默认 + italic word-accents + terracotta/amber accent 组合,尤其在 dashboard/dev tool/fintech/healthcare/enterprise surface 上
 
-**Phase 3:修复和总结**——直接应用修复。多个选项都合理时(如哪个非 Inter 字体),挑最可辩护的默认并 note 让用户覆盖。**总结**:按类别找到的 trope、应用的修复、给用户的开放问题。
+**Phase 3:建议和总结**——默认输出可操作建议,不修改文件。用户明确授权修改后,再应用修复;多个选项都合理时(如字体选择),说明取舍并采用最可辩护的默认。**总结**:按类别列出 trope、建议或已应用的修复、开放问题。
 
 ### 6.3 视觉层级和节奏检测流程(Hierarchy & Rhythm Review)
 
@@ -377,7 +377,7 @@
 
 **Phase 1:识别 surface**——审用户刚编辑或问到的 HTML/CSS 文件;否则最近修改的设计文件;不清楚就问。读文件和引用的 style,note medium(slide/page/mobile/dashboard)——规则按上下文不同。
 
-**Phase 2:并行启动 2 个审查 agent**——用 `${AGENT_TOOL_NAME}` 在单条消息里并发启动两个 agent。**显式指令两个 agent**:报告找到的每个问题,包括不确定和低严重度的,带置信度和严重度估计。
+**Phase 2:并行审查(可选)**——环境支持子代理时,可并行启动两个审查任务;否则顺序执行。两个任务都应报告不确定和低严重度问题,并给出置信度与严重度估计。
 
 #### Agent 1:层级审查
 
@@ -403,7 +403,7 @@
 6. **Section 结构**——section 视觉可区分(背景变化、divider、padding 切换)但一致。标记无分隔和太多分隔风格
 7. **对齐**——标记离网格几像素的元素——不一致 margin 而非故意 offset
 
-**Phase 3:聚合和修复**——等两个 agent,聚合 finding,直接修:
+**Phase 3:聚合和处置**——聚合 finding。默认报告下列建议;仅在用户明确授权后实施:
 - 随机 spacing/字号 → snap 到文件 scale(缺失就定义一个——4px 或 8px 倍数)
 - 扁平层级 → 引入对比(更大 headline、更突出 primary CTA、一致 neutral body)
 - 反转层级 → 换信号(弱化大声的不重要元素,重新定位被埋的 primary)
@@ -435,7 +435,7 @@
 
 **Phase 4:验证动作反馈**——每个动作显示可见结果:提交成功(toast、inline message、或带确认的 redirect)、提交失败(清晰 error,字段特定则绑字段)、验证 error(blur 或 submit 时出现,修好时清除)、状态变化(立即视觉更新)。标记静默成功和静默失败——都感觉 broken。当前状态也可见:active 页面/tab、选中项、active filter/sort 视觉区别。
 
-**Phase 5:应用修复和总结**——用 design system token 加每个缺失状态/反馈元素。系统未定义时用:hover 10-15% 更深(或 `color-mix`);active 再 10% 或 `scale(0.98)`;disabled opacity 0.6 + `cursor: not-allowed`;focus `outline: 2px solid var(--color-primary); outline-offset: 2px`;transition `0.2s ease`。状态不明显时(如 toggle button 的 hover-on-active),做判断 call 并 note。
+**Phase 5:建议、授权后修复和总结**——默认报告缺失状态/反馈元素及建议 token。用户明确授权修改后,再应用修复。系统未定义时可用:hover 10-15% 更深(或 `color-mix`);active 再 10% 或 `scale(0.98)`;disabled opacity 0.6 + `cursor: not-allowed`;focus `outline: 2px solid var(--color-primary); outline-offset: 2px`;transition `0.2s ease`。状态不明显时(如 toggle button 的 hover-on-active),说明判断依据。
 
 **总结**:清单化的元素、按类别加的状态、加或规范化的 transition、加的反馈、用户应审查的判断 call。
 
@@ -464,9 +464,9 @@
 
 设计明显 mid-flight(布局坏、section 缺、placeholder 内容还在迭代)时,说出来并问是现在打磨还是结构 settle 后。
 
-### 7.2 Phase 2:并行启动 4 个审查 agent
+### 7.2 Phase 2:并行审查(可选)
 
-用 `${AGENT_TOOL_NAME}` 在单条消息里并发启动 4 个 agent。每个跑等价于一个独立审查 skill,scoped 到这个文件。**显式指令每个 agent**:**报告找到的每个问题,包括不确定和低严重度的,带置信度和严重度估计**。覆盖是 agent 的工作;过滤和优先级在 Phase 3 做。自审"minor" finding 的 agent 静默降低 recall。
+环境支持子代理时,可并行启动 4 个审查任务;否则顺序执行。每个任务等价于一个独立审查 skill,并限定到当前文件。每个任务都应报告不确定和低严重度问题,附置信度与严重度估计。覆盖在本阶段完成,过滤和优先级在 Phase 3 做。
 
 1. **Accessibility audit**(`accessibility-audit`):对比度和色彩(WCAG AA 最小值、仅色彩信号、纯白/黑);语义 HTML 和结构(标题、button vs div、label、alt、ARIA 纪律);键盘导航和 focus(可达性、tab 顺序、可见 focus);动效、表单、hit-target 尺寸
 2. **AI slop check**(`ai-slop-check`):激进渐变;emoji 装饰;默认左 border card;手画 SVG;滥用默认字体(Inter、Roboto、Arial、Fraunces、bare system stack);editorial-warm house style 作 silent 默认(cream + serif display + terracotta,无品牌理由);纯白/黑;invented 色;off-scale spacing
@@ -477,13 +477,13 @@
 
 等 4 个 agent。merge 重复 finding(如"focus ring 移除"同时来自 accessibility 和 interaction-states)。group 成:
 
-1. **Blockers**——可访问性失败(对比度低于 WCAG、缺键盘支持、移除 focus ring、缺 label)。这些对真实用户 break 设计;全修
-2. **Quality issues**——AI slop trope、坏的层级、缺交互状态。这些廉价化设计;全修
+1. **Blockers**——可访问性失败(对比度低于 WCAG、缺键盘支持、移除 focus ring、缺 label)。这些会阻断真实用户;授权修复后全部处理
+2. **Quality issues**——AI slop trope、坏的层级、缺交互状态。这些会廉价化设计;授权修复后全部处理
 3. **Polish recommendations**——更微妙的改进(色 tone 切换、spacing scale 收紧)。在 scope 内时应用;out 时标记
 
-### 7.4 Phase 4:修复和重验
+### 7.4 Phase 4:授权后修复和重验
 
-直接修每个 blocker 和 quality issue。模糊修复(如设计用 Inter 但无品牌字体声明)时,挑可辩护默认并 note 让用户覆盖。明确假阳性(如第三方 embed 的对比度)note 并跳过。
+默认先交付 blocker 和 quality issue 报告。用户明确授权修改后,再逐项修复并重验。模糊修复(如设计用 Inter 但无品牌字体声明)时,说明取舍并采用可辩护默认。明确假阳性(如第三方 embed 的对比度)说明原因并跳过。
 
 然后重检高风险区:对比度修复洗淡了品牌色吗?新 focus ring 重叠邻居内容吗?primary CTA 现在真感觉 primary 吗?修看起来 off 的;标记不确定的。
 
