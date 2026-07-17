@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="zh-CN" id="top">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monkren — 1 个设计智能体 · 5 阶段设计生命周期</title>
+  <meta name="description" content="Monkren v6.0。1 个设计智能体覆盖 5 阶段设计生命周期 — 调研定义 → 创作定义 → 设计执行 → 设计审查 → 设计改进。5 阶段可迭代。同一个设计品味贯穿全程。" />
+  <meta property="og:title" content="Monkren — 1 个设计智能体 · 5 阶段设计生命周期" />
+  <meta property="og:description" content="5 阶段：调研 / 创作 / 执行 / 审查 / 改进。可迭代。" />
+  <style>
+    :root {
+      --color-canvas-black: #000000;
+      --color-arctic-white: #ffffff;
+      --color-subtle-gray: #a9a9a9;
+      --color-warn: #d4ff00;
+      --font-lausanne: 'Lausanne', ui-sans-serif, system-ui, -apple-system;
+      --font-victor-serif: 'Victor Serif', ui-serif, Georgia;
+      --font-black-tie: 'Black Tie', ui-monospace, SFMono-Regular, Menlo, Consolas;
+      --space-8: 8px;
+      --space-12: 12px;
+      --space-16: 16px;
+      --space-20: 20px;
+      --space-28: 28px;
+      --space-40: 40px;
+      --space-56: 56px;
+      --space-64: 64px;
+      --space-96: 96px;
+      --page-max-width: 1280px;
+      --border-w: 1px;
+      --font-size-xs: 11px;      /* eyebrow / meta / labels */
+      --font-size-sm: 13px;      /* compat / minor tags */
+      --font-size-base: 14px;    /* footer */
+      --font-size-md: 16px;      /* body / queries */
+      --font-size-lg: 18px;      /* stage name / install cmd */
+      --font-size-xl: 20px;      /* stage num */
+      --font-size-2xl: 24px;     /* case h3 */
+      --font-size-3xl: 40px;     /* mobile h1 */
+      --font-size-display: 96px; /* h1 max */
+      --letter-spacing-tight: -.03em;  /* display h1 */
+      --letter-spacing-snug: -.01em;   /* h2 */
+      --letter-spacing-wide: .04em;    /* labels */
+      --letter-spacing-xwide: .08em;   /* eyebrow */
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--color-canvas-black);
+      color: var(--color-arctic-white);
+      font-family: var(--font-lausanne);
+      font-weight: 400;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, code { font: inherit; }
+    :focus-visible { outline: var(--border-w) solid var(--color-arctic-white); outline-offset: 2px; }
+    .skip-link {
+      position: absolute; top: -100px; left: var(--space-12);
+      background: var(--color-arctic-white); color: var(--color-canvas-black);
+      padding: var(--space-8) var(--space-12); z-index: 100;
+    }
+    .skip-link:focus { top: var(--space-8); }
+    .wrap { width: min(var(--page-max-width), calc(100% - var(--space-40))); margin: 0 auto; }
+
+    /* Section dividers — 与 .wrap 完全同宽同位（不贴屏幕边缘） */
+    .top, .section { position: relative; }
+    .top::after, .section::after {
+      content: "";
+      position: absolute;
+      width: min(var(--page-max-width), calc(100% - var(--space-40)));
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      height: var(--border-w);
+      background: var(--color-arctic-white);
+    }
+
+    /* Top */
+    .top { position: sticky; top: 0; z-index: 20; background: var(--color-canvas-black); }
+    .top-row { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-12); }
+    .brand { display: inline-flex; align-items: center; gap: var(--space-12); font-weight: 400; }
+    .mark {
+      width: 40px; height: 40px; flex: 0 0 auto;
+      border: var(--border-w) solid var(--color-arctic-white); border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: var(--font-victor-serif);
+    }
+    .version { font-family: var(--font-black-tie); font-size: var(--font-size-xs); letter-spacing: var(--letter-spacing-xwide); color: var(--color-subtle-gray); text-transform: uppercase; }
+
+    /* Hero */
+    .hero {
+      min-height: calc(100svh - 64px);
+      display: flex; align-items: center; justify-content: center;
+      padding: var(--space-56) 0;
+      position: relative;
+    }
+    .hero-inner { display: grid; gap: var(--space-40); }
+    .eyebrow { display: inline-flex; align-items: center; gap: var(--space-8); color: var(--color-subtle-gray); font-size: var(--font-size-md); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 28px; height: var(--border-w); background: currentColor; }
+    h1 {
+      margin: 0;
+      font-family: var(--font-lausanne);
+      font-size: clamp(var(--font-size-3xl), 8vw, var(--font-size-display));
+      line-height: 1; letter-spacing: var(--letter-spacing-tight); font-weight: 400;
+    }
+    .tagline { margin: var(--space-20) 0 0; color: var(--color-subtle-gray); font-size: clamp(20px, 2.4vw, 28px); line-height: 1.3; max-width: 720px; }
+    .tagline strong { color: var(--color-arctic-white); font-weight: 400; }
+    .queries {
+      margin-top: var(--space-40);
+      display: grid; gap: var(--space-12);
+      max-width: 720px;
+    }
+    .query {
+      display: flex; align-items: center; gap: var(--space-12);
+      border: var(--border-w) solid var(--color-arctic-white);
+      padding: var(--space-12) var(--space-16);
+      font-family: var(--font-black-tie); font-size: var(--font-size-md); line-height: 1.3;
+    }
+    .query .prompt { color: var(--color-warn); flex: 0 0 auto; }
+    .query .star { color: var(--color-warn); flex: 0 0 auto; font-size: var(--font-size-sm); letter-spacing: var(--letter-spacing-xwide); text-transform: uppercase; }
+    .query.is-featured { border-color: var(--color-warn); }
+    .query.is-featured .star { color: var(--color-warn); }
+    .install {
+      margin-top: var(--space-28);
+      display: flex; align-items: center; gap: var(--space-12); flex-wrap: wrap;
+    }
+    .install code {
+      border: var(--border-w) solid var(--color-arctic-white);
+      padding: var(--space-12) var(--space-16);
+      font-family: var(--font-black-tie); font-size: var(--font-size-md);
+      background: var(--color-arctic-white); color: var(--color-canvas-black);
+    }
+    .install .meta { color: var(--color-subtle-gray); font-size: var(--font-size-base); font-family: var(--font-black-tie); letter-spacing: var(--letter-spacing-wide); }
+
+    /* Depth-meter — 进度指示 */
+    .depth-meter {
+      position: fixed; top: 64px; left: 0; right: 0; height: 2px;
+      background: rgba(255,255,255,.12);
+      z-index: 15;
+    }
+    .depth-meter-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--color-arctic-white);
+      transition: width .08s linear;
+    }
+    .depth-meter-label {
+      position: fixed; top: 70px; right: 16px; z-index: 16;
+      font-family: var(--font-black-tie); font-size: var(--font-size-xs); letter-spacing: var(--letter-spacing-xwide);
+      color: var(--color-subtle-gray); text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    /* Section */
+    .section { padding: var(--space-96) 0; }
+    .section-head { display: grid; gap: var(--space-12); margin-bottom: var(--space-40); max-width: 720px; }
+    .section-head h2 {
+      margin: 0; font-family: var(--font-victor-serif);
+      font-size: clamp(28px, 4vw, 48px); line-height: 1.2; font-weight: 400; letter-spacing: var(--letter-spacing-snug);
+    }
+    .section-head p { margin: 0; color: var(--color-subtle-gray); font-size: var(--font-size-lg); line-height: 1.4; }
+
+    /* Proof (3 cases) */
+    .cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-12); }
+    .case {
+      display: flex; flex-direction: column; gap: var(--space-12);
+      border: var(--border-w) solid var(--color-arctic-white);
+      padding: var(--space-20);
+      background: var(--color-canvas-black);
+      color: var(--color-arctic-white);
+      transition: background .12s, color .12s;
+    }
+    .case:hover { background: var(--color-arctic-white); color: var(--color-canvas-black); }
+    .case .num { font-family: var(--font-black-tie); font-size: var(--font-size-md); color: var(--color-subtle-gray); }
+    .case:hover .num { color: var(--color-canvas-black); }
+    .case h3 { margin: 0; font-family: var(--font-lausanne); font-size: var(--font-size-2xl); line-height: 1.2; font-weight: 400; }
+    .case p { margin: 0; color: var(--color-subtle-gray); font-size: var(--font-size-md); line-height: 1.4; }
+    .case:hover p { color: var(--color-canvas-black); }
+    .case .arrow { margin-top: auto; font-family: var(--font-black-tie); font-size: var(--font-size-md); }
+
+    /* Method (5 stages) */
+    .stage-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-12); }
+    .stage {
+      display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-16); align-items: center;
+      border: var(--border-w) solid var(--color-arctic-white);
+      padding: var(--space-16) var(--space-20);
+    }
+    .stage .num {
+      font-family: var(--font-black-tie); font-size: var(--font-size-xl); letter-spacing: var(--letter-spacing-wide);
+      color: var(--color-warn); flex: 0 0 auto;
+    }
+    .stage .name { font-size: var(--font-size-lg); line-height: 1.3; }
+    .stage .name b { font-family: var(--font-black-tie); font-size: var(--font-size-xs); letter-spacing: var(--letter-spacing-xwide); text-transform: uppercase; color: var(--color-subtle-gray); font-weight: 400; display: block; margin-top: 2px; }
+    .stage .ask { font-family: var(--font-black-tie); font-size: var(--font-size-xs); letter-spacing: var(--letter-spacing-wide); color: var(--color-subtle-gray); text-align: right; }
+    @media (max-width: 720px) {
+      .stage { grid-template-columns: auto 1fr; }
+      .stage .ask { display: none; }
+    }
+
+    /* Discipline (4 评分纪律) */
+    .discipline-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-12); }
+    .discipline {
+      display: grid; grid-template-columns: auto 1fr; gap: var(--space-16); align-items: baseline;
+      border: var(--border-w) solid var(--color-arctic-white);
+      padding: var(--space-16) var(--space-20);
+    }
+    .discipline .num { font-family: var(--font-black-tie); font-size: var(--font-size-xl); letter-spacing: var(--letter-spacing-wide); color: var(--color-warn); flex: 0 0 auto; }
+    .discipline .body { font-size: var(--font-size-lg); line-height: 1.3; }
+    .discipline .note { display: block; font-family: var(--font-black-tie); font-size: var(--font-size-sm); color: var(--color-subtle-gray); margin-top: 4px; letter-spacing: var(--letter-spacing-wide); }
+    .discipline-stack { display: grid; gap: var(--space-28); }
+    @media (max-width: 720px) {
+      .discipline-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Difference (4 列横向对比) */
+    .diff-grid { display: grid; gap: var(--space-12); }
+    .diff-row {
+      display: grid;
+      grid-template-columns: 60px 180px 1fr 1fr 1.4fr;
+      gap: var(--space-16);
+      align-items: start;
+      border: var(--border-w) solid var(--color-arctic-white);
+      padding: var(--space-20);
+    }
+    .diff-row .num {
+      font-family: var(--font-black-tie);
+      font-size: var(--font-size-xl);
+      letter-spacing: var(--letter-spacing-wide);
+      color: var(--color-warn);
+      flex: 0 0 auto;
+    }
+    .diff-row .cell { font-size: var(--font-size-md); line-height: 1.4; }
+    .diff-row .cell b {
+      display: block;
+      font-family: var(--font-black-tie);
+      font-size: var(--font-size-xs);
+      letter-spacing: var(--letter-spacing-wide);
+      text-transform: uppercase;
+      color: var(--color-subtle-gray);
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .diff-row .cell.is-monkren {
+      border-left: var(--border-w) solid var(--color-warn);
+      padding-left: var(--space-16);
+      margin-left: calc(-1 * var(--space-16));
+      color: var(--color-arctic-white);
+    }
+    .callout {
+      margin-top: var(--space-28);
+      border: var(--border-w) dashed var(--color-arctic-white);
+      padding: var(--space-20);
+      color: var(--color-subtle-gray);
+      font-size: var(--font-size-md);
+      line-height: 1.5;
+    }
+    .callout strong {
+      display: block;
+      font-family: var(--font-black-tie);
+      font-size: var(--font-size-xs);
+      letter-spacing: var(--letter-spacing-xwide);
+      text-transform: uppercase;
+      color: var(--color-warn);
+      margin-bottom: var(--space-8);
+    }
+
+    /* Compat agents */
+    .compat { display: flex; flex-wrap: wrap; gap: var(--space-12); }
+    .compat span {
+      border: var(--border-w) solid var(--color-arctic-white);
+      padding: var(--space-8) var(--space-12);
+      font-family: var(--font-black-tie); font-size: var(--font-size-sm); letter-spacing: var(--letter-spacing-wide);
+    }
+
+    /* Footer */
+    .footer { padding: var(--space-40) 0 var(--space-56); color: var(--color-subtle-gray); font-size: var(--font-size-base); font-family: var(--font-black-tie); }
+    .footer-row { display: flex; justify-content: space-between; gap: var(--space-12); padding-top: var(--space-28); border-top: var(--border-w) solid var(--color-arctic-white); flex-wrap: wrap; }
+    .footer a { border-bottom: var(--border-w) solid currentColor; }
+    .footer a:hover { color: var(--color-arctic-white); }
+
+    /* Mobile */
+    @media (max-width: 720px) {
+      .cases { grid-template-columns: 1fr; }
+      .method-grid { grid-template-columns: 1fr; gap: var(--space-28); }
+      .section { padding: var(--space-56) 0; }
+      .hero { min-height: auto; padding: var(--space-40) 0; }
+      h1 { font-size: var(--font-size-3xl); }
+      .diff-row { grid-template-columns: auto 1fr; gap: var(--space-12); }
+      .diff-row .cell { grid-column: 2; }
+      .diff-row .cell b { margin-top: var(--space-8); }
+      .diff-row .cell.is-monkren { border-left: none; padding-left: 0; margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="depth-meter" aria-hidden="true"><div class="depth-meter-fill" id="depthFill"></div></div>
+  <div class="depth-meter-label" id="depthLabel">DEPTH · 0%</div>
+
+  <header class="top">
+    <div class="wrap top-row">
+      <a class="brand" href="#top" aria-label="Monkren home">
+        <span class="mark">M</span>
+        <span>Monkren</span>
+      </a>
+      <span class="version">v6.0 · 2026-07-15</span>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <span class="eyebrow">Design Agent · v6.0</span>
+        <h1>Monkren.</h1>
+        <p class="tagline">
+          <strong>1 个设计智能体 · 5 阶段设计生命周期</strong>。
+          调研定义 → 创作定义 → 设计执行 → 设计审查 → 设计改进。
+          <em>5 阶段可迭代</em>，<strong>同一个设计品味</strong>贯穿全程。
+        </p>
+
+        <div class="queries" aria-label="5 阶段招牌 query">
+          <div class="query"><span class="prompt">&gt;</span><span>调研这个领域的设计方向</span></div>
+          <div class="query"><span class="prompt">&gt;</span><span>给 3 个设计变体方向</span></div>
+          <div class="query is-featured"><span class="prompt">&gt;</span><span>5 维度评审这个设计</span><span class="star">★ Most Used</span></div>
+          <div class="query"><span class="prompt">&gt;</span><span>改进这个设计（基于审查报告）</span></div>
+        </div>
+
+        <div class="install">
+          <code>$ npx skills add monkren-ai/monkren-designer</code>
+          <span class="meta">Claude Code · Cursor · Codex · OpenClaw · Hermes</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="proof" class="section" aria-labelledby="proof-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Proof · 3 份真实报告</span>
+          <h2 id="proof-title">不是 demo。是 monkren 自己审查 monkren 的输出。</h2>
+          <p>5 维度评分 + 严重度分级 + 可操作修复建议——每份报告都是真的。</p>
+        </div>
+        <div class="cases">
+          <a class="case" href="case/Design Review — Landing Page.html">
+            <span class="num">01 · Review</span>
+            <h3>Design Review</h3>
+            <p>5 维度评审 + 多视角 + 严重度分级</p>
+            <span class="arrow">→ 打开</span>
+          </a>
+          <a class="case" href="case/Score Improvement — Landing Page.html">
+            <span class="num">02 · Improvement</span>
+            <h3>Score Improvement</h3>
+            <p>从 6/10 提升到 8/10 的具体路径</p>
+            <span class="arrow">→ 打开</span>
+          </a>
+          <a class="case" href="case/Design Suggestion — Landing Page.html">
+            <span class="num">03 · Suggestion</span>
+            <h3>Design Suggestion</h3>
+            <p>3 个差异化方向 + 落地概念包</p>
+            <span class="arrow">→ 打开</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="method" class="section" aria-labelledby="method-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Method · 5 阶段 + 5 维度 + 4 纪律</span>
+          <h2 id="method-title">1 个设计智能体，5 阶段，1 个 taste 贯穿全程.</h2>
+          <p>调研定义 → 创作定义 → 设计执行 → 设计审查 → 设计改进。线性是默认，迭代是常态。5 维度 + 4 纪律是 monkren 的设计品味标尺，所有阶段都按此运作。</p>
+        </div>
+
+        <div class="stage-grid">
+          <div class="stage">
+            <span class="num">01</span>
+            <span class="name">调研定义<b>Research &amp; Definition</b></span>
+            <span class="ask">现状 / 约束 / 方向</span>
+          </div>
+          <div class="stage">
+            <span class="num">02</span>
+            <span class="name">创作定义<b>Creation Definition</b></span>
+            <span class="ask">做什么 / 选哪个</span>
+          </div>
+          <div class="stage">
+            <span class="num">03</span>
+            <span class="name">设计执行<b>Design Execution</b></span>
+            <span class="ask">怎么做出来</span>
+          </div>
+          <div class="stage">
+            <span class="num">04</span>
+            <span class="name">设计审查<b>Design Review</b></span>
+            <span class="ask">做出来好不好</span>
+          </div>
+          <div class="stage">
+            <span class="num">05</span>
+            <span class="name">设计改进<b>Design Improvement</b></span>
+            <span class="ask">怎么修</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="disciplines" class="section" aria-labelledby="disciplines-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Disciplines · 4 评分纪律</span>
+          <h2 id="disciplines-title">诚实底线。99% 是 checklist，monkren 是 judgment。</h2>
+          <p>5 维度是评分对象，4 纪律是评分方式。装上后这 4 条自动启用——不需要手动配置。</p>
+        </div>
+
+        <div class="discipline-stack">
+          <div class="discipline-grid">
+            <div class="discipline">
+              <span class="num">01</span>
+              <span class="body">禁止评分通胀<span class="note">全维度 ≥7 时强制自检</span></span>
+            </div>
+            <div class="discipline">
+              <span class="num">02</span>
+              <span class="body">禁止平均上浮<span class="note">取最差持续段，非平均分</span></span>
+            </div>
+            <div class="discipline">
+              <span class="num">03</span>
+              <span class="body">评分必须引证<span class="note">文件 + 行号 + 元素</span></span>
+            </div>
+            <div class="discipline">
+              <span class="num">04</span>
+              <span class="body">创新性允许低分<span class="note">5/10 对生产交付物合理</span></span>
+            </div>
+          </div>
+
+          <div class="compat" aria-label="兼容 agent">
+            <span>Claude Code</span>
+            <span>Cursor</span>
+            <span>Codex</span>
+            <span>OpenClaw</span>
+            <span>Hermes</span>
+            <span>CodeBuddy</span>
+            <span>Workbuddy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="difference" class="section" aria-labelledby="difference-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Difference · 1 个 design agent，不是 1 个 agent</span>
+          <h2 id="difference-title">monkren = 1 个 design agent。通用 agent 是 1 个 coder。</h2>
+          <p>它们回答"怎么做出来"。monkren 额外回答"做出来好不好 · 像不像你 · 怎么修到 9 分"。</p>
+        </div>
+        <div class="diff-grid">
+          <div class="diff-row">
+            <span class="num">01</span>
+            <span class="cell"><b>维度</b>方法论</span>
+            <span class="cell"><b>通用 coding agent</b>按 prompt 实现，能跑就行</span>
+            <span class="cell"><b>AI 设计工具 · Review 工具</b>按组件生成 / 按 checklist 打勾</span>
+            <span class="cell is-monkren"><b>monkren</b>5 维度评审（哲学 / 层级 / 细节 / 功能 / 创新）</span>
+          </div>
+          <div class="diff-row">
+            <span class="num">02</span>
+            <span class="cell"><b>维度</b>反馈形式</span>
+            <span class="cell"><b>通用 coding agent</b>输出代码，无评价</span>
+            <span class="cell"><b>AI 设计工具 · Review 工具</b>输出原型 / 输出"是否通过"二分</span>
+            <span class="cell is-monkren"><b>monkren</b>5 维度分数 + 文件路径 + 行号 + 元素名（强制引证）</span>
+          </div>
+          <div class="diff-row">
+            <span class="num">03</span>
+            <span class="cell"><b>维度</b>诚实底线</span>
+            <span class="cell"><b>通用 coding agent</b>鼓励你"再试一次 prompt"</span>
+            <span class="cell"><b>AI 设计工具 · Review 工具</b>默认打 8/10，让你高兴</span>
+            <span class="cell is-monkren"><b>monkren</b>4 评分纪律：禁通胀 / 禁上浮 / 必须引证 / 创新性允许 5/10</span>
+          </div>
+          <div class="diff-row">
+            <span class="num">04</span>
+            <span class="cell"><b>维度</b>生命周期</span>
+            <span class="cell"><b>通用 coding agent</b>写代码</span>
+            <span class="cell"><b>AI 设计工具 · Review 工具</b>画原型 / 审成品</span>
+            <span class="cell is-monkren"><b>monkren</b>5 阶段可迭代：调研 → 创作 → 执行 → 审查 → 改进（审查不通过回到 02）</span>
+          </div>
+          <div class="diff-row">
+            <span class="num">05</span>
+            <span class="cell"><b>维度</b>人格一致性</span>
+            <span class="cell"><b>通用 coding agent</b>切换 model / persona 不连续</span>
+            <span class="cell"><b>AI 设计工具 · Review 工具</b>工具与 agent 分离，"好品味"分散在 prompt</span>
+            <span class="cell is-monkren"><b>monkren</b>1 个 design taste 贯穿 5 阶段（同一段对话不换人）</span>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>为什么用 "design agent" 不是 "skill bundle"</strong>
+          bolt / v0 / cursor 是工具箱——"好品味"分散在 prompt 和 preset 里，你得自己拼。monkren 是 1 个 agent——"好品味"写进 5 维度 + 4 纪律的硬规则里，每条输出都按它走。
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <span>Monkren v6.0 — 1 个设计智能体 · 5 阶段设计生命周期。个人使用免费，企业商用需授权。</span>
+      <span>
+        <a href="https://github.com/monkren-ai/monkren-designer">GitHub</a> ·
+        <a href="https://github.com/monkren-ai/monkren-designer/blob/main/references/standards.md">9 份 reference →</a> ·
+        <a href="https://github.com/monkren-ai/monkren-designer/blob/main/SKILL.md">SKILL.md →</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var fill = document.getElementById('depthFill');
+      var label = document.getElementById('depthLabel');
+      function tick() {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = max > 0 ? Math.min(100, Math.max(0, (window.scrollY / max) * 100)) : 0;
+        if (fill) fill.style.width = pct.toFixed(1) + '%';
+        if (label) label.textContent = 'DEPTH · ' + Math.round(pct) + '%';
+      }
+      window.addEventListener('scroll', tick, { passive: true });
+      window.addEventListener('resize', tick);
+      tick();
+    })();
+  </script>
+</body>
+</html>
