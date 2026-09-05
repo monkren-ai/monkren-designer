@@ -1,7 +1,8 @@
 import http from 'node:http';
 import { WebSocketServer, WebSocket } from 'ws';
 import { DataStore } from './store.js';
-import type { CreateProjectInput } from './types.js';
+import { createGraphFromTemplate } from './templates.js';
+import type { CreateProjectInput, StartTaskNodeInput } from './types.js';
 
 export function createDaemonServer(store: DataStore = new DataStore()) {
   const sseClients = new Set<http.ServerResponse>();
@@ -206,6 +207,8 @@ export function createDaemonServer(store: DataStore = new DataStore()) {
           }
 
           const currentAccount = store.getCurrentAccount();
+          const templateId = body.templateId || 'tpl_ui_telemetry_console';
+          const taskGraph = createGraphFromTemplate(templateId, body.name);
 
           const newProj = {
             id: `proj_${Date.now()}`,
@@ -216,6 +219,7 @@ export function createDaemonServer(store: DataStore = new DataStore()) {
             gatePassed: false,
             shipped: false,
             status: 'draft' as const,
+            taskGraph,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           };
@@ -285,6 +289,119 @@ export function createDaemonServer(store: DataStore = new DataStore()) {
         sendJson(200, { message: 'Project shipped successfully', project: proj });
         return;
       }
+    }
+
+    // 7. REST endpoints for Scene Templates (M1)
+    if (pathname === '/api/templates' && method === 'GET') {
+      sendJson(200, store.templates);
+      return;
+    }
+
+    // 8. REST endpoints for TaskGraph node activation and mode switching (M1)
+    const taskGraphMatch = pathname.match(/^\/api\/projects\/([^/]+)\/taskgraph\/activate$/);
+    if (taskGraphMatch && method === 'POST') {
+      const projId = taskGraphMatch[1];
+      const proj = store.projects.find(p => p.id === projId);
+      if (!proj) {
+        sendJson(404, { error: 'Project not found' });
+        return;
+      }
+      parseBody().then(body => {
+        const { nodeId } = body;
+        if (!nodeId) {
+          sendJson(400, { error: 'nodeId is required' });
+          return;
+        }
+        if (!proj.taskGraph) {
+          sendJson(400, { error: 'Project has no active TaskGraph' });
+          return;
+        }
+        const targetNode = proj.taskGraph.nodes.find(n => n.id === nodeId);
+        if (!targetNode) {
+          sendJson(404, { error: `Node ${nodeId} not found in project TaskGraph` });
+          return;
+        }
+        proj.taskGraph.activeNodeId = nodeId;
+        proj.updatedAt = new Date().toISOString();
+        broadcastEvent('taskgraph_node_activated', { projectId: proj.id, activeNodeId: nodeId, mode: targetNode.mode });
+        sendJson(200, { project: proj, activeNode: targetNode });
+      }).catch(() => sendJson(400, { error: 'Invalid JSON body' }));
+      return;
+    }
+
+    // Task node start / execute endpoint (M1 thin slice)
+    // Invariant: start must NOT accept skillIds; skills bind only to designers!
+    const taskStartMatch = pathname.match(/^\/api\/projects\/([^/]+)\/taskgraph\/nodes\/([^/]+)\/start$/);
+    if (taskStartMatch && method === 'POST') {
+      const projId = taskStartMatch[1];
+      const nodeId = taskStartMatch[2];
+      const proj = store.projects.find(p => p.id === projId);
+      if (!proj) {
+        sendJson(404, { error: 'Project not found' });
+        return;
+      }
+      parseBody().then((body: StartTaskNodeInput) => {
+        // INVARIANT CHECK: task start must NOT accept skillIds!
+        if (body.skillIds !== undefined && body.skillIds !== null) {
+          sendJson(400, {
+            error: 'Invalid task start configuration: "skillIds" cannot be passed to a task. Skills bind only to Designers.',
+          });
+          return;
+        }
+
+        if (!proj.taskGraph) {
+          sendJson(400, { error: 'Project has no active TaskGraph' });
+          return;
+        }
+
+        const node = proj.taskGraph.nodes.find(n => n.id === nodeId);
+        if (!node) {
+          sendJson(404, { error: `Node ${nodeId} not found` });
+          return;
+        }
+
+        node.status = 'in_progress';
+        proj.taskGraph.activeNodeId = node.id;
+        proj.updatedAt = new Date().toISOString();
+
+        broadcastEvent('taskgraph_node_started', { projectId: proj.id, node });
+        sendJson(200, { message: `Task node ${node.title} started`, node, project: proj });
+      }).catch(() => sendJson(400, { error: 'Invalid JSON body' }));
+      return;
+    }
+
+    // Task node complete endpoint (M1 thin slice)
+    const taskCompleteMatch = pathname.match(/^\/api\/projects\/([^/]+)\/taskgraph\/nodes\/([^/]+)\/complete$/);
+    if (taskCompleteMatch && method === 'POST') {
+      const projId = taskCompleteMatch[1];
+      const nodeId = taskCompleteMatch[2];
+      const proj = store.projects.find(p => p.id === projId);
+      if (!proj) {
+        sendJson(404, { error: 'Project not found' });
+        return;
+      }
+      parseBody().then(body => {
+        if (!proj.taskGraph) {
+          sendJson(400, { error: 'Project has no active TaskGraph' });
+          return;
+        }
+
+        const node = proj.taskGraph.nodes.find(n => n.id === nodeId);
+        if (!node) {
+          sendJson(404, { error: `Node ${nodeId} not found` });
+          return;
+        }
+
+        node.status = 'completed';
+        if (body.outputSummary) {
+          node.outputSummary = body.outputSummary;
+        }
+        proj.updatedAt = new Date().toISOString();
+
+        broadcastEvent('taskgraph_node_completed', { projectId: proj.id, node });
+        sendJson(200, { message: `Task node ${node.title} completed`, node, project: proj });
+      }).catch(() => sendJson(400, { error: 'Invalid JSON body' }));
+      return;
     }
 
     // Not found fallback

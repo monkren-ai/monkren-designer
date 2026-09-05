@@ -1,4 +1,4 @@
-import type { Account, Project, Designer, Skill, DaemonHealth } from '../types';
+import type { Account, Project, Designer, Skill, DaemonHealth, SceneTemplate, TaskGraphNode } from '../types';
 
 const DAEMON_URL = import.meta.env.VITE_DAEMON_URL || 'http://127.0.0.1:7420';
 
@@ -33,7 +33,7 @@ export async function fetchProjects(): Promise<Project[]> {
   return res.json();
 }
 
-export async function createProject(data: { name: string; description?: string; designerId?: string; skillIds?: string[] }): Promise<Project> {
+export async function createProject(data: { name: string; description?: string; designerId?: string; templateId?: string; skillIds?: string[] }): Promise<Project> {
   const res = await fetch(`${DAEMON_URL}/api/projects`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -43,6 +43,51 @@ export async function createProject(data: { name: string; description?: string; 
   if (!res.ok) {
     throw new Error(json.error || 'Failed to create project');
   }
+  return json;
+}
+
+export async function fetchProject(projectId: string): Promise<Project> {
+  const res = await fetch(`${DAEMON_URL}/api/projects/${projectId}`);
+  if (!res.ok) throw new Error(`Failed to fetch project ${projectId}`);
+  return res.json();
+}
+
+export async function fetchTemplates(): Promise<SceneTemplate[]> {
+  const res = await fetch(`${DAEMON_URL}/api/templates`);
+  if (!res.ok) throw new Error(`Failed to fetch scene templates`);
+  return res.json();
+}
+
+export async function activateTaskGraphNode(projectId: string, nodeId: string): Promise<{ project: Project; activeNode: TaskGraphNode }> {
+  const res = await fetch(`${DAEMON_URL}/api/projects/${projectId}/taskgraph/activate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nodeId }),
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.error || 'Failed to activate task node');
+  return json;
+}
+
+export async function startTaskNode(projectId: string, nodeId: string, skillIds?: string[]): Promise<{ message: string; node: TaskGraphNode; project: Project }> {
+  const res = await fetch(`${DAEMON_URL}/api/projects/${projectId}/taskgraph/nodes/${nodeId}/start`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nodeId, skillIds }),
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.error || 'Failed to start task node');
+  return json;
+}
+
+export async function completeTaskNode(projectId: string, nodeId: string, outputSummary?: string): Promise<{ message: string; node: TaskGraphNode; project: Project }> {
+  const res = await fetch(`${DAEMON_URL}/api/projects/${projectId}/taskgraph/nodes/${nodeId}/complete`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ outputSummary }),
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.error || 'Failed to complete task node');
   return json;
 }
 

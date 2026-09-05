@@ -1,4 +1,5 @@
-import type { Account, Skill, Designer, Project } from './types.js';
+import type { Account, Skill, Designer, Project, SceneTemplate } from './types.js';
+import { SCENE_TEMPLATES, createGraphFromTemplate } from './templates.js';
 
 export class DataStore {
   public accounts: Account[] = [
@@ -89,6 +90,8 @@ export class DataStore {
     },
   ];
 
+  public templates: SceneTemplate[] = SCENE_TEMPLATES;
+
   public projects: Project[] = [
     {
       id: 'proj_sample_01',
@@ -99,6 +102,7 @@ export class DataStore {
       gatePassed: true,
       shipped: false,
       status: 'ready_to_ship',
+      taskGraph: createGraphFromTemplate('tpl_ui_telemetry_console', 'AIOS Studio Shell'),
       createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
       updatedAt: new Date().toISOString(),
     },
@@ -111,6 +115,7 @@ export class DataStore {
       gatePassed: false,
       shipped: false,
       status: 'in_progress',
+      taskGraph: createGraphFromTemplate('tpl_ui_agent_canvas', 'Cloud Observability Dashboard'),
       createdAt: new Date(Date.now() - 3600000 * 48).toISOString(),
       updatedAt: new Date().toISOString(),
     },

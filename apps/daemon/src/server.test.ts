@@ -108,5 +108,34 @@ test('Daemon server API and rules', async (t) => {
     assert.deepStrictEqual(res.data.assignedSkillIds, ['skill-01-research', 'skill-02-create']);
   });
 
+  await t.test('GET /api/templates returns UI and Product scene templates (M1)', async () => {
+    const res = await request('/api/templates');
+    assert.strictEqual(res.status, 200);
+    assert.ok(Array.isArray(res.data));
+    assert.ok(res.data.length >= 4);
+    const telemetry = res.data.find((t: any) => t.id === 'tpl_ui_telemetry_console');
+    assert.ok(telemetry);
+    assert.strictEqual(telemetry.category, 'ui');
+    assert.strictEqual(telemetry.archetype, 'console');
+  });
+
+  await t.test('TaskGraph node start rejects skillIds (M1 invariant)', async () => {
+    const res = await request('/api/projects/proj_sample_01/taskgraph/nodes/node-3-code/start', { method: 'POST' }, {
+      nodeId: 'node-3-code',
+      skillIds: ['skill-03-execute'],
+    });
+    assert.strictEqual(res.status, 400);
+    assert.match(res.data.error, /skillIds/);
+  });
+
+  await t.test('TaskGraph node activation switches active node and returns target mode (M1)', async () => {
+    const res = await request('/api/projects/proj_sample_01/taskgraph/activate', { method: 'POST' }, {
+      nodeId: 'node-3-code',
+    });
+    assert.strictEqual(res.status, 200);
+    assert.strictEqual(res.data.activeNode.id, 'node-3-code');
+    assert.strictEqual(res.data.activeNode.mode, 'code');
+  });
+
   server.close();
 });
