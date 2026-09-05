@@ -145,11 +145,11 @@ export const HomePage: React.FC = () => {
 
             <div className="pt-2 flex items-center justify-between">
               <span className="text-xs text-neutral-500 font-mono">
-                Ready to pass into Stage 02 Wireframe & Host Shell
+                Wires into TaskGraph & mode switching
               </span>
               <Button
                 variant="primary"
-                className="gap-2"
+                className="gap-2 bg-rose-600 hover:bg-rose-500 text-white"
                 onClick={handleStartBrief}
                 disabled={generating || !brief.trim()}
               >

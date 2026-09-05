@@ -13,8 +13,8 @@ import {
   Sparkles,
   UserCheck
 } from 'lucide-react';
-import type { Project, Designer } from '../types';
-import { fetchProjects, createProject, gateProject, shipProject, fetchDesigners } from '../api/client';
+import type { Project, Designer, SceneTemplate } from '../types';
+import { fetchProjects, createProject, gateProject, shipProject, fetchDesigners, fetchTemplates } from '../api/client';
 import { useDaemon } from '../context/DaemonContext';
 
 export const ProjectsPage: React.FC = () => {
@@ -22,6 +22,7 @@ export const ProjectsPage: React.FC = () => {
   const { currentAccount, isOnline } = useDaemon();
   const [projects, setProjects] = useState<Project[]>([]);
   const [designers, setDesigners] = useState<Designer[]>([]);
+  const [templates, setTemplates] = useState<SceneTemplate[]>([]);
   const [loading, setLoading] = useState(true);
 
   // New Project Form Modal / Drawer State
@@ -29,6 +30,7 @@ export const ProjectsPage: React.FC = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [designerId, setDesignerId] = useState('');
+  const [templateId, setTemplateId] = useState('tpl_ui_telemetry_console');
   // Field to test invariant: projects create must reject skillIds
   const [testIllegalSkillIds, setTestIllegalSkillIds] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
@@ -37,9 +39,10 @@ export const ProjectsPage: React.FC = () => {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [p, d] = await Promise.all([fetchProjects(), fetchDesigners()]);
+      const [p, d, t] = await Promise.all([fetchProjects(), fetchDesigners(), fetchTemplates()]);
       setProjects(p);
       setDesigners(d);
+      setTemplates(t);
       if (d.length > 0 && !designerId) {
         setDesignerId(d[0].id);
       }
@@ -66,6 +69,7 @@ export const ProjectsPage: React.FC = () => {
         name,
         description,
         designerId: designerId || undefined,
+        templateId,
       };
 
       if (testIllegalSkillIds) {
@@ -73,7 +77,7 @@ export const ProjectsPage: React.FC = () => {
       }
 
       const created = await createProject(payload);
-      setActionSuccess(`Project "${created.name}" created successfully!`);
+      setActionSuccess(`Project "${created.name}" created with TaskGraph sequence!`);
       setName('');
       setDescription('');
       setTestIllegalSkillIds(false);
@@ -201,6 +205,26 @@ export const ProjectsPage: React.FC = () => {
                   rows={2}
                   className="w-full bg-neutral-900 border border-neutral-800 focus:border-rose-500 focus:outline-none rounded px-3 py-2 text-sm text-neutral-200"
                 />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-neutral-300 mb-1.5">
+                  Scene Template (TaskGraph M1)
+                </label>
+                <select
+                  value={templateId}
+                  onChange={(e) => setTemplateId(e.target.value)}
+                  className="w-full bg-neutral-900 border border-neutral-800 focus:border-rose-500 focus:outline-none rounded px-3 py-2 text-sm text-neutral-200 font-mono"
+                >
+                  {templates.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      [{t.category.toUpperCase()}] {t.name} ({t.archetype})
+                    </option>
+                  ))}
+                </select>
+                <p className="text-[11px] text-neutral-500 mt-1">
+                  Generates an initial multi-stage TaskGraph sequence wired into Workbench modes.
+                </p>
               </div>
 
               <div>

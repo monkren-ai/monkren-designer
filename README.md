@@ -150,4 +150,8 @@ Daemon 默认监听 `127.0.0.1:7420` (可通过环境变量 `AIOS_DAEMON_HOST` �
 | `/api/designers` | `GET` | 获取设计智能体成员名单 |
 | `/api/designers/:id/skills` | `PUT` | 为智能体绑定技能清单 |
 | `/api/skills` | `GET` | 获取模块化技能目录 |
+| `/api/templates` | `GET` | (M1) 获取 UI 与 Product 场景模板列表 |
+| `/api/projects/:id/taskgraph/activate` | `POST` | (M1) 激活 TaskGraph 节点并联动 Workbench 模式切换 |
+| `/api/projects/:id/taskgraph/nodes/:nodeId/start` | `POST` | (M1) 启动任务节点（**若传入 `skillIds` 会被严格拒绝**） |
+| `/api/projects/:id/taskgraph/nodes/:nodeId/complete` | `POST` | (M1) 标记任务节点完成并更新产出摘要 |
 | WebSocket | `ws://` | 支持实时双向通信存根 |
