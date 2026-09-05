@@ -101,6 +101,18 @@ export const SkillsPage: React.FC = () => {
                 <p className="text-xs text-neutral-400 leading-relaxed">
                   {skill.description}
                 </p>
+
+                {/* M3: Skill Declared Tools */}
+                {skill.toolsAllowed && skill.toolsAllowed.length > 0 && (
+                  <div className="pt-1.5 flex flex-wrap items-center gap-1">
+                    <span className="text-[10px] text-neutral-500 font-mono">Allowed Tools:</span>
+                    {skill.toolsAllowed.map((t) => (
+                      <span key={t} className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-rose-300">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="pt-3 border-t border-neutral-900 flex items-center justify-between text-[11px] font-mono text-neutral-500">

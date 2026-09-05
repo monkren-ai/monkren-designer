@@ -3,10 +3,12 @@ import { Badge } from 'aios-ui-kit/badge';
 import { 
   Users, 
   Sparkles, 
-  Check
+  Check,
+  Wrench,
+  ShieldAlert
 } from 'lucide-react';
-import type { Designer, Skill } from '../types';
-import { fetchDesigners, fetchSkills, bindDesignerSkills } from '../api/client';
+import type { Designer, Skill, ToolSurface } from '../types';
+import { fetchDesigners, fetchSkills, bindDesignerSkills, fetchDesignerToolSurface } from '../api/client';
 import { useDaemon } from '../context/DaemonContext';
 
 export const DesignersPage: React.FC = () => {
@@ -15,6 +17,7 @@ export const DesignersPage: React.FC = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedDesigner, setSelectedDesigner] = useState<Designer | null>(null);
+  const [toolSurface, setToolSurface] = useState<ToolSurface | null>(null);
   const [saving, setSaving] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -41,6 +44,16 @@ export const DesignersPage: React.FC = () => {
     if (isOnline) loadData();
   }, [isOnline]);
 
+  useEffect(() => {
+    if (selectedDesigner) {
+      fetchDesignerToolSurface(selectedDesigner.id)
+        .then(setToolSurface)
+        .catch(() => setToolSurface(null));
+    } else {
+      setToolSurface(null);
+    }
+  }, [selectedDesigner]);
+
   const toggleSkill = async (skillId: string) => {
     if (!selectedDesigner) return;
     const currentSkills = selectedDesigner.assignedSkillIds || [];
@@ -53,6 +66,9 @@ export const DesignersPage: React.FC = () => {
       const updated = await bindDesignerSkills(selectedDesigner.id, newSkills);
       setSelectedDesigner(updated);
       setDesigners(prev => prev.map(d => d.id === updated.id ? updated : d));
+      // Refresh tool surface preview
+      const surface = await fetchDesignerToolSurface(updated.id);
+      setToolSurface(surface);
       setSuccessMessage(`Skills updated for ${updated.name}`);
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch {
@@ -149,6 +165,46 @@ export const DesignersPage: React.FC = () => {
                   </Badge>
                 </div>
 
+                {/* M3: Dynamic Tool Surface Preview */}
+                <div className="p-4 rounded-xl border border-neutral-800 bg-neutral-900/40 space-y-3 font-mono">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <Wrench className="w-3.5 h-3.5 text-rose-500" />
+                      M3 Tool Surface Preview
+                    </span>
+                    <span className="text-[10px] text-neutral-500">
+                      (Skill-Declared ∩ Harness-Implemented)
+                    </span>
+                  </div>
+
+                  {toolSurface ? (
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-center gap-1.5 text-xs">
+                        <span className="text-neutral-400 text-[11px]">Permitted Run Tools:</span>
+                        {toolSurface.allowedTools.length > 0 ? (
+                          toolSurface.allowedTools.map((tool) => (
+                            <Badge key={tool} variant="primary" size="sm" className="bg-emerald-950/80 border-emerald-500/40 text-emerald-300 font-mono text-[10px]">
+                              {tool}
+                            </Badge>
+                          ))
+                        ) : (
+                          <span className="text-rose-400 text-[11px] font-semibold flex items-center gap-1">
+                            <ShieldAlert className="w-3.5 h-3.5" />
+                            [EMPTY SURFACE: Agent has no allowed tools]
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="text-[10px] text-neutral-500 flex flex-col sm:flex-row gap-1 sm:gap-4 pt-1 border-t border-neutral-800/60">
+                        <span>Declared: {toolSurface.skillDeclaredTools.length} tools</span>
+                        <span>Implemented: {toolSurface.harnessImplementedTools.join(', ')}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <span className="text-neutral-500 text-xs">Computing tool surface...</span>
+                  )}
+                </div>
+
                 <div className="space-y-3">
                   <div className="text-xs font-mono text-neutral-400">
                     AVAILABLE SKILLS REPOSITORY ({skills.length}):
@@ -179,6 +235,18 @@ export const DesignersPage: React.FC = () => {
                             <p className="text-[11px] text-neutral-400 line-clamp-2">
                               {skill.description}
                             </p>
+
+                            {/* M3: Allowed tools list */}
+                            {skill.toolsAllowed && skill.toolsAllowed.length > 0 && (
+                              <div className="flex flex-wrap items-center gap-1 pt-1">
+                                <span className="text-[10px] text-neutral-500 font-mono">Tools:</span>
+                                {skill.toolsAllowed.map(tool => (
+                                  <span key={tool} className="text-[9px] font-mono px-1 py-0.2 rounded bg-neutral-800/80 text-rose-300">
+                                    {tool}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
                           </div>
 
                           <div className="pt-2 border-t border-neutral-800/60 flex items-center justify-between text-[11px] font-mono">

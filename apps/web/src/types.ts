@@ -23,6 +23,15 @@ export interface Skill {
   description: string;
   category: string;
   version: string;
+  toolsAllowed?: string[];
+}
+
+export interface ToolSurface {
+  designerId: string;
+  boundSkillIds: string[];
+  skillDeclaredTools: string[];
+  harnessImplementedTools: string[];
+  allowedTools: string[];
 }
 
 export interface Designer {
@@ -93,6 +102,7 @@ export interface Run {
   logs: RunLogEntry[];
   result?: RunResult;
   error?: string;
+  toolSurface?: string[];
   createdAt: string;
   startedAt?: string;
   finishedAt?: string;

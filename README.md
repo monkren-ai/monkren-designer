@@ -148,13 +148,38 @@ Daemon 默认监听 `127.0.0.1:7420` (可通过环境变量 `AIOS_DAEMON_HOST` �
 | `/api/projects/:id/gate` | `POST` | 触发门禁质量审查（要求会话所有者匹配） |
 | `/api/projects/:id/ship` | `POST` | 交付项目（要求会话所有者匹配且门禁已通过） |
 | `/api/designers` | `GET` | 获取设计智能体成员名单 |
-| `/api/designers/:id/skills` | `PUT` | 为智能体绑定技能清单 |
-| `/api/skills` | `GET` | 获取模块化技能目录 |
+| `/api/designers/:id/skills` | `PUT` | 为智能体绑定技能清单（驱动 Run 工具界面 Tool Surface） |
+| `/api/designers/:id/tool-surface` | `GET` | (M3) 预览智能体计算工具表面 `(skillDeclared ∩ harnessImplemented)` |
+| `/api/skills` | `GET` | (M3) 获取模块化技能目录及每个 Skill 声明允许的工具列表 `toolsAllowed` |
 | `/api/templates` | `GET` | (M1) 获取 UI 与 Product 场景模板列表 |
 | `/api/projects/:id/taskgraph/activate` | `POST` | (M1) 激活 TaskGraph 节点并联动 Workbench 模式切换 |
 | `/api/projects/:id/taskgraph/nodes/:nodeId/start` | `POST` | (M1) 启动任务节点（**若传入 `skillIds` 会被严格拒绝**）并联动生成 Run |
 | `/api/projects/:id/taskgraph/nodes/:nodeId/complete` | `POST` | (M1) 标记任务节点完成并更新产出摘要 |
-| `/api/projects/:id/runs` | `GET` / `POST` | (M2) 启动与查看 Agent Harness Run（**创建 Run 严拒 `skillIds`**） |
-| `/api/runs/:id` | `GET` | (M2) 查询单次 Run 状态、执行日志与产出成果 |
+| `/api/projects/:id/runs` | `GET` / `POST` | (M2/M3) 启动与查看 Agent Harness Run（**严拒 `skillIds`**，自动计算 `toolSurface`） |
+| `/api/runs/:id` | `GET` | (M2/M3) 查询单次 Run 状态、执行日志、工具拦截记录与产出成果 |
 | `/api/runs/:id/cancel` | `POST` | (M2) 取消正在执行的 Run |
-| WebSocket / SSE | `run.*` | (M2) 广播 `run.started`、`run.token`、`run.finished`、`run.failed` 事件 |
+| WebSocket / SSE | `run.*` | (M2/M3) 广播 `run.started`、`run.token`、`run.tool_call`、`run.tool_result`、`run.tool_rejected`、`run.finished`、`run.failed` 事件 |
+
+---
+
+## M3 里程碑实现说明 (M3: Skill Load → Tool Surface)
+
+1. **Skill 技能包元数据 (Skill Manifests)**：
+   - 技能具备明确的 `manifest` 结构：`id`、`name`、`description`、`category`、`version` 以及 `toolsAllowed`（技能允许调用的工具名称数组）。
+   - 包含预置技能包（如 `skill-01-research`、`skill-read-repo`、`skill-submit-only` 等），支持区分只读代码库检视与仅交付报告。
+
+2. **Designer 绑定与 Tool Surface 计算**：
+   - 维持架构不变式：`Skills 仅绑定至 Designers`（项目创建、任务启动、Run 启动均严禁 `skillIds`）。
+   - 当 Designer 启动 Run 时，Harness 动态计算其 **Tool Surface（工具暴露面）**：
+     $$\text{Tool Surface} = \text{skillDeclaredTools} \cap \text{harnessImplementedTools}$$
+   - 仅在此交集内的工具才被允许调用；未实现或未授权工具被完全屏蔽。
+
+3. **运行时安全执行与拦截 (Tool Enforcement & Path Jail)**：
+   - 如果智能体尝试调用非 Tool Surface 上的工具，Harness 立即阻断并抛出 `ToolNotPermittedError` (403 Forbidden 语义)，记录结构化拦截日志，并向事件流广播 `run.tool_rejected` 事件。
+   - 文件工具（如 `repo.read_file`）依然受严格的 **Path Jail** 限制，杜绝任何逃逸出项目根目录的越界路径访问。
+
+4. **Web 界面联动 (Thin Shell)**：
+   - **Designers 页面**：实时预览所选智能体的 M3 Tool Surface（包含允许执行的工具标签、声明工具数与已实现工具对比），并在技能卡片上清晰标明每个 Skill 允许的工具清单。
+   - **Skills 页面**：展示模块化技能包及其声明的 `Allowed Tools`。
+   - **Workbench 页面**：运行监控侧栏展示活跃 Run 的 Tool Surface 容量，且当工具被拒绝时以告警色高亮显示拦截日志。
+

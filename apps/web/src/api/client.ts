@@ -1,4 +1,4 @@
-import type { Account, Project, Designer, Skill, DaemonHealth, SceneTemplate, TaskGraphNode, Run } from '../types';
+import type { Account, Project, Designer, Skill, DaemonHealth, SceneTemplate, TaskGraphNode, Run, ToolSurface } from '../types';
 
 const DAEMON_URL = import.meta.env.VITE_DAEMON_URL || 'http://127.0.0.1:7420';
 
@@ -168,6 +168,12 @@ export async function bindDesignerSkills(designerId: string, skillIds: string[])
 export async function fetchSkills(): Promise<Skill[]> {
   const res = await fetch(`${DAEMON_URL}/api/skills`);
   if (!res.ok) throw new Error(`Failed to fetch skills`);
+  return res.json();
+}
+
+export async function fetchDesignerToolSurface(designerId: string): Promise<ToolSurface> {
+  const res = await fetch(`${DAEMON_URL}/api/designers/${designerId}/tool-surface`);
+  if (!res.ok) throw new Error(`Failed to fetch tool surface for designer ${designerId}`);
   return res.json();
 }
 

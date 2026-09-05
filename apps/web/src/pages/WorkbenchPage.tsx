@@ -813,19 +813,37 @@ export function SceneComponent() {
 
                     {/* Streamed token logs buffer */}
                     <div className="mt-2 space-y-1">
-                      <span className="text-neutral-500 text-[10px] block">STREAM LOGS ({activeRun.logs.length})</span>
-                      <div className="bg-black border border-neutral-800 rounded p-2 max-h-32 overflow-y-auto space-y-1 font-mono text-[10px] text-neutral-300">
+                      <div className="flex items-center justify-between">
+                        <span className="text-neutral-500 text-[10px] block">STREAM LOGS ({activeRun.logs.length})</span>
+                        {activeRun.toolSurface && (
+                          <span className="text-[9px] text-rose-400 font-mono">
+                            Surface: {activeRun.toolSurface.length} tools
+                          </span>
+                        )}
+                      </div>
+                      <div className="bg-black border border-neutral-800 rounded p-2 max-h-36 overflow-y-auto space-y-1 font-mono text-[10px] text-neutral-300">
                         {activeRun.logs.length === 0 ? (
                           <span className="text-neutral-600">Waiting for stream tokens...</span>
                         ) : (
-                          activeRun.logs.map((log, i) => (
-                            <div key={i} className="leading-tight">
-                              {log.type === 'token' && <span className="text-neutral-300">{log.content}</span>}
-                              {log.type === 'tool_call' && <span className="text-amber-400 block">{log.content}</span>}
-                              {log.type === 'tool_result' && <span className="text-emerald-400 block">{log.content}</span>}
-                              {log.type === 'system' && <span className="text-neutral-500 block italic">{log.content}</span>}
-                            </div>
-                          ))
+                          activeRun.logs.map((log, i) => {
+                            const isDeny = log.content.includes('rejected:') || log.content.includes('403 Forbidden');
+                            return (
+                              <div key={i} className="leading-tight">
+                                {log.type === 'token' && <span className="text-neutral-300">{log.content}</span>}
+                                {log.type === 'tool_call' && <span className="text-amber-400 block">{log.content}</span>}
+                                {log.type === 'tool_result' && (
+                                  <span className={`block ${isDeny ? 'text-rose-400 bg-rose-950/40 p-1 rounded border border-rose-900/60 font-semibold' : 'text-emerald-400'}`}>
+                                    {log.content}
+                                  </span>
+                                )}
+                                {log.type === 'system' && (
+                                  <span className={`block italic ${isDeny ? 'text-rose-400 font-bold' : 'text-neutral-500'}`}>
+                                    {log.content}
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          })
                         )}
                       </div>
                     </div>
@@ -849,9 +867,9 @@ export function SceneComponent() {
               </div>
 
               <div className="pt-2 border-t border-neutral-900 space-y-2">
-                <label className="text-neutral-500 text-[11px] block uppercase">M2 INVARIANT CHECK</label>
+                <label className="text-neutral-500 text-[11px] block uppercase">M3 INVARIANT CHECK</label>
                 <p className="text-neutral-400 text-[11px] leading-relaxed">
-                  Run start and TaskGraph activation reject <code className="text-neutral-300">skillIds</code>. Path jail strictly confines tool file access to project root.
+                  Run start and TaskGraph activation reject <code className="text-neutral-300">skillIds</code>. Tool Surface enforces <code className="text-neutral-300">skillDeclared ∩ harnessImplemented</code>. Path jail strictly confines tool file access to project root.
                 </p>
               </div>
             </div>
