@@ -11,6 +11,15 @@ export interface Skill {
   description: string;
   category: string;
   version: string;
+  toolsAllowed: string[]; // M3: Tools allowed by this skill
+}
+
+export interface ToolSurface {
+  designerId: string;
+  boundSkillIds: string[];
+  skillDeclaredTools: string[];
+  harnessImplementedTools: string[];
+  allowedTools: string[]; // Intersection: (skill-declared tools) ∩ (harness-implemented tools)
 }
 
 export interface Designer {
@@ -126,6 +135,7 @@ export interface Run {
   logs: RunLogEntry[];
   result?: RunResult;
   error?: string;
+  toolSurface?: string[]; // M3: Allowed tools calculated for this run
   createdAt: string;
   startedAt?: string;
   finishedAt?: string;

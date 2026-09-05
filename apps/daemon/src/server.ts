@@ -2,7 +2,7 @@ import http from 'node:http';
 import { WebSocketServer, WebSocket } from 'ws';
 import { DataStore } from './store.js';
 import { createGraphFromTemplate } from './templates.js';
-import { AgentHarness } from './harness.js';
+import { AgentHarness, computeToolSurface } from './harness.js';
 import type { CreateProjectInput, StartTaskNodeInput, CreateRunInput, Run } from './types.js';
 
 export function createDaemonServer(
@@ -143,6 +143,7 @@ export function createDaemonServer(
             description: body.description || '',
             category: body.category || 'custom',
             version: '1.0.0',
+            toolsAllowed: Array.isArray(body.toolsAllowed) ? body.toolsAllowed : ['submit_result'],
           };
           store.skills.push(newSkill);
           broadcastEvent('skill_created', newSkill);
@@ -193,6 +194,20 @@ export function createDaemonServer(
         broadcastEvent('designer_updated', designer);
         sendJson(200, designer);
       }).catch(() => sendJson(400, { error: 'Invalid JSON body' }));
+      return;
+    }
+
+    // M3: GET /api/designers/:id/tool-surface preview
+    const toolSurfaceMatch = pathname.match(/^\/api\/designers\/([^/]+)\/tool-surface$/);
+    if (toolSurfaceMatch && method === 'GET') {
+      const designerId = toolSurfaceMatch[1];
+      const designer = store.designers.find(d => d.id === designerId);
+      if (!designer) {
+        sendJson(404, { error: 'Designer not found' });
+        return;
+      }
+      const surface = computeToolSurface(designer, store.skills);
+      sendJson(200, surface);
       return;
     }
 
@@ -377,6 +392,8 @@ export function createDaemonServer(
 
         // Auto-spawn a Run bound to executorDesignerId (node designer or project designer)
         const executorDesignerId = node.designerId || proj.designerId || store.designers[0]?.id || 'des_monkren_core';
+        const designer = store.designers.find(d => d.id === executorDesignerId);
+        const toolSurface = designer ? computeToolSurface(designer, store.skills).allowedTools : [];
         const runId = `run_${Date.now()}`;
         const newRun: Run = {
           id: runId,
@@ -386,6 +403,7 @@ export function createDaemonServer(
           status: 'queued',
           inputPrompt: `Execute step ${node.title} for stage ${node.stage}`,
           logs: [],
+          toolSurface,
           createdAt: new Date().toISOString(),
         };
         store.runs.push(newRun);
@@ -482,6 +500,9 @@ export function createDaemonServer(
             return;
           }
 
+          // M3: Compute tool surface for this designer
+          const surface = computeToolSurface(designer, store.skills);
+
           const runId = `run_${Date.now()}`;
           const newRun: Run = {
             id: runId,
@@ -491,6 +512,7 @@ export function createDaemonServer(
             status: 'queued',
             inputPrompt: body.inputPrompt || `Synthesize design artifacts for ${proj.name}`,
             logs: [],
+            toolSurface: surface.allowedTools,
             createdAt: new Date().toISOString(),
           };
 

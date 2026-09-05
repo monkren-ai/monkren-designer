@@ -3,7 +3,9 @@ import assert from 'node:assert';
 import http from 'node:http';
 import { createDaemonServer } from './server.js';
 import { DataStore } from './store.js';
-import { resolveJailedPath, toolRepoReadFile, ToolExecutionError } from './harness.js';
+import { resolveJailedPath, toolRepoReadFile, ToolExecutionError, computeToolSurface, ToolNotPermittedError, AgentHarness } from './harness.js';
+import type { Run } from './types.js';
+import fs from 'node:fs/promises';
 
 test('Daemon server API and rules', async (t) => {
   const store = new DataStore();
@@ -211,6 +213,147 @@ test('Daemon server API and rules', async (t) => {
     // Reading safe file succeeds
     const content = await toolRepoReadFile(mockRoot, 'package.json');
     assert.match(content, /@aios-designer\/daemon/);
+  });
+
+  // M3: Skill Package Manifests and Tool Surface Enforcement Tests
+  await t.test('GET /api/skills returns seed manifests with allowed tools (M3)', async () => {
+    const res = await request('/api/skills');
+    assert.strictEqual(res.status, 200);
+    assert.ok(Array.isArray(res.data));
+    assert.ok(res.data.length >= 8);
+    const readRepo = res.data.find((s: any) => s.id === 'skill-read-repo');
+    assert.ok(readRepo);
+    assert.deepStrictEqual(readRepo.toolsAllowed, ['repo.read_file']);
+
+    const submitOnly = res.data.find((s: any) => s.id === 'skill-submit-only');
+    assert.ok(submitOnly);
+    assert.deepStrictEqual(submitOnly.toolsAllowed, ['submit_result']);
+
+    const research = res.data.find((s: any) => s.id === 'skill-01-research');
+    assert.ok(research);
+    assert.ok(research.toolsAllowed.includes('repo.read_file'));
+  });
+
+  await t.test('GET /api/designers/:id/tool-surface computes intersection of declared and implemented tools (M3)', async () => {
+    // 1. Monkren core has both repo.read_file and submit_result
+    const resMonkren = await request('/api/designers/des_monkren_core/tool-surface');
+    assert.strictEqual(resMonkren.status, 200);
+    assert.strictEqual(resMonkren.data.designerId, 'des_monkren_core');
+    assert.ok(resMonkren.data.allowedTools.includes('repo.read_file'));
+    assert.ok(resMonkren.data.allowedTools.includes('submit_result'));
+
+    // 2. Research only designer has ONLY repo.read_file
+    const resResearch = await request('/api/designers/des_research_only/tool-surface');
+    assert.strictEqual(resResearch.status, 200);
+    assert.deepStrictEqual(resResearch.data.allowedTools, ['repo.read_file']);
+
+    // 3. Submitter agent has ONLY submit_result
+    const resSubmit = await request('/api/designers/des_submit_only/tool-surface');
+    assert.strictEqual(resSubmit.status, 200);
+    assert.deepStrictEqual(resSubmit.data.allowedTools, ['submit_result']);
+
+    // 4. Unskilled agent has empty allowedTools
+    const resUnskilled = await request('/api/designers/des_unskilled/tool-surface');
+    assert.strictEqual(resUnskilled.status, 200);
+    assert.deepStrictEqual(resUnskilled.data.allowedTools, []);
+
+    // 5. Test intersection filtering unimplemented tools
+    // Bind skill-shell-eval-unimplemented to a test designer
+    await request('/api/designers/des_unskilled/skills', { method: 'PUT' }, {
+      skillIds: ['skill-shell-eval-unimplemented'],
+    });
+    const resEval = await request('/api/designers/des_unskilled/tool-surface');
+    assert.strictEqual(resEval.status, 200);
+    assert.ok(resEval.data.skillDeclaredTools.includes('shell.exec'));
+    // shell.exec must NOT be in allowedTools because harness does not implement it!
+    assert.ok(!resEval.data.allowedTools.includes('shell.exec'));
+    assert.deepStrictEqual(resEval.data.allowedTools, ['submit_result']);
+  });
+
+  await t.test('POST /api/projects/:id/runs records calculated toolSurface on Run (M3)', async () => {
+    const res = await request('/api/projects/proj_sample_01/runs', { method: 'POST' }, {
+      designerId: 'des_research_only',
+      inputPrompt: 'Inspect codebase',
+    });
+    assert.strictEqual(res.status, 201);
+    assert.strictEqual(res.data.executorDesignerId, 'des_research_only');
+    assert.deepStrictEqual(res.data.toolSurface, ['repo.read_file']);
+  });
+
+  await t.test('Harness rejects tool not on Tool Surface and streams event (M3)', async () => {
+    const localHarness = new AgentHarness();
+    const proj = store.projects[0];
+
+    // Create a mock run for an agent with NO allowed tools (empty surface)
+    const mockRun: Run = {
+      id: `run_test_reject_${Date.now()}`,
+      projectId: proj.id,
+      executorDesignerId: 'des_unskilled',
+      status: 'queued',
+      inputPrompt: 'Test tool rejection',
+      logs: [],
+      toolSurface: [], // No tools permitted!
+      createdAt: new Date().toISOString(),
+    };
+
+    let rejectedEventFired = false;
+    let rejectedToolName = '';
+
+    const executed = await localHarness.executeRun(
+      mockRun,
+      proj,
+      (evt, payload) => {
+        if (evt === 'run.tool_rejected') {
+          rejectedEventFired = true;
+          rejectedToolName = payload.toolName;
+        }
+      },
+      {
+        attemptTools: [{ name: 'repo.read_file', params: { path: 'README.md' } }],
+      }
+    );
+
+    assert.strictEqual(executed.status, 'failed');
+    assert.strictEqual(rejectedEventFired, true);
+    assert.strictEqual(rejectedToolName, 'repo.read_file');
+    assert.match(executed.error || '', /not allowed for this Run/);
+
+    // Verify error is recorded in run logs
+    const rejectLog = executed.logs.find(l => l.content.includes('rejected:') || l.content.includes('403 Forbidden'));
+    assert.ok(rejectLog, 'Expected tool rejection to be recorded in logs');
+  });
+
+  await t.test('Harness allows permitted tools and successfully completes (M3)', async () => {
+    // When run from apps/daemon, relative path to package.json is safe in any cwd
+    const localHarness = new AgentHarness(process.cwd());
+    const targetFile = fs.stat('package.json').then(() => 'package.json').catch(() => 'README.md');
+    const existingFile = await targetFile;
+    const proj = store.projects[0];
+
+    // Run with both repo.read_file and submit_result permitted
+    const mockRun: Run = {
+      id: `run_test_allow_${Date.now()}`,
+      projectId: proj.id,
+      executorDesignerId: 'des_monkren_core',
+      status: 'queued',
+      inputPrompt: 'Test permitted tools',
+      logs: [],
+      toolSurface: ['repo.read_file', 'submit_result'],
+      createdAt: new Date().toISOString(),
+    };
+
+    const executed = await localHarness.executeRun(
+      mockRun,
+      proj,
+      undefined,
+      {
+        attemptTools: [{ name: 'repo.read_file', params: { path: existingFile } }],
+      }
+    );
+
+    assert.strictEqual(executed.status, 'completed');
+    assert.ok(executed.result);
+    assert.strictEqual(executed.result.artifacts?.length, 1);
   });
 
   server.close();

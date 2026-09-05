@@ -1,5 +1,6 @@
 import type { Account, Skill, Designer, Project, SceneTemplate, Run } from './types.js';
 import { SCENE_TEMPLATES, createGraphFromTemplate } from './templates.js';
+import { SEED_SKILLS } from './skills/manifests.js';
 
 export class DataStore {
   public accounts: Account[] = [
@@ -20,50 +21,7 @@ export class DataStore {
   // Default active session account
   public currentAccountId: string = 'acc_owner_01';
 
-  public skills: Skill[] = [
-    {
-      id: 'skill-01-research',
-      name: 'Design Research & Taste Lab',
-      description: 'Explore visual taste archetypes and product design directions',
-      category: 'research',
-      version: '6.2.0',
-    },
-    {
-      id: 'skill-02-create',
-      name: 'Wireframe & Variation Generator',
-      description: 'Synthesize low-fidelity wireframes and high-fidelity variations',
-      category: 'create',
-      version: '6.2.0',
-    },
-    {
-      id: 'skill-03-execute',
-      name: 'Interactive Prototyping',
-      description: 'Generate production-ready code prototypes with aios-ui-kit',
-      category: 'execute',
-      version: '6.2.0',
-    },
-    {
-      id: 'skill-04-review',
-      name: '5-Dim Taste & Slop Reviewer',
-      description: 'Review aesthetics, visual hierarchy, rhythm, and ai-slop check',
-      category: 'review',
-      version: '6.2.0',
-    },
-    {
-      id: 'skill-05-improve',
-      name: 'Surgical Design Fixer',
-      description: 'Fix design issues based on review metrics without regression',
-      category: 'improve',
-      version: '6.2.0',
-    },
-    {
-      id: 'skill-advisor-council',
-      name: 'Design Decision Council',
-      description: 'First principles cross-stage critical design evaluator',
-      category: 'advisor',
-      version: '6.2.0',
-    },
-  ];
+  public skills: Skill[] = SEED_SKILLS.map(s => ({ ...s }));
 
   public designers: Designer[] = [
     {
@@ -87,6 +45,30 @@ export class DataStore {
       avatar: '/avatars/council.png',
       status: 'idle',
       assignedSkillIds: ['skill-advisor-council'],
+    },
+    {
+      id: 'des_research_only',
+      name: 'Research Analyst',
+      title: 'Repository Inspection Specialist',
+      avatar: '/avatars/research.png',
+      status: 'idle',
+      assignedSkillIds: ['skill-read-repo'],
+    },
+    {
+      id: 'des_submit_only',
+      name: 'Submitter Agent',
+      title: 'Submission Only Reporter',
+      avatar: '/avatars/submit.png',
+      status: 'idle',
+      assignedSkillIds: ['skill-submit-only'],
+    },
+    {
+      id: 'des_unskilled',
+      name: 'Unskilled Agent',
+      title: 'Agent Without Assigned Skills',
+      avatar: '/avatars/unskilled.png',
+      status: 'idle',
+      assignedSkillIds: [],
     },
   ];
 

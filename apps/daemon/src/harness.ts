@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import type { Run, RunLogEntry, RunResult, Project } from './types.js';
+import type { Run, RunLogEntry, RunResult, Project, Designer, Skill, ToolSurface } from './types.js';
 
 export interface ToolContext {
   projectRoot: string;
@@ -11,6 +11,53 @@ export class ToolExecutionError extends Error {
     super(message);
     this.name = 'ToolExecutionError';
   }
+}
+
+export class ToolNotPermittedError extends ToolExecutionError {
+  constructor(toolName: string, allowedTools: string[]) {
+    super(
+      `Tool '${toolName}' is not allowed for this Run. Allowed tool surface: [${allowedTools.join(', ')}]`
+    );
+    this.name = 'ToolNotPermittedError';
+  }
+}
+
+/**
+ * All tools implemented and supported by AgentHarness
+ */
+export const HARNESS_IMPLEMENTED_TOOLS: string[] = [
+  'repo.read_file',
+  'submit_result',
+];
+
+/**
+ * Calculate the Tool Surface for a designer.
+ * Tool Surface = (skill-declared tools) ∩ (harness-implemented tools)
+ */
+export function computeToolSurface(designer: Designer, allSkills: Skill[]): ToolSurface {
+  const boundSkills = allSkills.filter(s => designer.assignedSkillIds.includes(s.id));
+  
+  // Aggregate unique tools declared across all bound skills
+  const declaredToolSet = new Set<string>();
+  for (const s of boundSkills) {
+    if (Array.isArray(s.toolsAllowed)) {
+      for (const t of s.toolsAllowed) {
+        declaredToolSet.add(t);
+      }
+    }
+  }
+
+  const skillDeclaredTools = Array.from(declaredToolSet);
+  // Intersection with harness implemented tools
+  const allowedTools = skillDeclaredTools.filter(t => HARNESS_IMPLEMENTED_TOOLS.includes(t));
+
+  return {
+    designerId: designer.id,
+    boundSkillIds: [...designer.assignedSkillIds],
+    skillDeclaredTools,
+    harnessImplementedTools: [...HARNESS_IMPLEMENTED_TOOLS],
+    allowedTools,
+  };
 }
 
 /**
@@ -56,7 +103,7 @@ export async function toolRepoReadFile(projectRoot: string, filePath: string): P
 }
 
 export type RunEventCallback = (
-  event: 'run.started' | 'run.token' | 'run.finished' | 'run.failed',
+  event: 'run.started' | 'run.token' | 'run.tool_call' | 'run.tool_result' | 'run.tool_rejected' | 'run.finished' | 'run.failed',
   payload: any
 ) => void;
 
@@ -67,6 +114,13 @@ export type RunEventCallback = (
  * executing tools (repo.read_file inside jailed workspace), streaming tokens,
  * and calling submit_result without requiring live cloud LLM keys in test.
  */
+export interface ExecuteRunOptions {
+  attemptTools?: Array<{
+    name: string;
+    params?: Record<string, any>;
+  }>;
+}
+
 export class AgentHarness {
   private activeRuns = new Map<string, { abortController: AbortController }>();
 
@@ -86,12 +140,13 @@ export class AgentHarness {
   }
 
   /**
-   * Execute a deterministic fixture run loop
+   * Execute a deterministic fixture run loop with Tool Surface enforcement
    */
   async executeRun(
     run: Run,
     project: Project,
-    onEvent?: RunEventCallback
+    onEvent?: RunEventCallback,
+    options?: ExecuteRunOptions
   ): Promise<Run> {
     const abortController = new AbortController();
     this.activeRuns.set(run.id, { abortController });
@@ -100,19 +155,25 @@ export class AgentHarness {
       run.logs.push(entry);
       if (entry.type === 'token') {
         onEvent?.('run.token', { runId: run.id, token: entry.content, timestamp: entry.timestamp });
+      } else if (entry.type === 'tool_call') {
+        onEvent?.('run.tool_call', { runId: run.id, content: entry.content, timestamp: entry.timestamp });
+      } else if (entry.type === 'tool_result') {
+        onEvent?.('run.tool_result', { runId: run.id, content: entry.content, timestamp: entry.timestamp });
       }
     };
 
     run.status = 'running';
     run.startedAt = new Date().toISOString();
+    const surfaceList = run.toolSurface ? `[${run.toolSurface.join(', ')}]` : '[]';
     emitLog({
       type: 'system',
-      content: `[Harness] Run started with executor: ${run.executorDesignerId} on project: ${project.name}`,
+      content: `[Harness] Run started with executor: ${run.executorDesignerId} on project: ${project.name}. Tool surface: ${surfaceList}`,
       timestamp: new Date().toISOString(),
     });
     onEvent?.('run.started', { runId: run.id, run, timestamp: run.startedAt });
 
     const isAborted = () => abortController.signal.aborted;
+    const allowedSurface = new Set<string>(run.toolSurface || []);
 
     try {
       // Step 1: Simulate thought & token streaming
@@ -133,29 +194,76 @@ export class AgentHarness {
         await new Promise((r) => setTimeout(r, 15));
       }
 
-      // Step 2: Tool execution - repo.read_file (Path Jailed)
-      const targetDoc = 'README.md';
-      emitLog({
-        type: 'tool_call',
-        content: `call: repo.read_file({ path: "${targetDoc}" })`,
-        timestamp: new Date().toISOString(),
-      });
+      // Step 2: Tool execution
+      // Determine tools to execute: default sequence or custom attempted tools (for testing/agent)
+      const toolsToRun = options?.attemptTools ?? [
+        { name: 'repo.read_file', params: { path: 'README.md' } },
+      ];
 
-      let fileSnippet = '';
-      try {
-        const fileContent = await toolRepoReadFile(this.projectRoot, targetDoc);
-        fileSnippet = fileContent.slice(0, 120).replace(/\n/g, ' ');
+      let targetDoc = 'README.md';
+
+      for (const toolInvocation of toolsToRun) {
+        if (isAborted()) throw new Error('Run was cancelled by user');
+
+        const toolName = toolInvocation.name;
+        const toolParams = toolInvocation.params || {};
+
         emitLog({
-          type: 'tool_result',
-          content: `result: 200 OK (${fileContent.length} bytes read). Snippet: "${fileSnippet}..."`,
+          type: 'tool_call',
+          content: `call: ${toolName}(${JSON.stringify(toolParams)})`,
           timestamp: new Date().toISOString(),
         });
-      } catch (toolErr: any) {
-        emitLog({
-          type: 'tool_result',
-          content: `error: ${toolErr.message}`,
-          timestamp: new Date().toISOString(),
-        });
+
+        // ENFORCEMENT: Check if tool is allowed on Tool Surface
+        if (!allowedSurface.has(toolName)) {
+          const rejectMsg = `Tool '${toolName}' rejected: not permitted on designer tool surface [${Array.from(allowedSurface).join(', ')}]`;
+          emitLog({
+            type: 'tool_result',
+            content: `error: 403 Forbidden: ${rejectMsg}`,
+            timestamp: new Date().toISOString(),
+          });
+
+          // Stream event on run stream
+          onEvent?.('run.tool_rejected', {
+            runId: run.id,
+            toolName,
+            allowedTools: Array.from(allowedSurface),
+            error: rejectMsg,
+            timestamp: new Date().toISOString(),
+          });
+
+          // Invariant: Unpermitted tool attempt terminates the run with failure
+          throw new ToolNotPermittedError(toolName, Array.from(allowedSurface));
+        }
+
+        // Tool is allowed on surface: dispatch execution
+        if (toolName === 'repo.read_file') {
+          const filePath = String(toolParams.path || 'README.md');
+          targetDoc = filePath;
+          try {
+            const fileContent = await toolRepoReadFile(this.projectRoot, filePath);
+            const fileSnippet = fileContent.slice(0, 120).replace(/\n/g, ' ');
+            emitLog({
+              type: 'tool_result',
+              content: `result: 200 OK (${fileContent.length} bytes read). Snippet: "${fileSnippet}..."`,
+              timestamp: new Date().toISOString(),
+            });
+          } catch (toolErr: any) {
+            emitLog({
+              type: 'tool_result',
+              content: `error: ${toolErr.message}`,
+              timestamp: new Date().toISOString(),
+            });
+            throw toolErr;
+          }
+        } else if (toolName === 'submit_result') {
+          // Handled or explicit submit
+          emitLog({
+            type: 'tool_result',
+            content: `result: 200 OK (result accepted)`,
+            timestamp: new Date().toISOString(),
+          });
+        }
       }
 
       if (isAborted()) throw new Error('Run was cancelled by user');
@@ -178,6 +286,30 @@ export class AgentHarness {
       }
 
       // Step 4: submit_result
+      // Check if submit_result is on tool surface!
+      emitLog({
+        type: 'tool_call',
+        content: `call: submit_result(${JSON.stringify({ summary: `Synthesized for ${run.nodeId || 'default'}` })})`,
+        timestamp: new Date().toISOString(),
+      });
+
+      if (!allowedSurface.has('submit_result')) {
+        const rejectMsg = `Tool 'submit_result' rejected: not permitted on designer tool surface [${Array.from(allowedSurface).join(', ')}]`;
+        emitLog({
+          type: 'tool_result',
+          content: `error: 403 Forbidden: ${rejectMsg}`,
+          timestamp: new Date().toISOString(),
+        });
+        onEvent?.('run.tool_rejected', {
+          runId: run.id,
+          toolName: 'submit_result',
+          allowedTools: Array.from(allowedSurface),
+          error: rejectMsg,
+          timestamp: new Date().toISOString(),
+        });
+        throw new ToolNotPermittedError('submit_result', Array.from(allowedSurface));
+      }
+
       const result: RunResult = {
         summary: `Deterministic specification synthesized for node '${run.nodeId || 'default'}' using aios-ui-kit under executor '${run.executorDesignerId}'. Read baseline from '${targetDoc}'.`,
         artifacts: [
@@ -190,8 +322,8 @@ export class AgentHarness {
       };
 
       emitLog({
-        type: 'tool_call',
-        content: `call: submit_result(${JSON.stringify({ summary: result.summary })})`,
+        type: 'tool_result',
+        content: `result: 200 OK (submission recorded)`,
         timestamp: new Date().toISOString(),
       });
 
