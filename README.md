@@ -52,19 +52,22 @@ monkren-designer/
 
 ## 如何安装 aios-ui-kit (Git Dependency)
 
-`aios-ui-kit` 托管于 GitHub Monorepo `monkren-ai/AIOS-UI` 的子目录 `aios-design-skill/aios-design/web-ui-kit/react`。
+`aios-ui-kit` 源码与打包产物托管于 GitHub Monorepo `monkren-ai/AIOS-UI` 的子目录 `aios-design-skill/aios-design/web-ui-kit/react`。其子目录内的 `package.json` 中的包名即为 `aios-ui-kit`（v3.0.0）。
 
-### 1. 声明方式
+### 1. 精确依赖声明
 
-在 `apps/web/package.json` 中添加 git 子路径依赖：
+使用带有 `#path:<subdirectory>` 的 Git 依赖直接声明该子目录为 `aios-ui-kit`：
 
 ```json
-{
-  "dependencies": {
-    "aios-ui-kit": "github:monkren-ai/AIOS-UI#path:aios-design-skill/aios-design/web-ui-kit/react"
-  }
+"dependencies": {
+  "aios-ui-kit": "github:monkren-ai/AIOS-UI#path:aios-design-skill/aios-design/web-ui-kit/react"
 }
 ```
+
+> **说明：**
+> - 包名在子目录的 `package.json` 中已确认为 `"name": "aios-ui-kit"`。
+> - 若使用标准 npm URL，等价形式为：`git+https://github.com/monkren-ai/AIOS-UI.git#path:aios-design-skill/aios-design/web-ui-kit/react`。
+> - 在 `npm` 或 `pnpm` 中，该配置会直接克隆该子目录并以 `aios-ui-kit` 作为包名安装入 `node_modules`。
 
 ### 2. pnpm 允许执行构建脚本
 

@@ -192,101 +192,129 @@ export const WorkbenchPage: React.FC = () => {
             </button>
           </div>
 
-          {/* Canvas Host Container */}
-          <div className="w-full max-w-4xl bg-black border border-neutral-800 rounded-lg shadow-2xl overflow-hidden flex flex-col my-auto transition-all animate-fade-in">
-            {/* Window title bar */}
-            <div className="h-8 bg-neutral-950 border-b border-neutral-800 px-3 flex items-center justify-between text-xs font-mono text-neutral-400">
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-neutral-800" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-neutral-800" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-neutral-800" />
-                </div>
-                <span className="text-neutral-500 pl-2">aios-workbench-host-shell</span>
-              </div>
-              <span className="text-neutral-600 text-[10px]">aios-ui-kit v3.0.0</span>
-            </div>
-
-            {/* Embedded Screen Mock */}
-            <div className="p-6 space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-900 pb-4">
-                <div>
-                  <div className="text-xs font-mono text-rose-500 uppercase tracking-widest flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    AIOS DESIGN CANVAS M0
-                  </div>
-                  <h2 className="text-lg font-bold text-white mt-1">
-                    System Kernel Console Specification
-                  </h2>
-                  <p className="text-xs text-neutral-400 mt-0.5">
-                    {briefParam}
-                  </p>
-                </div>
-
+          {activeTab === 'canvas' ? (
+            /* Canvas Host Container */
+            <div className="w-full max-w-4xl bg-black border border-neutral-800 rounded-lg shadow-2xl overflow-hidden flex flex-col my-auto transition-all animate-fade-in">
+              {/* Window title bar */}
+              <div className="h-8 bg-neutral-950 border-b border-neutral-800 px-3 flex items-center justify-between text-xs font-mono text-neutral-400">
                 <div className="flex items-center gap-2">
-                  <Button variant="secondary" size="sm" className="text-xs font-mono">
-                    Inspect AST
-                  </Button>
-                  <Button variant="primary" size="sm" className="text-xs font-mono bg-rose-600">
-                    Export React 19 Spec
-                  </Button>
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-neutral-800" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-neutral-800" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-neutral-800" />
+                  </div>
+                  <span className="text-neutral-500 pl-2">aios-workbench-host-shell</span>
                 </div>
+                <span className="text-neutral-600 text-[10px]">aios-ui-kit v3.0.0</span>
               </div>
 
-              {/* Grid of UI Kit components inside canvas */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded border border-neutral-800 bg-neutral-950/70 space-y-2">
-                  <div className="text-[11px] font-mono text-neutral-500 uppercase">
-                    Telemetry Ingestion
+              {/* Embedded Screen Mock */}
+              <div className="p-6 space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-900 pb-4">
+                  <div>
+                    <div className="text-xs font-mono text-rose-500 uppercase tracking-widest flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      AIOS DESIGN CANVAS M0
+                    </div>
+                    <h2 className="text-lg font-bold text-white mt-1">
+                      System Kernel Console Specification
+                    </h2>
+                    <p className="text-xs text-neutral-400 mt-0.5">
+                      {briefParam}
+                    </p>
                   </div>
-                  <div className="text-2xl font-mono font-bold text-white tracking-tight">
-                    99.98%
-                  </div>
-                  <div className="text-[11px] text-emerald-400 font-mono">
-                    ● Stable continuous sampling
+
+                  <div className="flex items-center gap-2">
+                    <Button variant="secondary" size="sm" className="text-xs font-mono">
+                      Inspect AST
+                    </Button>
+                    <Button variant="primary" size="sm" className="text-xs font-mono bg-rose-600">
+                      Export React 19 Spec
+                    </Button>
                   </div>
                 </div>
 
-                <div className="p-4 rounded border border-neutral-800 bg-neutral-950/70 space-y-2">
-                  <div className="text-[11px] font-mono text-neutral-500 uppercase">
-                    Agent Heartbeat
+                {/* Grid of UI Kit components inside canvas */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-4 rounded border border-neutral-800 bg-neutral-950/70 space-y-2">
+                    <div className="text-[11px] font-mono text-neutral-500 uppercase">
+                      Telemetry Ingestion
+                    </div>
+                    <div className="text-2xl font-mono font-bold text-white tracking-tight">
+                      99.98%
+                    </div>
+                    <div className="text-[11px] text-emerald-400 font-mono">
+                      ● Stable continuous sampling
+                    </div>
                   </div>
-                  <div className="text-2xl font-mono font-bold text-white tracking-tight">
-                    12ms
+
+                  <div className="p-4 rounded border border-neutral-800 bg-neutral-950/70 space-y-2">
+                    <div className="text-[11px] font-mono text-neutral-500 uppercase">
+                      Agent Heartbeat
+                    </div>
+                    <div className="text-2xl font-mono font-bold text-white tracking-tight">
+                      12ms
+                    </div>
+                    <div className="text-[11px] text-neutral-400 font-mono">
+                      Local daemon loopback
+                    </div>
                   </div>
-                  <div className="text-[11px] text-neutral-400 font-mono">
-                    Local daemon loopback
+
+                  <div className="p-4 rounded border border-neutral-800 bg-neutral-950/70 space-y-2">
+                    <div className="text-[11px] font-mono text-neutral-500 uppercase">
+                      Quality Gate Invariant
+                    </div>
+                    <div className="text-2xl font-mono font-bold text-rose-500 tracking-tight">
+                      ENFORCED
+                    </div>
+                    <div className="text-[11px] text-neutral-400 font-mono">
+                      Owner session check strict
+                    </div>
                   </div>
                 </div>
 
-                <div className="p-4 rounded border border-neutral-800 bg-neutral-950/70 space-y-2">
-                  <div className="text-[11px] font-mono text-neutral-500 uppercase">
-                    Quality Gate Invariant
+                {/* Industrial Interactive Simulation */}
+                <div className="p-4 rounded border border-neutral-800 bg-neutral-950 font-mono text-xs space-y-2">
+                  <div className="text-neutral-500 text-[11px] flex justify-between">
+                    <span>TERMINAL LOG BUFFER</span>
+                    <span>ID: stream_host_mock_{refreshCount}</span>
                   </div>
-                  <div className="text-2xl font-mono font-bold text-rose-500 tracking-tight">
-                    ENFORCED
+                  <div className="text-neutral-300 space-y-1">
+                    <div><span className="text-rose-500">&gt;</span> Initializing AIOS Designer Host Shell canvas adapter...</div>
+                    <div><span className="text-neutral-500">&gt;</span> Binding aios-ui-kit industrial monochrome token system</div>
+                    <div><span className="text-emerald-400">&gt;</span> Gate/Ship invariant active: ownerAccountId verified</div>
+                    <div><span className="text-neutral-400">&gt;</span> Ready for full canvas writeback expansion in future iterations.</div>
                   </div>
-                  <div className="text-[11px] text-neutral-400 font-mono">
-                    Owner session check strict
-                  </div>
-                </div>
-              </div>
-
-              {/* Industrial Interactive Simulation */}
-              <div className="p-4 rounded border border-neutral-800 bg-neutral-950 font-mono text-xs space-y-2">
-                <div className="text-neutral-500 text-[11px] flex justify-between">
-                  <span>TERMINAL LOG BUFFER</span>
-                  <span>ID: stream_host_mock_{refreshCount}</span>
-                </div>
-                <div className="text-neutral-300 space-y-1">
-                  <div><span className="text-rose-500">&gt;</span> Initializing AIOS Designer Host Shell canvas adapter...</div>
-                  <div><span className="text-neutral-500">&gt;</span> Binding aios-ui-kit industrial monochrome token system</div>
-                  <div><span className="text-emerald-400">&gt;</span> Gate/Ship invariant active: ownerAccountId verified</div>
-                  <div><span className="text-neutral-400">&gt;</span> Ready for full canvas writeback expansion in future iterations.</div>
                 </div>
               </div>
             </div>
-          </div>
+          ) : (
+            /* Source Spec Editor / View */
+            <div className="w-full max-w-4xl bg-black border border-neutral-800 rounded-lg shadow-2xl overflow-hidden flex flex-col my-auto transition-all animate-fade-in">
+              <div className="h-8 bg-neutral-950 border-b border-neutral-800 px-3 flex items-center justify-between text-xs font-mono text-neutral-400">
+                <span>spec.tsx (React 19 + aios-ui-kit)</span>
+                <span className="text-[10px] text-neutral-500">Read-only Host Preview</span>
+              </div>
+              <pre className="p-4 text-xs font-mono text-neutral-300 overflow-x-auto bg-neutral-950/90 leading-relaxed">
+{`import * as motion from 'motion/react';
+import { ConfigProvider } from 'aios-ui-kit';
+import { Button } from 'aios-ui-kit/button';
+import { Badge } from 'aios-ui-kit/badge';
+
+export function AIOSSceneHost() {
+  return (
+    <ConfigProvider motion={motion} defaultTheme="dark">
+      <div className="p-6 bg-black text-neutral-200 border border-neutral-800 rounded-lg">
+        <Badge variant="outline">Stage 02 Wireframe</Badge>
+        <h1 className="text-xl font-bold mt-2">Console Specification</h1>
+        <Button variant="primary" className="mt-4">Execute Invariant Test</Button>
+      </div>
+    </ConfigProvider>
+  );
+}`}
+              </pre>
+            </div>
+          )}
         </main>
 
         {/* Right Drawer / Inspector */}
