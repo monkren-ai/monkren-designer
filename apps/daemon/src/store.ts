@@ -1,4 +1,4 @@
-import type { Account, Skill, Designer, Project, SceneTemplate } from './types.js';
+import type { Account, Skill, Designer, Project, SceneTemplate, Run } from './types.js';
 import { SCENE_TEMPLATES, createGraphFromTemplate } from './templates.js';
 
 export class DataStore {
@@ -91,6 +91,7 @@ export class DataStore {
   ];
 
   public templates: SceneTemplate[] = SCENE_TEMPLATES;
+  public runs: Run[] = [];
 
   public projects: Project[] = [
     {

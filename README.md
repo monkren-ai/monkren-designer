@@ -152,6 +152,9 @@ Daemon 默认监听 `127.0.0.1:7420` (可通过环境变量 `AIOS_DAEMON_HOST` �
 | `/api/skills` | `GET` | 获取模块化技能目录 |
 | `/api/templates` | `GET` | (M1) 获取 UI 与 Product 场景模板列表 |
 | `/api/projects/:id/taskgraph/activate` | `POST` | (M1) 激活 TaskGraph 节点并联动 Workbench 模式切换 |
-| `/api/projects/:id/taskgraph/nodes/:nodeId/start` | `POST` | (M1) 启动任务节点（**若传入 `skillIds` 会被严格拒绝**） |
+| `/api/projects/:id/taskgraph/nodes/:nodeId/start` | `POST` | (M1) 启动任务节点（**若传入 `skillIds` 会被严格拒绝**）并联动生成 Run |
 | `/api/projects/:id/taskgraph/nodes/:nodeId/complete` | `POST` | (M1) 标记任务节点完成并更新产出摘要 |
-| WebSocket | `ws://` | 支持实时双向通信存根 |
+| `/api/projects/:id/runs` | `GET` / `POST` | (M2) 启动与查看 Agent Harness Run（**创建 Run 严拒 `skillIds`**） |
+| `/api/runs/:id` | `GET` | (M2) 查询单次 Run 状态、执行日志与产出成果 |
+| `/api/runs/:id/cancel` | `POST` | (M2) 取消正在执行的 Run |
+| WebSocket / SSE | `run.*` | (M2) 广播 `run.started`、`run.token`、`run.finished`、`run.failed` 事件 |

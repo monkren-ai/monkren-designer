@@ -20,8 +20,8 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { DaemonPill } from '../components/DaemonPill';
-import type { Project, TaskGraph, TaskGraphNode, WorkbenchMode } from '../types';
-import { fetchProject, fetchProjects, activateTaskGraphNode, startTaskNode, completeTaskNode, gateProject, shipProject } from '../api/client';
+import type { Project, TaskGraph, TaskGraphNode, WorkbenchMode, Run } from '../types';
+import { fetchProject, fetchProjects, activateTaskGraphNode, startTaskNode, completeTaskNode, gateProject, shipProject, fetchRun, cancelRun, subscribeToEvents } from '../api/client';
 import { useDaemon } from '../context/DaemonContext';
 
 export const WorkbenchPage: React.FC = () => {
@@ -37,6 +37,7 @@ export const WorkbenchPage: React.FC = () => {
   const [taskGraph, setTaskGraph] = useState<TaskGraph | null>(null);
   const [activeNode, setActiveNode] = useState<TaskGraphNode | null>(null);
   const [activeMode, setActiveMode] = useState<WorkbenchMode>('design');
+  const [activeRun, setActiveRun] = useState<Run | null>(null);
   const [showLeftPanel, setShowLeftPanel] = useState(true);
   const [showRightPanel, setShowRightPanel] = useState(true);
   const [refreshCount, setRefreshCount] = useState(0);
@@ -67,6 +68,9 @@ export const WorkbenchPage: React.FC = () => {
           if (active) {
             setActiveNode(active);
             setActiveMode(active.mode);
+            if (active.activeRunId) {
+              fetchRun(active.activeRunId).then(setActiveRun).catch(() => {});
+            }
           }
         }
       }
@@ -81,6 +85,20 @@ export const WorkbenchPage: React.FC = () => {
     }
   }, [projectIdParam, isOnline]);
 
+  // Subscribe to real-time Run events (run.started, run.token, run.finished, run.failed)
+  useEffect(() => {
+    const unsubscribe = subscribeToEvents((event: any) => {
+      if (event?.type?.startsWith('run.')) {
+        if (activeRun && event.data?.runId === activeRun.id) {
+          fetchRun(activeRun.id).then(setActiveRun).catch(() => {});
+        } else if (event.data?.run) {
+          setActiveRun(event.data.run);
+        }
+      }
+    });
+    return () => unsubscribe();
+  }, [activeRun]);
+
   // Handle switching node in TaskGraph
   const handleSelectNode = async (node: TaskGraphNode) => {
     if (!project) return;
@@ -94,6 +112,11 @@ export const WorkbenchPage: React.FC = () => {
       setActiveNode(res.activeNode);
       // Mode automatically synchronizes with node mode!
       setActiveMode(res.activeNode.mode);
+      if (res.activeNode.activeRunId) {
+        fetchRun(res.activeNode.activeRunId).then(setActiveRun).catch(() => setActiveRun(null));
+      } else {
+        setActiveRun(null);
+      }
       setStatusMessage(`Active node set to: ${res.activeNode.title} (Mode: ${res.activeNode.mode.toUpperCase()})`);
       setTimeout(() => setStatusMessage(null), 3000);
     } catch (err: any) {
@@ -111,6 +134,22 @@ export const WorkbenchPage: React.FC = () => {
       if (res.project.taskGraph) setTaskGraph(res.project.taskGraph);
       setActiveNode(res.node);
       setActiveMode(res.node.mode);
+      if ((res as any).run) {
+        setActiveRun((res as any).run);
+      }
+      setStatusMessage(res.message);
+      setTimeout(() => setStatusMessage(null), 3000);
+    } catch (err: any) {
+      setErrorMessage(err.message);
+    }
+  };
+
+  const handleCancelRun = async () => {
+    if (!activeRun) return;
+    try {
+      setErrorMessage(null);
+      const res = await cancelRun(activeRun.id);
+      setActiveRun(res.run);
       setStatusMessage(res.message);
       setTimeout(() => setStatusMessage(null), 3000);
     } catch (err: any) {
@@ -746,10 +785,73 @@ export function SceneComponent() {
                 </p>
               </div>
 
+              {/* M2: Harness Active Run Monitor */}
               <div className="pt-2 border-t border-neutral-900 space-y-2">
-                <label className="text-neutral-500 text-[11px] block uppercase">M1 INVARIANT CHECK</label>
+                <div className="flex items-center justify-between">
+                  <label className="text-neutral-500 text-[11px] block uppercase">AGENT HARNESS RUN</label>
+                  {activeRun && (
+                    <Badge
+                      variant={activeRun.status === 'completed' ? 'primary' : activeRun.status === 'running' ? 'default' : 'outline'}
+                      size="sm"
+                      className="text-[9px] uppercase font-mono px-1 py-0"
+                    >
+                      {activeRun.status}
+                    </Badge>
+                  )}
+                </div>
+
+                {activeRun ? (
+                  <div className="p-2.5 rounded bg-neutral-900 border border-neutral-800 space-y-2 text-[11px]">
+                    <div className="flex justify-between">
+                      <span className="text-neutral-500">Run ID:</span>
+                      <span className="text-rose-400 font-mono truncate max-w-[140px]">{activeRun.id}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-neutral-500">Executor:</span>
+                      <span className="text-neutral-300 font-mono truncate max-w-[140px]">{activeRun.executorDesignerId}</span>
+                    </div>
+
+                    {/* Streamed token logs buffer */}
+                    <div className="mt-2 space-y-1">
+                      <span className="text-neutral-500 text-[10px] block">STREAM LOGS ({activeRun.logs.length})</span>
+                      <div className="bg-black border border-neutral-800 rounded p-2 max-h-32 overflow-y-auto space-y-1 font-mono text-[10px] text-neutral-300">
+                        {activeRun.logs.length === 0 ? (
+                          <span className="text-neutral-600">Waiting for stream tokens...</span>
+                        ) : (
+                          activeRun.logs.map((log, i) => (
+                            <div key={i} className="leading-tight">
+                              {log.type === 'token' && <span className="text-neutral-300">{log.content}</span>}
+                              {log.type === 'tool_call' && <span className="text-amber-400 block">{log.content}</span>}
+                              {log.type === 'tool_result' && <span className="text-emerald-400 block">{log.content}</span>}
+                              {log.type === 'system' && <span className="text-neutral-500 block italic">{log.content}</span>}
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </div>
+
+                    {activeRun.status === 'running' && (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="w-full text-[10px] text-rose-400 border-rose-500/30 hover:border-rose-500 justify-center h-6"
+                        onClick={handleCancelRun}
+                      >
+                        Cancel Run
+                      </Button>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-neutral-500 text-[11px]">
+                    No active Run for this node. Click 'Start Step' to dispatch a deterministic fixture run.
+                  </p>
+                )}
+              </div>
+
+              <div className="pt-2 border-t border-neutral-900 space-y-2">
+                <label className="text-neutral-500 text-[11px] block uppercase">M2 INVARIANT CHECK</label>
                 <p className="text-neutral-400 text-[11px] leading-relaxed">
-                  Starting or updating TaskGraph nodes must never accept <code className="text-neutral-300">skillIds</code>. Skills bind only to Designers.
+                  Run start and TaskGraph activation reject <code className="text-neutral-300">skillIds</code>. Path jail strictly confines tool file access to project root.
                 </p>
               </div>
             </div>

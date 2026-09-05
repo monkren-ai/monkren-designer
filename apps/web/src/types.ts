@@ -48,6 +48,7 @@ export interface TaskGraphNode {
   outputSummary?: string;
   dependencies: string[];
   designerId?: string;
+  activeRunId?: string;
 }
 
 export interface TaskGraphEdge {
@@ -62,6 +63,39 @@ export interface TaskGraph {
   nodes: TaskGraphNode[];
   edges: TaskGraphEdge[];
   activeNodeId?: string;
+}
+
+// M2: Agent Harness & Run Model Types
+export type RunStatus = 'queued' | 'running' | 'completed' | 'failed' | 'cancelled';
+
+export interface RunLogEntry {
+  type: 'token' | 'tool_call' | 'tool_result' | 'system';
+  content: string;
+  timestamp: string;
+}
+
+export interface RunResult {
+  summary: string;
+  artifacts?: Array<{
+    name: string;
+    path: string;
+    content: string;
+  }>;
+}
+
+export interface Run {
+  id: string;
+  projectId: string;
+  nodeId?: string;
+  executorDesignerId: string;
+  status: RunStatus;
+  inputPrompt: string;
+  logs: RunLogEntry[];
+  result?: RunResult;
+  error?: string;
+  createdAt: string;
+  startedAt?: string;
+  finishedAt?: string;
 }
 
 export interface Project {

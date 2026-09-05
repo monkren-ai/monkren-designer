@@ -2,9 +2,13 @@ import http from 'node:http';
 import { WebSocketServer, WebSocket } from 'ws';
 import { DataStore } from './store.js';
 import { createGraphFromTemplate } from './templates.js';
-import type { CreateProjectInput, StartTaskNodeInput } from './types.js';
+import { AgentHarness } from './harness.js';
+import type { CreateProjectInput, StartTaskNodeInput, CreateRunInput, Run } from './types.js';
 
-export function createDaemonServer(store: DataStore = new DataStore()) {
+export function createDaemonServer(
+  store: DataStore = new DataStore(),
+  harness: AgentHarness = new AgentHarness()
+) {
   const sseClients = new Set<http.ServerResponse>();
 
   function broadcastEvent(eventType: string, data: any) {
@@ -17,6 +21,14 @@ export function createDaemonServer(store: DataStore = new DataStore()) {
         sseClients.delete(res);
       }
     }
+
+    // Broadcast to WS clients
+    const wsPayload = JSON.stringify({ event: eventType, data, timestamp: new Date().toISOString() });
+    wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(wsPayload);
+      }
+    });
   }
 
   const server = http.createServer((req, res) => {
@@ -362,10 +374,42 @@ export function createDaemonServer(store: DataStore = new DataStore()) {
 
         node.status = 'in_progress';
         proj.taskGraph.activeNodeId = node.id;
+
+        // Auto-spawn a Run bound to executorDesignerId (node designer or project designer)
+        const executorDesignerId = node.designerId || proj.designerId || store.designers[0]?.id || 'des_monkren_core';
+        const runId = `run_${Date.now()}`;
+        const newRun: Run = {
+          id: runId,
+          projectId: proj.id,
+          nodeId: node.id,
+          executorDesignerId,
+          status: 'queued',
+          inputPrompt: `Execute step ${node.title} for stage ${node.stage}`,
+          logs: [],
+          createdAt: new Date().toISOString(),
+        };
+        store.runs.push(newRun);
+        node.activeRunId = runId;
         proj.updatedAt = new Date().toISOString();
 
-        broadcastEvent('taskgraph_node_started', { projectId: proj.id, node });
-        sendJson(200, { message: `Task node ${node.title} started`, node, project: proj });
+        broadcastEvent('taskgraph_node_started', { projectId: proj.id, node, run: newRun });
+
+        // Kick off Harness async execution
+        harness.executeRun(newRun, proj, (evt, payload) => {
+          broadcastEvent(evt, payload);
+          if (evt === 'run.finished' && payload.result) {
+            node.status = 'completed';
+            node.outputSummary = payload.result.summary;
+            proj.updatedAt = new Date().toISOString();
+            broadcastEvent('taskgraph_node_completed', { projectId: proj.id, node });
+          } else if (evt === 'run.failed') {
+            node.status = 'failed';
+            proj.updatedAt = new Date().toISOString();
+            broadcastEvent('taskgraph_node_failed', { projectId: proj.id, node, error: payload.error });
+          }
+        }).catch(() => {});
+
+        sendJson(200, { message: `Task node ${node.title} started`, node, run: newRun, project: proj });
       }).catch(() => sendJson(400, { error: 'Invalid JSON body' }));
       return;
     }
@@ -401,6 +445,123 @@ export function createDaemonServer(store: DataStore = new DataStore()) {
         broadcastEvent('taskgraph_node_completed', { projectId: proj.id, node });
         sendJson(200, { message: `Task node ${node.title} completed`, node, project: proj });
       }).catch(() => sendJson(400, { error: 'Invalid JSON body' }));
+      return;
+    }
+
+    // 9. REST endpoints for Agent Harness Runs (M2)
+    // POST /api/projects/:id/runs (start run)
+    const projectRunsMatch = pathname.match(/^\/api\/projects\/([^/]+)\/runs$/);
+    if (projectRunsMatch) {
+      const projId = projectRunsMatch[1];
+      const proj = store.projects.find(p => p.id === projId);
+      if (!proj) {
+        sendJson(404, { error: 'Project not found' });
+        return;
+      }
+
+      if (method === 'GET') {
+        const projectRuns = store.runs.filter(r => r.projectId === projId);
+        sendJson(200, projectRuns);
+        return;
+      }
+
+      if (method === 'POST') {
+        parseBody().then((body: CreateRunInput) => {
+          // INVARIANT CHECK: Starting a Run must NOT accept skillIds!
+          if (body.skillIds !== undefined && body.skillIds !== null) {
+            sendJson(400, {
+              error: 'Invalid run configuration: "skillIds" cannot be attached to a run. Skills bind only to Designers.',
+            });
+            return;
+          }
+
+          const executorDesignerId = body.designerId || proj.designerId || store.designers[0]?.id || 'des_monkren_core';
+          const designer = store.designers.find(d => d.id === executorDesignerId);
+          if (!designer) {
+            sendJson(404, { error: `Executor designer '${executorDesignerId}' not found` });
+            return;
+          }
+
+          const runId = `run_${Date.now()}`;
+          const newRun: Run = {
+            id: runId,
+            projectId: proj.id,
+            nodeId: body.nodeId,
+            executorDesignerId,
+            status: 'queued',
+            inputPrompt: body.inputPrompt || `Synthesize design artifacts for ${proj.name}`,
+            logs: [],
+            createdAt: new Date().toISOString(),
+          };
+
+          store.runs.push(newRun);
+
+          // If linked to a node, update node activeRunId
+          if (body.nodeId && proj.taskGraph) {
+            const node = proj.taskGraph.nodes.find(n => n.id === body.nodeId);
+            if (node) {
+              node.activeRunId = runId;
+              node.status = 'in_progress';
+              proj.taskGraph.activeNodeId = node.id;
+              proj.updatedAt = new Date().toISOString();
+            }
+          }
+
+          broadcastEvent('run.started', { runId, run: newRun, timestamp: newRun.createdAt });
+
+          // Execute run asynchronously with Harness
+          harness.executeRun(newRun, proj, (evt, payload) => {
+            broadcastEvent(evt, payload);
+            if (evt === 'run.finished' && payload.result && body.nodeId && proj.taskGraph) {
+              const node = proj.taskGraph.nodes.find(n => n.id === body.nodeId);
+              if (node) {
+                node.status = 'completed';
+                node.outputSummary = payload.result.summary;
+                proj.updatedAt = new Date().toISOString();
+                broadcastEvent('taskgraph_node_completed', { projectId: proj.id, node });
+              }
+            }
+          }).catch(() => {});
+
+          sendJson(201, newRun);
+        }).catch(() => sendJson(400, { error: 'Invalid JSON body' }));
+        return;
+      }
+    }
+
+    // GET /api/runs/:id
+    const singleRunMatch = pathname.match(/^\/api\/runs\/([^/]+)$/);
+    if (singleRunMatch && method === 'GET') {
+      const runId = singleRunMatch[1];
+      const run = store.runs.find(r => r.id === runId);
+      if (!run) {
+        sendJson(404, { error: 'Run not found' });
+        return;
+      }
+      sendJson(200, run);
+      return;
+    }
+
+    // POST /api/runs/:id/cancel
+    const cancelRunMatch = pathname.match(/^\/api\/runs\/([^/]+)\/cancel$/);
+    if (cancelRunMatch && method === 'POST') {
+      const runId = cancelRunMatch[1];
+      const run = store.runs.find(r => r.id === runId);
+      if (!run) {
+        sendJson(404, { error: 'Run not found' });
+        return;
+      }
+
+      const cancelled = harness.cancelRun(runId);
+      if (!cancelled && run.status !== 'running' && run.status !== 'queued') {
+        sendJson(400, { error: `Run ${runId} is not running (current status: ${run.status})` });
+        return;
+      }
+
+      run.status = 'cancelled';
+      run.finishedAt = new Date().toISOString();
+      broadcastEvent('run.failed', { runId, run, error: 'Cancelled by user', cancelled: true });
+      sendJson(200, { message: 'Run cancelled successfully', run });
       return;
     }
 
