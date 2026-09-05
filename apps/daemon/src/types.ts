@@ -63,6 +63,7 @@ export interface TaskGraphNode {
   outputSummary?: string;
   dependencies: string[]; // Node IDs that must complete first
   designerId?: string;
+  activeRunId?: string;
 }
 
 export interface TaskGraphEdge {
@@ -95,4 +96,44 @@ export interface SceneTemplate {
 export interface StartTaskNodeInput {
   nodeId: string;
   skillIds?: string[]; // Note: Starting a task node with skillIds must ALSO be rejected!
+}
+
+// M2: Agent Harness & Run Model Types
+export type RunStatus = 'queued' | 'running' | 'completed' | 'failed' | 'cancelled';
+
+export interface RunLogEntry {
+  type: 'token' | 'tool_call' | 'tool_result' | 'system';
+  content: string;
+  timestamp: string;
+}
+
+export interface RunResult {
+  summary: string;
+  artifacts?: Array<{
+    name: string;
+    path: string;
+    content: string;
+  }>;
+}
+
+export interface Run {
+  id: string;
+  projectId: string;
+  nodeId?: string;
+  executorDesignerId: string;
+  status: RunStatus;
+  inputPrompt: string;
+  logs: RunLogEntry[];
+  result?: RunResult;
+  error?: string;
+  createdAt: string;
+  startedAt?: string;
+  finishedAt?: string;
+}
+
+export interface CreateRunInput {
+  nodeId?: string;
+  designerId?: string;
+  inputPrompt?: string;
+  skillIds?: string[]; // Invariant: Starting a Run must NOT accept skillIds!
 }

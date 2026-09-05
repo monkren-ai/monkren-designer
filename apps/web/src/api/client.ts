@@ -1,4 +1,4 @@
-import type { Account, Project, Designer, Skill, DaemonHealth, SceneTemplate, TaskGraphNode } from '../types';
+import type { Account, Project, Designer, Skill, DaemonHealth, SceneTemplate, TaskGraphNode, Run } from '../types';
 
 const DAEMON_URL = import.meta.env.VITE_DAEMON_URL || 'http://127.0.0.1:7420';
 
@@ -88,6 +88,39 @@ export async function completeTaskNode(projectId: string, nodeId: string, output
   });
   const json = await res.json();
   if (!res.ok) throw new Error(json.error || 'Failed to complete task node');
+  return json;
+}
+
+// M2 Run APIs
+export async function createRun(projectId: string, data: { nodeId?: string; designerId?: string; inputPrompt?: string; skillIds?: string[] }): Promise<Run> {
+  const res = await fetch(`${DAEMON_URL}/api/projects/${projectId}/runs`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.error || 'Failed to start run');
+  return json;
+}
+
+export async function fetchProjectRuns(projectId: string): Promise<Run[]> {
+  const res = await fetch(`${DAEMON_URL}/api/projects/${projectId}/runs`);
+  if (!res.ok) throw new Error(`Failed to fetch runs for project ${projectId}`);
+  return res.json();
+}
+
+export async function fetchRun(runId: string): Promise<Run> {
+  const res = await fetch(`${DAEMON_URL}/api/runs/${runId}`);
+  if (!res.ok) throw new Error(`Failed to fetch run ${runId}`);
+  return res.json();
+}
+
+export async function cancelRun(runId: string): Promise<{ message: string; run: Run }> {
+  const res = await fetch(`${DAEMON_URL}/api/runs/${runId}/cancel`, {
+    method: 'POST',
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.error || 'Failed to cancel run');
   return json;
 }
 
