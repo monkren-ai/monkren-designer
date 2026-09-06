@@ -13,10 +13,6 @@ Thumbs.db
 !.env.example
 .monkren/
 .lazyweb/
-node_modules/
-dist/
-dist-ssr/
-*.tsbuildinfo
 
 # Archives and temporary files
 *.zip
