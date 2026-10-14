@@ -2,6 +2,8 @@
 
 Keep this concise. The goal is to constrain implementation, not write a brand book.
 
+Use only sections and tokens relevant to the requested scope. Omit unsupported proof, absent components, and inapplicable states; this template does not require adding sections or features to the product. Strategy-only requests remain in conversation unless saving a document was requested.
+
 ## Direction
 
 - Name:

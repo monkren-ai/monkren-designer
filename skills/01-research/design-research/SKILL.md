@@ -7,7 +7,7 @@ description: 对设计问题进行竞品、模式和最佳实践研究，并生�
 
 ## 输出
 
-将结果保存到 `.monkren/research/{topic}-{YYYY-MM-DD}/report.md`。用户需要可视化交付时再生成同目录 `report.html`；只下载与结论直接相关且授权允许保存的参考图。
+默认在对话交付；用户要求保存或导出时，将结果保存到 `.monkren/research/{topic}-{YYYY-MM-DD}/report.md`。用户需要可视化交付时再生成同目录 `report.html`；只下载与结论直接相关且授权允许保存的参考图。
 
 ## 流程
 

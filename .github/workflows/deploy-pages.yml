@@ -16,7 +16,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate repository
-        run: ruby scripts/validate_repo.rb
+        run: |
+          ruby scripts/validate_repo.rb
+          ruby scripts/test_validate_repo.rb
 
       - name: Prepare public artifact
         run: |
@@ -25,7 +27,7 @@ jobs:
           cp index.html public/
           # 2. 资源(80 张哲学图)
           cp -R assets public/assets
-          # 3. 案例(只复制已存在的 3 个,避免空目录错)
+          # 3. 案例(复制当前已有案例)
           if [ -d case ]; then
             cp -R case public/case
           fi

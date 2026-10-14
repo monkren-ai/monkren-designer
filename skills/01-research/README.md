@@ -8,7 +8,7 @@
 |-------|------|
 | [design-research](./design-research/) | 调研竞品 / 同类设计 / 最佳实践 |
 | [design-brainstorm](./design-brainstorm/) | 头脑风暴，列方向、列可能性 |
-| [quick-references](./quick-references/) | 快速看一组参考（如 "AI landing page" 的 30 张） |
+| [quick-references](./quick-references/) | 快速看一组参考（默认少量准确样本） |
 | [discovery-questions](./discovery-questions/) | 通过提问澄清需求（who / what / why / constraints） |
 | [frontend-aesthetic-direction](./frontend-aesthetic-direction/) | 设定美学方向（字体、配色、节奏的总体倾向） |
 | [visual-taste-lab](./visual-taste-lab/) | 视觉品味探索（archetypes / design language） |
@@ -28,8 +28,8 @@
 ## 与 references 的关系
 
 - 设计信念（7 条） → `references/beliefs.md`
-- 完整方法论 → `references/methods-review.md`（虽然命名是 review，但 0-3 步是调研/定义）
+- 证据与来源 → `references/integration.md`；各模块维护自己的调研流程
 
 ## 进入下阶段
 
-调研定义完成 → 输出**简明 brief** + **美学方向** → 进入 02 创作定义
+按请求交付 brief、参考或方向建议；只在任务需要继续创作时进入 02。默认对话交付，要求保存时才写文件。

@@ -1,7 +1,6 @@
 # 平台设计规范参考
 
-> ⚠️ **INTERNAL · v5.0 起标 internal** · 不对外展示，仅供 agent 内部使用。
-> 公开 reference：beliefs / standards / methods-review。入口与路由见根 [SKILL.md](../SKILL.md)。
+> 按需资料库，不是必跑流程。只读取当前平台、场景或候选方向的相关段落。数值、权重与风格描述是参考；项目要求优先，无障碍与评分以 [共享标准](standards.md) 为准。涉及当前产品、技术或法规的事实需另行验证。
 >
 > 各平台设计规范核心要点整合。iOS/Android 移动端、macOS/Windows 桌面端、Web 应用、PPT 演示、插画、角色 IP 设计规范，以及主流开源设计系统参考要点。
 

@@ -1,6 +1,6 @@
 ---
 name: visual-taste-lab
-description: Use when the user wants better-looking UI, fewer AI-looking webpages, a reusable design-language workflow, screenshot/URL-based aesthetic distillation, or adaptable visual direction for company sites, product landing pages, investor pages, institutional pages, transactional utility sites, dashboards, portfolios, or marketing pages.
+description: Distill a reusable visual language from screenshots, URLs, brand assets, and existing UI before a substantial redesign. Use for reference-led visual direction or a coherent brand system; route small visual fixes and isolated audits directly to their focused modules.
 ---
 
 # Visual Taste Lab
@@ -11,8 +11,8 @@ Turn vague taste requests into a repeatable design-language workflow. Use this b
 
 ## Trigger When
 
-- The user asks to improve, polish, redesign, modernize, de-AI, or make a UI look more premium.
-- The work involves a website, product surface, dashboard, portfolio, investor page, institutional page, transactional flow, or marketing page.
+- The user requests a substantial redesign or a reusable visual language, rather than an isolated fix.
+- Visual direction materially affects several surfaces or shared components.
 - The user provides screenshots, URLs, brand references, competitor references, or asks to derive taste from examples.
 - The project needs a reusable visual system before implementation.
 
@@ -20,7 +20,7 @@ Do not use this skill for pure copy editing, backend work, accessibility-only au
 
 ## Core Rule
 
-Do not start by redesigning pages. First create or infer the brand visual identity, then create the design language, then apply it.
+Reuse a viable existing identity and design language. Distill missing decisions before a substantial redesign; do not make a full VI exercise a prerequisite for small, clear improvements. Strategy-only requests remain read-only, including design-language files.
 
 The first question is not "how do we make this page prettier?" The first question is "what visual identity should this organization or product own?"
 
@@ -47,7 +47,7 @@ If references conflict with the existing brand, state the conflict and choose a 
    - Identify the logo or wordmark if one exists. Treat it as the strongest visual anchor.
    - Identify current brand colors, likely primary color, secondary color, accent color, neutral system, and semantic colors.
    - If the brand has no clear VI, create a provisional VI direction and state why it fits.
-   - Decide whether the site is primarily a **company website** or a **product website**.
+   - Identify whether it is a company site, product site, transactional utility, dashboard, or another surface; do not force an app into a marketing-site category.
    - Company websites should foreground the organization, business structure, credibility, partners, investors, and contact paths.
    - Product websites should foreground product value, features, demos, pricing, proof, and conversion.
    - Do not let a company website accidentally become a single-product landing page unless the user explicitly asks for that.
@@ -57,15 +57,15 @@ If references conflict with the existing brand, state the conflict and choose a 
    - Name the direction in one short phrase, e.g. `credible company brief`, `quiet institutional clarity`, `sharp transactional utility`.
 
 4. **Distill design language**
-   - Produce a concise `docs/design-language.md` or equivalent.
+   - For authorized implementation, record necessary decisions in existing design documentation, or `docs/design-language.md` when none exists. For advice, deliver the outline in conversation.
    - Use [references/design-language-template.md](references/design-language-template.md).
    - Include VI anchors, logo usage, color roles, typography, spacing, surfaces, components, CTA rules, motion, imagery, and anti-patterns.
    - Keep decisions implementable: use concrete tokens, component rules, and page patterns.
 
 5. **Prototype before committing to a full rebuild**
-   - Create 1-3 small visual previews when the user is choosing style.
-   - Each preview should show hero, data cards, content cards, table/list, form/CTA, and mobile behavior.
-   - If showing multiple previews, each preview must use a meaningfully different VI territory, not just the same layout with different copy.
+   - When visual previews are part of the authorized task, create the requested number of small previews; default to 1–3 only when unspecified.
+   - Each preview should show representative components relevant to this product and mobile behavior; do not add unrelated cards, forms, or a hero to satisfy a checklist.
+   - Multiple previews must differ along the requested axes. Keep established VI fixed unless the user asks to explore a different identity.
    - Show palette swatches and explain what audience each VI serves.
 
 6. **Apply system-first**
@@ -82,7 +82,7 @@ If references conflict with the existing brand, state the conflict and choose a 
 ## Design Standards
 
 - Typography should create hierarchy before decoration does.
-- Color should be restrained: 1 dominant neutral system, 1 main accent, 1 support color.
+- Use clear color roles. A neutral system with a main accent is a useful starting point; semantic and chart colors follow the product's needs.
 - Brand colors must have roles. Do not use random accent colors because they look fashionable.
 - Logo, color, typography, imagery, and component geometry should feel like one brand, not one downloaded template.
 - Company sites should explain the company first. Product sites should sell the product first.
@@ -112,7 +112,7 @@ For a real project, aim to deliver:
 - `docs/design-language.md` or a project-local equivalent.
 - A short VI brief: logo anchor, primary color, secondary color, accent color, neutral system, typography direction, image direction, and site-type decision.
 - Updated shared styles/components.
-- 2-4 key pages redesigned or tightened.
+- Only the requested pages/components redesigned or tightened; do not default to expanding to 2–4 pages.
 - Build/test results, or a clear note when verification was not possible.
 - A final note with changed files, the chosen visual direction, remaining content/assets needed, and any assumptions.
 
@@ -169,5 +169,5 @@ Constraints:
 - Do not delete unrelated files.
 - Keep mobile clean with no horizontal overflow.
 - Run build/tests when applicable.
-- Commit and deploy if this project normally deploys from git.
+- Commit or deploy only if my request separately authorizes those actions; an existing deployment workflow is not authorization.
 ```

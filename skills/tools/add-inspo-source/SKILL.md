@@ -21,7 +21,7 @@ description: 将 Mobbin、Savee、Dribbble、Behance、Awwwards 等外部灵感�
 
 ## 2. 检查现有配置
 
-读取 `~/.lazyweb/libraries.json`；不存在时按 `{"libraries":[]}` 处理。已登记时询问是保留、更新 URL 还是重新认证。
+读取 `~/.lazyweb/libraries.json`；不存在时按 `{"libraries":[]}` 处理。已登记且内容相同时保持不变；用户指定更新或重新认证时直接按请求处理，仅在目标不明确时澄清。配置损坏时报告问题，不按空配置覆盖。
 
 ## 3. 认证边界
 
@@ -32,7 +32,7 @@ description: 将 Mobbin、Savee、Dribbble、Behance、Awwwards 等外部灵感�
 
 ## 4. 保存配置
 
-用户确认后，将以下结构合并写入 `~/.lazyweb/libraries.json`，保留其它来源：
+用户要求登记即授权该配置变更；将以下结构合并写入 `~/.lazyweb/libraries.json`，保留其它来源：
 
 ```json
 {

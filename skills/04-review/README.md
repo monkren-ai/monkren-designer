@@ -7,11 +7,11 @@
 | Skill | 用途 | 何时用 |
 |-------|------|--------|
 | **[5-dim-review](./5-dim-review/)**（**核心**） | 5 维度评审 + 严重度报告 | **默认**——一般或深度审查从这里开始 |
-| [ai-slop-check](./ai-slop-check/) | 9 类 AI 化信号 | 用户明确问"是不是 AI slop" |
+| [ai-slop-check](./ai-slop-check/) | 脱离任务与品牌的模板化表达 | 用户明确问"是不是 AI slop" |
 | [accessibility-audit](./accessibility-audit/) | 无障碍 / WCAG 审计 | 涉及可访问性的设计 |
 | [hierarchy-rhythm-review](./hierarchy-rhythm-review/) | 视觉层级 / 节奏审查 | 排版、视觉流动问题 |
 | [interaction-states-pass](./interaction-states-pass/) | 交互状态审查 | 按钮 / 表单 / 状态的完整性 |
-| [polish-pass](./polish-pass/) | 细节打磨 | 像素级精度问题 |
+| [polish-pass](./polish-pass/) | 综合质量检查与授权内打磨 | 交付前检查或打磨请求 |
 
 > **5-dim-review** 是可路由的核心 skill；详细方法与评分标准位于 `references/methods-review.md` 和 `references/standards.md`。
 
@@ -23,7 +23,7 @@
 ## 核心方法
 
 - **5 维度评审** + **4 条评分纪律**是 monkren 的设计品味标尺
-- 每个评分必须有引证（"哲学一致性 7/10，因为 hero 文案和 footer 文案的字体对比过于同质——hero 是 Victor Serif 32pt，footer 是 Lausanne 16pt，没有形成 hierarchy"）
+- 每个评分必须有引证；截图无法证明运行行为，未验证维度不补造分数
 - 创新性允许低分（5/10 对生产交付物合理）
 
 ## 阶段产物

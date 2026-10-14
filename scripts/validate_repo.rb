@@ -3,10 +3,16 @@
 
 require "cgi"
 require "json"
+require "optparse"
 require "pathname"
 require "yaml"
 
-ROOT = Pathname.new(File.expand_path("..", __dir__))
+options = { root: File.expand_path("..", __dir__) }
+OptionParser.new do |parser|
+  parser.banner = "Usage: ruby scripts/validate_repo.rb [--root PATH]"
+  parser.on("--root PATH", "Validate an isolated repository copy") { |path| options[:root] = path }
+end.parse!
+ROOT = Pathname.new(File.expand_path(options[:root]))
 errors = []
 
 def relative(path)
@@ -18,7 +24,7 @@ def frontmatter(path)
   match = text.match(/\A---\s*\n(.*?)\n---\s*\n/m)
   return [nil, "missing YAML frontmatter"] unless match
 
-  data = YAML.safe_load(match[1], [], [], false)
+  data = YAML.safe_load(match[1], permitted_classes: [], permitted_symbols: [], aliases: false)
   [data, nil]
 rescue StandardError => e
   [nil, "invalid YAML frontmatter: #{e.message}"]
@@ -30,6 +36,7 @@ active_skills = [root_skill] + Dir[ROOT.join("skills/**/SKILL.md")]
   .reject { |path| path.to_s.include?("/skills/_deprecated/") }
   .sort
 
+names = {}
 active_skills.each do |path|
   data, error = frontmatter(path)
   if error
@@ -37,15 +44,35 @@ active_skills.each do |path|
     next
   end
 
-  unless data.is_a?(Hash) && data.keys.sort == %w[description name]
-    errors << "#{relative(path)}: frontmatter must contain only name and description"
+  unless data.is_a?(Hash)
+    errors << "#{relative(path)}: frontmatter must be a mapping"
+    next
   end
-  errors << "#{relative(path)}: name must be a non-empty string" unless data["name"].is_a?(String) && !data["name"].strip.empty?
-  errors << "#{relative(path)}: description must be a non-empty string" unless data["description"].is_a?(String) && !data["description"].strip.empty?
+  name = data["name"]
+  description = data["description"]
+  unless name.is_a?(String) && name.length <= 64 && name.match?(/\A[a-z0-9]+(?:-[a-z0-9]+)*\z/)
+    errors << "#{relative(path)}: name must be kebab-case and 1–64 characters"
+  end
+  unless description.is_a?(String) && !description.strip.empty? && description.length <= 1024
+    errors << "#{relative(path)}: description must be a non-empty string of at most 1024 characters"
+  end
+  if description.is_a?(String) && description.match?(/[<>]/)
+    errors << "#{relative(path)}: description must not contain angle brackets"
+  end
+  if name.is_a?(String)
+    errors << "#{relative(path)}: duplicate skill name #{name} (#{names[name]})" if names.key?(name)
+    names[name] = relative(path)
+    if path != root_skill && name != path.dirname.basename.to_s
+      errors << "#{relative(path)}: name must match module directory"
+    end
+  end
+  if path.read.match?(/^\s*\[TODO:[^\n]*\]\s*$/) || description.to_s.start_with?("[TODO:")
+    errors << "#{relative(path)}: unfinished scaffold placeholder"
+  end
 end
 
 root_data, root_error = frontmatter(root_skill)
-errors << "SKILL.md: root skill name must remain monkren-design" unless root_error.nil? && root_data["name"] == "monkren-design"
+errors << "SKILL.md: root skill name must remain monkren-design" unless root_error.nil? && root_data.is_a?(Hash) && root_data["name"] == "monkren-design"
 
 stage_skills = active_skills.reject do |path|
   path == root_skill || path.to_s.include?("/skills/tools/") || path.to_s.include?("/skills/advisors/")
@@ -148,6 +175,18 @@ markdown_files.uniq.each do |path|
       next
     end
     next if in_fence
+
+    # Inline code paths are executable routing instructions too. A module's
+    # own references/ directory is local; shared references/ and skills/ paths
+    # in legacy knowledge files are relative to the repository root.
+    line.scan(/`((?:(?:\.\.\/)+|\.\/|references\/|skills\/)[^`]+\.md)`/).flatten.each do |target|
+      next if target.include?("{") || target.include?("}")
+      resolved = path.dirname.join(target).cleanpath
+      if !resolved.file? && target.match?(%r{\A(?:references|skills)/})
+        resolved = ROOT.join(target).cleanpath
+      end
+      errors << "#{relative(path)}:#{index + 1}: broken instruction path #{target}" unless resolved.file?
+    end
 
     link_source = line.gsub(/`[^`]*`/, "")
     link_source.scan(/!?\[[^\]]*\]\(([^)]+)\)/).flatten.each do |raw_target|

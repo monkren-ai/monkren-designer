@@ -36,7 +36,7 @@ Ask the second design agent whether this direction should exist
 
 A standard installation exposes one root skill, `monkren-design`. It is the sole entry point and loads the relevant bundled stage module. The 16 stage modules, one advisor, and two tools are not separate products users must install individually.
 
-Review, audit, and critique requests are read-only by default. Files are changed only when the user explicitly asks to fix, improve, implement, build, or create. Browsers, MCP servers, and subagents are optional enhancements, not prerequisites for the core workflow.
+Review, audit, and critique requests are read-only and delivered in conversation by default. Save reports only when requested. Fix, improve, polish, implement, build, and create requests authorize changes within their scope; focused fixes do not require a full review or repeated confirmation. Browsers, MCP servers, and subagents are optional enhancements, not prerequisites for the core workflow.
 
 ## Five-stage routing
 
@@ -91,6 +91,14 @@ monkren-designer/
 └── index.html                # GitHub Pages site
 ```
 
+## Operating principles
+
+- Honor requested counts, formats, and scope, including one wireframe or two variants.
+- Preserve existing brands; fonts, black and white, rounded corners, and SVG are not defects by themselves.
+- Separate requirements, confirmed defects, unverified risks, and aesthetic suggestions.
+- Load references as needed; Swift examples live in a separate reference.
+- Keep evidence-backed high scores after checking counterexamples; leave unsupported dimensions unverified.
+
 ## Compatibility
 
 The root skill does not hardcode a proprietary agent path or tool variable. Agents that support skills.sh can install it directly; other environments can read `SKILL.md`. Missing optional capabilities fall back to local, sequential, or text-only execution.
@@ -99,9 +107,12 @@ The root skill does not hardcode a proprietary agent path or tool variable. Agen
 
 ```bash
 ruby scripts/validate_repo.rb
+ruby scripts/test_validate_repo.rb
 ```
 
 The validator checks skill frontmatter, root routes, advisor boundaries, relative links, local site assets, and the 80-image philosophy index. GitHub Pages runs the same validation before deployment.
+
+Behavioral review cases are maintained in [evaluation.md](references/evaluation.md). Structural validation and validator regression tests do not prove agent behavior.
 
 ## License
 

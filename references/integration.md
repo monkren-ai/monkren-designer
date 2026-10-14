@@ -47,7 +47,7 @@
 
 ## 5. 下载与存储
 
-仅在交付确实需要时下载截图。默认保存到 `.monkren/references/{topic}-{date}/`，并确保 `.monkren/` 已被忽略。
+仅在交付确实需要时下载截图。默认保存到 `.monkren/references/{topic}-{date}/`，遵循既有忽略规则，不自动修改 `.gitignore`。只读咨询不自动下载；用户请求保存报告或制作产出时只保存必要资产。
 
 - 文件名使用可读 slug，不保存 token、cookie 或认证信息。
 - 记录原始 URL 和访问日期。
