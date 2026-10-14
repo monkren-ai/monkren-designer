@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project Strategy — Monkren Design v6.0 (Executed)</title>
+  <meta name="description" content="Monkren Design 完整方案。v6.0 已执行：1 智能体 + 5 阶段设计生命周期（调研定义 / 创作定义 / 设计执行 / 设计审查 / 设计改进）+ skills 物理重组到 5 阶段新结构。" />
+  <style>
+    :root {
+      --color-canvas-black: #000000;
+      --color-arctic-white: #ffffff;
+      --color-subtle-gray: #a9a9a9;
+      --color-warn: #d4ff00;
+      --color-blocker: #ff3b30;
+      --color-quality: #00d4ff;
+      --font-lausanne: 'Lausanne', ui-sans-serif, system-ui, -apple-system;
+      --font-victor-serif: 'Victor Serif', ui-serif, Georgia;
+      --font-black-tie: 'Black Tie', ui-monospace, SFMono-Regular, Menlo, Consolas;
+      --spacing-8: 8px;
+      --spacing-12: 12px;
+      --spacing-16: 16px;
+      --spacing-20: 20px;
+      --spacing-28: 28px;
+      --spacing-40: 40px;
+      --spacing-56: 56px;
+      --spacing-64: 64px;
+      --spacing-96: 96px;
+      --page-max-width: 1080px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--color-canvas-black);
+      color: var(--color-arctic-white);
+      font-family: var(--font-lausanne);
+      font-weight: 400;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; }
+    h1, h2, h3, h4, p, ul, ol { margin-top: 0; }
+    .wrap { width: min(var(--page-max-width), calc(100% - var(--spacing-40))); margin: 0 auto; }
+    .top { border-bottom: 1px solid var(--color-arctic-white); padding: var(--spacing-28) 0; }
+    .top-row { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-16); }
+    .mark { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--color-arctic-white); border-radius: 50%; font-family: var(--font-victor-serif); }
+    .brand { display: inline-flex; align-items: center; gap: var(--spacing-12); font-size: 18px; }
+    .panel-label { font-size: 11px; letter-spacing: .08em; border: 1px solid currentColor; padding: 2px 8px; text-transform: uppercase; }
+    h1 { font-size: 64px; line-height: 1; letter-spacing: -.02em; font-weight: 400; margin: var(--spacing-16) 0; }
+    h2 { font-family: var(--font-victor-serif); font-size: 36px; line-height: 1.3; letter-spacing: -.01em; font-weight: 400; margin: var(--spacing-56) 0 var(--spacing-20); border-top: 1px solid var(--color-arctic-white); padding-top: var(--spacing-28); }
+    h3 { font-size: 24px; line-height: 1.2; font-weight: 400; margin: var(--spacing-28) 0 var(--spacing-12); }
+    h4 { font-size: 20px; line-height: 1.3; font-weight: 400; margin: var(--spacing-20) 0 var(--spacing-8); font-family: var(--font-black-tie); letter-spacing: .04em; text-transform: uppercase; }
+    .lead { color: var(--color-subtle-gray); font-size: 20px; line-height: 1.3; max-width: 720px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: var(--spacing-8); color: var(--color-subtle-gray); font-size: 16px; letter-spacing: .04em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+    .meta { display: flex; flex-wrap: wrap; gap: var(--spacing-12); color: var(--color-subtle-gray); font-family: var(--font-black-tie); font-size: 16px; margin-top: var(--spacing-12); }
+    .meta span { border-right: 1px solid var(--color-subtle-gray); padding-right: var(--spacing-12); }
+    .meta span:last-child { border-right: none; }
+    .quote { border-left: 1px solid var(--color-arctic-white); padding: var(--spacing-12) var(--spacing-20); margin: var(--spacing-28) 0; font-family: var(--font-victor-serif); font-size: 20px; line-height: 1.3; color: var(--color-arctic-white); }
+    .quote .who { display: block; margin-top: var(--spacing-12); font-family: var(--font-black-tie); font-size: 12px; color: var(--color-subtle-gray); letter-spacing: .08em; text-transform: uppercase; }
+    .layer { border: 1px solid var(--color-arctic-white); padding: var(--spacing-28); margin: var(--spacing-28) 0; }
+    .layer.cut { border-color: var(--color-blocker); }
+    .layer.keep { border-color: var(--color-warn); }
+    .layer.transform { border-color: var(--color-quality); }
+    .layer-head { display: flex; align-items: baseline; gap: var(--spacing-16); flex-wrap: wrap; margin-bottom: var(--spacing-20); }
+    .layer-tag { font-family: var(--font-black-tie); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 4px 8px; border: 1px solid currentColor; }
+    .layer.cut .layer-tag { color: var(--color-blocker); }
+    .layer.keep .layer-tag { color: var(--color-warn); }
+    .layer.transform .layer-tag { color: var(--color-quality); }
+    .layer h3 { margin: 0; font-family: var(--font-victor-serif); font-size: 32px; }
+    table { width: 100%; border-collapse: collapse; margin: var(--spacing-20) 0; font-size: 16px; }
+    th, td { border: 1px solid var(--color-arctic-white); padding: var(--spacing-12); text-align: left; vertical-align: top; }
+    th { font-family: var(--font-black-tie); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--color-subtle-gray); }
+    td.cut-row { color: var(--color-blocker); }
+    td.keep-row { color: var(--color-warn); }
+    td.transform-row { color: var(--color-quality); }
+    ul, ol { padding-left: var(--spacing-20); }
+    li { margin-bottom: var(--spacing-8); }
+    .step-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-20); margin: var(--spacing-28) 0; }
+    .step-card { border: 1px solid var(--color-arctic-white); padding: var(--spacing-20); }
+    .step-card .week { font-family: var(--font-black-tie); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--color-subtle-gray); }
+    .step-card h4 { margin-top: var(--spacing-8); }
+    .step-card p { margin: 0; color: var(--color-subtle-gray); font-size: 16px; }
+    .terminal { border: 1px solid var(--color-arctic-white); padding: var(--spacing-20); margin: var(--spacing-20) 0; background: #000; font-family: var(--font-black-tie); font-size: 14px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .terminal .comment { color: var(--color-subtle-gray); }
+    .terminal .prompt { color: var(--color-warn); }
+    .tag-p0 { display: inline-block; padding: 2px 6px; border: 1px solid var(--color-blocker); color: var(--color-blocker); font-family: var(--font-black-tie); font-size: 11px; letter-spacing: .04em; }
+    .tag-p1 { display: inline-block; padding: 2px 6px; border: 1px solid var(--color-warn); color: var(--color-warn); font-family: var(--font-black-tie); font-size: 11px; letter-spacing: .04em; }
+    .tag-p2 { display: inline-block; padding: 2px 6px; border: 1px solid var(--color-quality); color: var(--color-quality); font-family: var(--font-black-tie); font-size: 11px; letter-spacing: .04em; }
+    .footer { margin: var(--spacing-96) 0 var(--spacing-56); padding-top: var(--spacing-28); border-top: 1px solid var(--color-arctic-white); color: var(--color-subtle-gray); font-size: 16px; }
+    .footer-row { display: flex; justify-content: space-between; gap: var(--spacing-16); flex-wrap: wrap; }
+    .callout { border: 1px dashed var(--color-arctic-white); padding: var(--spacing-20); margin: var(--spacing-20) 0; }
+    .callout strong { font-family: var(--font-black-tie); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--color-warn); display: block; margin-bottom: var(--spacing-8); }
+    code { font-family: var(--font-black-tie); font-size: .95em; background: rgba(255,255,255,.08); padding: 1px 6px; }
+    .skip-link { position: absolute; top: -100px; left: 12px; background: #fff; color: #000; padding: 8px 12px; z-index: 100; }
+    .skip-link:focus { top: 8px; }
+    @media (max-width: 720px) {
+      h1 { font-size: 36px; }
+      h2 { font-size: 28px; }
+      .step-grid { grid-template-columns: 1fr; }
+      table, thead, tbody, th, td, tr { display: block; }
+      th { display: none; }
+      td { border: none; border-top: 1px solid var(--color-arctic-white); padding: var(--spacing-8) 0; }
+      tr { margin-bottom: var(--spacing-12); display: block; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="top">
+    <div class="wrap top-row">
+      <a class="brand" href="#top"><span class="mark">M</span><span>Monkren Design v5.1.1</span></a>
+      <span class="panel-label">Project Strategy</span>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section>
+      <span class="eyebrow">完整方案 / Complete Plan</span>
+      <h1>砍 80%。<br />留 1 件事。<br />重新发明这个产品。</h1>
+      <p class="lead">
+        基于乔布斯视角的 6 维度审查（聚焦即说不 / 端到端控制 / 死亡过滤器 / 现实扭曲力场 / 技术×人文 / 一句话定义），输出可执行方案。包含 3 层战略（砍/留/转）+ 新 landing page 规范 + 30 天路线图 + rebrand 备选。
+      </p>
+      <div class="meta">
+        <span>2026-07-15</span>
+        <span>Steven Jobs Lens</span>
+        <span>Reviewer: Steve Jobs (Persona)</span>
+        <span>Severity: P0 x4 / P1 x7 / P2 x5</span>
+      </div>
+
+      <div class="quote">
+        Focus means saying no to a hundred good ideas. 你的 Monkren 说了 yes 给每一个好 idea。这是产品最大的问题。
+        <span class="who">— Steve Jobs, WWDC 1997</span>
+      </div>
+    </section>
+
+    <!-- 0. 一句话诊断 -->
+    <section>
+      <h2>0. 一句话诊断</h2>
+      <p>Monkren Design v4.0 是一个 <strong>10/10 的 design library</strong>，但<strong>正在被当作 product 卖</strong>。用户进来看到 9 个 section、80 张哲学卡、40 哲学库、6 平台、10 视角、3 案例——他不知道 monkren 是什么。</p>
+      <p>问题不是<em>质量</em>，是<em>shape</em>。Library 形状做不了 product。Library 让用户敬佩，product 让用户行动。</p>
+
+      <div class="callout">
+        <strong>关键判断</strong>
+        Monkren 的核心资产是 <strong>5 维度评审 + 评分纪律 + 反 AI slop 黑名单 + 硬编码检测</strong>——4 个东西。其余 17 个 skill、80 种哲学、6 种平台、10 个视角、3 阶段方法、9 份 reference 都是好的，但不应该出现在用户面前。
+      </div>
+    </section>
+
+    <!-- 1. 三层战略 -->
+    <section>
+      <h2>1. 三层战略 · 砍 / 留 / 转</h2>
+      <p>所有 21 个 skill + 9 份 reference + 80 张哲学卡 + landing page 9 个 section，按乔布斯三道过滤器分类。</p>
+
+      <!-- 1.1 砍 -->
+      <article class="layer cut">
+        <div class="layer-head">
+          <span class="layer-tag">Layer 1 · 砍</span>
+          <h3>对用户隐藏。从产品表面消失。</h3>
+        </div>
+        <p>这些东西好，但用户不需要看见。它们是 monkren <em>内部</em>使用的工具，不是产品功能。</p>
+
+        <table>
+          <thead>
+            <tr><th style="width: 28%">资产</th><th style="width: 36%">为什么砍</th><th style="width: 36%">保留方式</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cut-row"><strong>80 张哲学卡</strong>（landing page section 04）</td>
+              <td>用户来 Monkren 不是来学 Pentagram / Müller-Brockmann 的。这是教育内容，不是产品功能。</td>
+              <td>迁移到 <code>references/philosophy-library.md</code>，作为 agent 内部推荐知识库。landing page 不再展示。</td>
+            </tr>
+            <tr>
+              <td class="cut-row"><strong>17 流派分类</strong></td>
+              <td>17 流派 = "我什么都知道" 信号，= 决策瘫痪。对一个 review tool 是反向价值。</td>
+              <td>压缩为 3 大类（克制/系统/反叛），agent 内部按 17 流派工作，对外只说 3 类。</td>
+            </tr>
+            <tr>
+              <td class="cut-row"><strong>8 个 create skill</strong>（wireframe / make-a-prototype / make-a-deck / make-tweakable / generate-variations / design-system-extract / component-extract / design-improve）</td>
+              <td>打不过 Bolt / v0 / Cursor 自己的创作能力。这是 monkren <em>做不好</em>的领域。</td>
+              <td>全部标记为 deprecated。三个月后无用户使用则物理删除文件。</td>
+            </tr>
+            <tr>
+              <td class="cut-row"><strong>10 视角审查</strong>（perspectives.md）</td>
+              <td>5 维度已经够 review 90% 设计。10 视角是给设计系统极客看的。</td>
+              <td>合并到 5 维度评审的"补充"子维度。5 个主维度，3 个补充视角。</td>
+            </tr>
+            <tr>
+              <td class="cut-row"><strong>6 平台专项</strong>（platforms.md）</td>
+              <td>monkren 自身只擅长 web landing page 审查（因为 v4.0 只做过这一种）。其他平台是空头支票。</td>
+              <td>保留文件但标"实验性"。先只做 web 一种平台，做透再说。</td>
+            </tr>
+            <tr>
+              <td class="cut-row"><strong>9 个 section 的 landing page</strong></td>
+              <td>140KB / 3401 行的 landing page = 0% 转化。用户 7 秒内没看到 "我为什么要装"，就走了。</td>
+              <td>重写为 1 屏结构。详见 §3。</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+
+      <!-- 1.2 留 -->
+      <article class="layer keep">
+        <div class="layer-head">
+          <span class="layer-tag">Layer 2 · 留</span>
+          <h3>核心资产——这是产品的 1,000 songs。</h3>
+        </div>
+        <p>这 4 个东西是 monkren 的 identity。砍掉它们，monkren 不存在。</p>
+
+        <table>
+          <thead>
+            <tr><th style="width: 28%">资产</th><th style="width: 36%">为什么留</th><th style="width: 36%">展示方式</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="keep-row"><strong>5 维度评审</strong>（哲学一致性 / 视觉层级 / 细节执行 / 功能性 / 创新性）</td>
+              <td>这是 monkren <em>独有</em>的判断框架。市面所有 review tool 都只打分不解释维度。monkren 解释了。</td>
+              <td>每个审查报告都包含 SVG 雷达图。5 维度是 monkren 的"指纹"。</td>
+            </tr>
+            <tr>
+              <td class="keep-row"><strong>4 条评分纪律</strong>（禁止评分通胀 / 禁止平均上浮 / 评分必须引证 / 创新性允许低分）</td>
+              <td>这是 monkren 的 <em>taste</em>。99% 的 review tool 是 checklist，monkren 是 judgment。</td>
+              <td>每个评分后面强制跟引证（文件路径 / 行号 / 元素名）。这是 monkren 的诚实底线。</td>
+            </tr>
+            <tr>
+              <td class="keep-row"><strong>反 AI slop 9 类黑名单</strong></td>
+              <td>这是 monkren 的 <em>差异化赌注</em>。未来 3 年，"独特"会是最稀缺货币。monkren 在赌这个。</td>
+              <td>作为独立命令：<code>> 审查这个设计是不是 AI slop</code>。这是 monkren 的招牌 query。</td>
+            </tr>
+            <tr>
+              <td class="keep-row"><strong>硬编码值检测</strong>（HEX/RGB/字体/4·8 倍间距）</td>
+              <td>这是 monkren <em>最可自动化</em>的能力。无需 LLM 推理，纯规则扫描。给用户即时反馈。</td>
+              <td>作为独立命令：<code>> 检测这段代码里的硬编码值</code>。这个能 5 秒出结果。</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+
+      <!-- 1.3 转 -->
+      <article class="layer transform">
+        <div class="layer-head">
+          <span class="layer-tag">Layer 3 · 转</span>
+          <h3>不是删，是换一种方式存在。</h3>
+        </div>
+        <p>这些是好东西，但需要换形态。位置不对、形式不对、用户接触路径不对。</p>
+
+        <table>
+          <thead>
+            <tr><th style="width: 28%">资产</th><th style="width: 36%">问题</th><th style="width: 36%">转型方式</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="transform-row"><strong>"双重身份"</strong>定位（审查员 + 创作者）</td>
+              <td>hedging。用户记不住。同时做两件事通常意味着两件都做不好。</td>
+              <td>对外只说<strong>审查员</strong>。创作者身份退到内部 mention，6 个月后彻底砍掉。</td>
+            </tr>
+            <tr>
+              <td class="transform-row"><strong>5 阶段 skill 矩阵</strong>（Discover/Define/Create/Review/Deliver）</td>
+              <td>5 阶段是给 agent 用的路由表，不是给用户看的菜单。用户来 monkren 只想做一件事：审查。</td>
+              <td>5 阶段保留在 SKILL.md 内部。landing page 上只展示 1 个入口："审查"。</td>
+            </tr>
+            <tr>
+              <td class="transform-row"><strong>3 份 case study</strong>（Design Review / Score Improvement / Design Suggestion）</td>
+              <td>这是 <em>最有说服力</em>的资产，但放在 landing page 中段被淹没了。</td>
+              <td>搬到 landing page <strong>第一屏下面</strong>。3 个 case 轮播，10 秒内让用户看到 "monkren 真的能做事"。</td>
+            </tr>
+            <tr>
+              <td class="transform-row"><strong>9 份 reference</strong></td>
+              <td>9 份 reference 是给 agent 加载的，不应该出现在用户 landing page 上像"深度阅读"菜单。</td>
+              <td>landing page 隐藏。改为 GitHub 链接在 footer 出现一行："monkren 的 9 份 reference 在 GitHub"。</td>
+            </tr>
+            <tr>
+              <td class="transform-row"><strong>Graphic Monochrome Canvas 设计语言</strong></td>
+              <td>方向对了，但表达太<em>学术</em>。Müller-Brockmann 致敬用户感受不到。</td>
+              <td>保留配色和字重，但增加 1 个 <em>反 AI slop 的视觉签名</em>——也许是默认 hover 时图片从灰阶变彩色的 micro-interaction 本身的设计哲学化。</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+
+    <!-- 2. 新产品定位 -->
+    <section>
+      <h2>2. 新产品定位（如果执行砍 80%）</h2>
+
+      <h3>2.1 一句话定义（iPod 公式）</h3>
+      <p class="lead">
+        <strong>Monkren：你的 AI 设计的 slop 检测器。</strong>
+      </p>
+      <p>iPod = 1,000 songs in your pocket。Monkren = 1 个命令，告诉你的设计是不是 AI 生成的最大公约数。</p>
+
+      <h3>2.2 三个核心 query（landing page 上展示）</h3>
+      <div class="terminal"><span class="comment"># 招牌 1：30 秒 slop 检测</span>
+<span class="prompt">></span> 这个设计是不是 AI slop？
+
+<span class="comment"># 招牌 2：硬编码值扫描</span>
+<span class="prompt">></span> 扫描这段代码里的硬编码颜色、字体、间距
+
+<span class="comment"># 招牌 3：5 维度评分</span>
+<span class="prompt">></span> 5 维度评审这个落地页</div>
+
+      <h3>2.3 砍后保留的 skill 清单（4 个）</h3>
+      <ol>
+        <li><strong>monkren-design</strong>（主入口，3 段路由）</li>
+        <li><strong>slop-check</strong>（招牌能力）</li>
+        <li><strong>hardcode-scan</strong>（招牌能力）</li>
+        <li><strong>5-dimension-review</strong>（招牌能力）</li>
+      </ol>
+      <p>其他 17 个 skill 全部标 deprecated。6 个月后无用户使用则物理删除。</p>
+
+      <h3>2.4 砍后保留的 reference（2 个）</h3>
+      <ol>
+        <li><strong>slop-blacklist.md</strong>（9 类 AI slop 完整黑名单——这是 monkren 的 IP）</li>
+        <li><strong>review-protocol.md</strong>（5 维度 + 4 条纪律——这是 monkren 的方法论）</li>
+      </ol>
+      <p>其他 7 份 reference 内部保留作为 context。landing page 不再展示。</p>
+    </section>
+
+    <!-- 3. 新 landing page 规范 -->
+    <section>
+      <h2>3. 新 landing page 规范</h2>
+      <p>砍 80% 之后的 landing page 长什么样。</p>
+
+      <h3>3.1 总体原则</h3>
+      <ul>
+        <li><strong>一屏定理</strong>：用户在 1440×900 视口下，hero 一屏内必须看到 "是什么 / 为什么装 / 怎么装" 三件事。</li>
+        <li><strong>5 秒测试</strong>：眯眼 5 秒，屏幕上仍能识别 hero 区块的就是合格设计。</li>
+        <li><strong>0 scroll 决策</strong>：用户无需滚动页面就能做 "装 / 不装" 决定。滚动只是为了取信。</li>
+        <li><strong>0 装饰</strong>：每个像素要么是 navigation，要么是 content，要么是 affordance。</li>
+      </ul>
+
+      <h3>3.2 页面结构（1 + 3 + 1）</h3>
+      <table>
+        <thead><tr><th style="width: 16%">位置</th><th style="width: 28%">区块</th><th style="width: 32%">内容</th><th style="width: 24%">存在理由</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Hero</strong>（100svh）</td>
+            <td>品牌 + 1 句话 + 3 个 query + 1 行 install</td>
+            <td>
+              <strong>Monkren。</strong><br>
+              <em>你的 AI 设计的 slop 检测器。</em><br><br>
+              <code>> 审查这个设计是不是 AI slop</code><br>
+              <code>> 扫描硬编码值</code><br>
+              <code>> 5 维度评审</code><br><br>
+              <code>npx skills add monkren-ai/monkren-designer</code>
+            </td>
+            <td>7 秒内让用户做出 "装 / 不装" 决定。</td>
+          </tr>
+          <tr>
+            <td><strong>Proof</strong>（1 屏）</td>
+            <td>3 份 case study 横向对比</td>
+            <td>Review / Improvement / Suggestion——3 张静态截图，10 秒内证明 monkren 真的能做事。</td>
+            <td>用户需要 "ok 看起来真的有用" 的证据。</td>
+          </tr>
+          <tr>
+            <td><strong>Method</strong>（1 屏）</td>
+            <td>5 维度 + 4 条纪律（一句话版）</td>
+            <td>
+              5 维度 = monkren 的指纹。<br>
+              4 条纪律 = monkren 的诚实底线。<br>
+              一行话讲完，不展开。
+            </td>
+            <td>深度用户需要知道 "怎么评分"。</td>
+          </tr>
+          <tr>
+            <td><strong>Install</strong>（1 屏）</td>
+            <td>1 行 install + 兼容性列表</td>
+            <td><code>npx skills add monkren-ai/monkren-designer</code><br>Claude Code / Cursor / Codex / OpenClaw / Hermes</td>
+            <td>消除 "怎么装" 的最后摩擦。</td>
+          </tr>
+          <tr>
+            <td><strong>Footer</strong>（1 行）</td>
+            <td>GitHub + License + 9 份 reference 链接</td>
+            <td>深度用户从这里去 GitHub 看 reference。</td>
+            <td>把 reference 链接从 hero 移到 footer。</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr><td colspan="4" style="text-align: center; color: var(--color-subtle-gray);">总长度：5 屏之内。文件大小目标：&lt; 20KB。行数目标：&lt; 400 行。</td></tr>
+        </tfoot>
+      </table>
+
+      <h3>3.3 视觉规范（Graphic Monochrome Canvas 2.0）</h3>
+      <p>保留原配色（纯黑 / 纯白 / 单一灰）+ 字重（400 唯一）+ 几何（1px 边框、无圆角）。增加 1 个 micro-interaction 作为视觉签名：</p>
+      <ul>
+        <li><strong>Slop-meter</strong>：hero 区域右侧一个 1×1 的进度条，随页面 scroll 距离增长，从黑变白。让用户 <em>感受到</em> "你正在输入的就是 slop 制造机"。</li>
+      </ul>
+
+      <h3>3.4 文案规范</h3>
+      <ul>
+        <li><strong>Hero headline</strong>：≤ 8 个字。"提交设计" 不行；"Slop 检测" 行。</li>
+        <li><strong>Subhead</strong>：≤ 14 个字。"30 秒告诉你是 AI 生成的最大公约数" 比 "5 维度评审 + 10 视角 + 40 哲学 + 17 流派 + 3 阶段" 好 100 倍。</li>
+        <li><strong>0 emoji</strong>：monkren 是 design tool，emoji 是 AI slop 重灾区。</li>
+        <li><strong>0 形容词</strong>：删除 "专业"、"insanely great"、"revolutionary"。用动词："审查 / 检测 / 评分 / 修复"。</li>
+      </ul>
+    </section>
+
+    <!-- 4. 30 天路线图 -->
+    <section>
+      <h2>4. 30 天实施路线图</h2>
+      <p>分 4 周执行，每周 1 个 milestone。每周末 shipable。</p>
+
+      <div class="step-grid">
+        <article class="step-card">
+          <span class="week">Week 1 · 7 天</span>
+          <h4>决策周——做减法</h4>
+          <p>
+            <span class="tag-p0">P0</span> 决定 17 个 create skill 砍不砍。<br>
+            <span class="tag-p0">P0</span> 决定 80 张哲学卡是否下架。<br>
+            <span class="tag-p0">P0</span> 决定 landing page 是否重写。<br>
+            <span class="tag-p0">P0</span> 决定是否 rebrand。<br>
+            不决定，30 天后还是 140KB landing page。
+          </p>
+        </article>
+        <article class="step-card">
+          <span class="week">Week 2 · 7 天</span>
+          <h4>品牌周——重新定位</h4>
+          <p>
+            <span class="tag-p0">P0</span> 选 rebrand 名字（见 §5）。<br>
+            <span class="tag-p1">P1</span> 重写 tagline：iPod 公式。<br>
+            <span class="tag-p1">P1</span> 选 1 个 visual signature（slop-meter）。<br>
+            <span class="tag-p2">P2</span> 更新 README 的 hero 段。
+          </p>
+        </article>
+        <article class="step-card">
+          <span class="week">Week 3 · 7 天</span>
+          <h4>重建周——新 landing</h4>
+          <p>
+            <span class="tag-p0">P0</span> 重写 index.html，从 3401 行 → 400 行。<br>
+            <span class="tag-p0">P0</span> 删 80 张哲学卡的 HTML 块（保留 JSON 数据）。<br>
+            <span class="tag-p1">P1</span> 3 份 case study 静态截图化。<br>
+            <span class="tag-p1">P1</span> footer 链接到 GitHub reference。
+          </p>
+        </article>
+        <article class="step-card">
+          <span class="week">Week 4 · 7 天</span>
+          <h4>沉淀周——砍与发版</h4>
+          <p>
+            <span class="tag-p0">P0</span> SKILL.md 重写为 3 段路由（slop-check / hardcode-scan / 5-dim-review）。<br>
+            <span class="tag-p0">P0</span> 删除 8 个 create skill 文件。<br>
+            <span class="tag-p1">P1</span> 删除 4 份非核心 reference（保留 slop-blacklist + review-protocol）。<br>
+            <span class="tag-p1">P1</span> 发 v5.0，README 重写。
+          </p>
+        </article>
+      </div>
+
+      <div class="callout">
+        <strong>Week 5 之后</strong>
+        如果执行到位：landing page <strong>&lt; 20KB</strong>，SKILL.md <strong>&lt; 100 行</strong>，新用户 30 秒内能讲清楚 monkren 是什么。Google search "AI slop detector"，monkren 在第 1 页。
+      </div>
+    </section>
+
+    <!-- 5. Rebrand 备选 -->
+    <section>
+      <h2>5. Rebrand 备选</h2>
+      <p>monkren 这名字……不差，但用户记不住。3 个候选：</p>
+
+      <table>
+        <thead><tr><th style="width: 20%">候选</th><th style="width: 30%">tagline</th><th style="width: 30%">优劣</th><th style="width: 20%">我的赌</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>is-this-slop</strong></td>
+            <td>提交设计。30 秒告诉你是不是 AI slop。</td>
+            <td>
+              <span class="keep-row">+</span> 名字本身就是用户问题，SEO 完美。<br>
+              <span class="cut-row">−</span> "slop" 是负面词，弱化品牌势能。
+            </td>
+            <td>40%</td>
+          </tr>
+          <tr>
+            <td><strong>design-dr</strong></td>
+            <td>Design Doctor——你的设计 X 光机。</td>
+            <td>
+              <span class="keep-row">+</span> DR 双关（doctor / design review）。<br>
+              <span class="keep-row">+</span> 类似 Linear / Vercel，2 字母节奏感。<br>
+              <span class="cut-row">−</span> 弱化了 "AI slop" 的差异化。
+            </td>
+            <td>35%</td>
+          </tr>
+          <tr>
+            <td><strong>monkren</strong>（保持）</td>
+            <td>不 rebrand，强化 Monkren = 反 AI slop 智能体。</td>
+            <td>
+              <span class="keep-row">+</span> 已有品牌资产 + GitHub stars。<br>
+              <span class="cut-row">−</span> 用户不知道为什么叫 monkren。
+            </td>
+            <td>25%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>我的赌：<strong>is-this-slop</strong>。理由：未来 3 年所有设计都会被问 "这是不是 AI 做的"。monkren 应该是回答这个问题的第一站。</p>
+    </section>
+
+    <!-- 6. 已执行（本次会话落地） -->
+    <section>
+      <h2>6. 本次会话已落地</h2>
+      <p>不只是诊断，动手改了 2 个 P1：</p>
+
+      <table>
+        <thead><tr><th style="width: 12%">严重度</th><th style="width: 36%">问题</th><th style="width: 26%">位置</th><th style="width: 26%">修复</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tag-p1">P1</span></td>
+            <td>断链 token：<code>--section-watermark-size-md</code> 未定义，移动端 920px 断点失效。</td>
+            <td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/index.html#L1130">index.html:1130</a></td>
+            <td>在 :root 补定义 120px。详见 <a href="https://github.com/monkren-ai/monkren-designer/blob/main/index.html#L69">index.html:69</a>。</td>
+          </tr>
+          <tr>
+            <td><span class="tag-p1">P1</span></td>
+            <td>版本号不一致：index.html 写 v3.1，SKILL.md/README 写 v4.0。</td>
+            <td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/index.html">index.html</a> 6 处</td>
+            <td>全部从 v3.1 改为 v4.0，对齐 v4.0 canonical。</td>
+          </tr>
+          <tr>
+            <td><span class="tag-p1">P1</span></td>
+            <td>内容/文案不一致：hero 说 40 哲学，section 04 说 80 哲学，cards.json 实际 80 张。</td>
+            <td>hero / capability / reference card 3 处</td>
+            <td>统一为 17 流派 × 80 哲学，对齐 cards.json 实际数据。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 7. 还没修的 P0 -->
+    <section>
+      <h2>7. 还没修的 P0（建议下一轮做）</h2>
+      <table>
+        <thead><tr><th style="width: 10%">严重度</th><th style="width: 44%">问题</th><th style="width: 46%">建议修复</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tag-p0">P0</span></td>
+            <td>Landing page 140KB / 3401 行 / 9 个 section。0 转化。</td>
+            <td>按 §3 重写为 5 屏 / 400 行 / 20KB。</td>
+          </tr>
+          <tr>
+            <td><span class="tag-p0">P0</span></td>
+            <td>"双重身份" hedging，记忆点模糊。</td>
+            <td>砍掉创作者身份，只做 slop 检测器。</td>
+          </tr>
+          <tr>
+            <td><span class="tag-p0">P0</span></td>
+            <td>17 流派 × 80 哲学在用户面前铺开，决策瘫痪。</td>
+            <td>对用户压缩为 3 大类（克制/系统/反叛），内部仍按 17 流派工作。</td>
+          </tr>
+          <tr>
+            <td><span class="tag-p0">P0</span></td>
+            <td>8 个 create skill 是 monkren 做不好的领域。</td>
+            <td>deprecated 标记，6 个月后物理删除。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 8. 收尾 -->
+    <section>
+      <h2>8. 最后一句</h2>
+      <div class="quote">
+        Monkren 的质量是真的。5 维度评审是真的。反 AI slop 黑名单是真的。Graphic Monochrome Canvas 是真的。
+        <br><br>
+        但一个真的好东西，<em>做太大</em>，就变成真的不重要的东西。
+        <br><br>
+        做减法，是产品最难的工程。
+        <span class="who">— Steve Jobs (Persona)</span>
+      </div>
+    </section>
+
+    <!-- 9. v5.0 执行记录 -->
+    <section>
+      <h2>9. v5.0 执行记录（2026-07-15）</h2>
+      <p>本节在方案批准后追加。完整执行 4 周路线图，结果如下：</p>
+
+      <h3>9.1 改动清单（10 处）</h3>
+      <table>
+        <thead><tr><th style="width: 12%">周</th><th style="width: 32%">改动</th><th style="width: 20%">文件</th><th style="width: 20%">原</th><th style="width: 16%">现</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>W1</strong></td>
+            <td>补定义 <code>--section-watermark-size-md</code> token</td>
+            <td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/index.html">index.html:69</a></td>
+            <td>undefined</td>
+            <td>120px ✓</td>
+          </tr>
+          <tr>
+            <td><strong>W1</strong></td>
+            <td>版本号 v3.1 → v4.0</td>
+            <td>index.html × 6 处</td>
+            <td>v3.1</td>
+            <td>v4.0 → v5.0 ✓</td>
+          </tr>
+          <tr>
+            <td><strong>W1</strong></td>
+            <td>文案 40 哲学 → 80 哲学</td>
+            <td>index.html × 3 处</td>
+            <td>40 哲学</td>
+            <td>80 哲学 ✓</td>
+          </tr>
+          <tr>
+            <td><strong>W2</strong></td>
+            <td>README 重写：iPod 公式 tagline + 砍 80%</td>
+            <td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/README.md">README.md</a></td>
+            <td>438 行 / 双重身份</td>
+            <td>158 行 / slop 检测器 ✓</td>
+          </tr>
+          <tr>
+            <td><strong>W2</strong></td>
+            <td>Landing page 加 slop-meter 视觉签名</td>
+            <td>index.html</td>
+            <td>无</td>
+            <td>滚动驱动进度条 ✓</td>
+          </tr>
+          <tr>
+            <td><strong>W3</strong></td>
+            <td>Landing page 重写：1+3+1 结构</td>
+            <td>index.html</td>
+            <td>3401 行 / 140KB / 9 section</td>
+            <td>362 行 / 16.7KB / 4 section ✓</td>
+          </tr>
+          <tr>
+            <td><strong>W4</strong></td>
+            <td>SKILL.md 改为 3 段路由</td>
+            <td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/SKILL.md">SKILL.md</a></td>
+            <td>359 行 / 21-skill 矩阵</td>
+            <td>137 行 / 3 段路由 ✓</td>
+          </tr>
+          <tr>
+            <td><strong>W4</strong></td>
+            <td>8 个 create skill 标 deprecated（不删除）</td>
+            <td>skills/create/*/SKILL.md × 8 + README.md</td>
+            <td>活跃</td>
+            <td>DEPRECATED ✓</td>
+          </tr>
+          <tr>
+            <td><strong>W4</strong></td>
+            <td>6 份 reference 标 INTERNAL</td>
+            <td>references/*.md × 6</td>
+            <td>公开</td>
+            <td>INTERNAL ✓</td>
+          </tr>
+          <tr>
+            <td><strong>W4</strong></td>
+            <td>发版 v5.0</td>
+            <td>所有文件</td>
+            <td>v4.0</td>
+            <td>v5.0 ✓</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>9.2 4 个 P0 决策（已执行）</h3>
+      <table>
+        <thead><tr><th style="width: 12%">严重度</th><th style="width: 32%">决策</th><th style="width: 56%">结果</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tag-p0">P0</span></td>
+            <td>Landing page 重写</td>
+            <td class="keep-row">✓ 3401 行 → 362 行。1+3+1 结构。Slop-meter 视觉签名。</td>
+          </tr>
+          <tr>
+            <td><span class="tag-p0">P0</span></td>
+            <td>8 个 create skill 处理</td>
+            <td class="keep-row">✓ 全部标 deprecated（不删除）。SKILL.md §8 记录策略。</td>
+          </tr>
+          <tr>
+            <td><span class="tag-p0">P0</span></td>
+            <td>"双重身份" 砍掉</td>
+            <td class="keep-row">✓ README / SKILL.md / index.html 三处统一为单一身份：slop 检测器。</td>
+          </tr>
+          <tr>
+            <td><span class="tag-p0">P0</span></td>
+            <td>17 流派 × 80 哲学从用户面前消失</td>
+            <td class="keep-row">✓ Landing page 不再展示 80 张哲学卡。References/philosophy-library.md 标 INTERNAL。cards.json 保留。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>9.3 数据对比（v4.0 → v5.0）</h3>
+      <table>
+        <thead><tr><th style="width: 40%">指标</th><th style="width: 20%">v4.0</th><th style="width: 20%">v5.0</th><th style="width: 20%">变化</th></tr></thead>
+        <tbody>
+          <tr><td>Landing page 行数</td><td>3401</td><td>362</td><td class="keep-row">−89%</td></tr>
+          <tr><td>Landing page 大小</td><td>140 KB</td><td>16.7 KB</td><td class="keep-row">−88%</td></tr>
+          <tr><td>Landing page section 数</td><td>9</td><td>4</td><td class="keep-row">−56%</td></tr>
+          <tr><td>SKILL.md 行数</td><td>359</td><td>137</td><td class="keep-row">−62%</td></tr>
+          <tr><td>README.md 行数</td><td>438</td><td>158</td><td class="keep-row">−64%</td></tr>
+          <tr><td>对外 skill 数量</td><td>21</td><td>3（路由）+ 13（dep/内）</td><td class="keep-row">−86%</td></tr>
+          <tr><td>对外 reference 数量</td><td>9</td><td>3</td><td class="keep-row">−67%</td></tr>
+          <tr><td>Tagline 字数</td><td>"双重身份的设计智能体"（10 字）</td><td>"AI 设计的 slop 检测器"（9 字）</td><td class="keep-row">单一身份</td></tr>
+        </tbody>
+      </table>
+
+      <h3>9.4 还没做的（v5.1 候选）</h3>
+      <table>
+        <thead><tr><th style="width: 12%">严重度</th><th style="width: 44%">剩余</th><th style="width: 44%">说明</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag-p1">P1</span></td><td>6 个月后物理删除 8 个 create skill</td><td>如果 2027-01-15 前无用户使用，则 rm -rf。</td></tr>
+          <tr><td><span class="tag-p1">P1</span></td><td>Rebrand 决定（is-this-slop / design-dr / keep monkren）</td><td>本次未做。需要单独决策（涉及 GitHub repo rename + npm package rename）。</td></tr>
+          <tr><td><span class="tag-p2">P2</span></td><td>README.en.md 同步更新到 v5.0</td><td>当前仍是 v4.0 文案。下次会话处理。</td></tr>
+          <tr><td><span class="tag-p2">P2</span></td><td>DESIGN.md 同步</td><td>当前仍是 v4.0 时期文件。下次会话处理。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 10. v5.1 微调（用户反馈"核心定义偏移"） -->
+    <section>
+      <h2>10. v5.1 微调（2026-07-15 · 同日）</h2>
+      <p>v5.0 执行后用户反馈："核心定义稍微有点偏移。核心不是反 AI slop，核心是创作与设计审查。"</p>
+      <p>v5.1 修正：</p>
+      <ul>
+        <li>identity 从 "AI slop 检测器" 改回 "设计审查与创作改进"</li>
+        <li>新 unifying principle：<strong>设计品味 applied forward and backward</strong>——审查是品味 applied backward（5 维度评审），创作是品味 applied forward（修复 / 变体 / 原型）</li>
+        <li>SKILL.md routing 从 3 段 → 2 大类（审查 + 创作）</li>
+        <li>8 个 create skill 中 3 个核心（design-improve / generate-variations / make-a-prototype）撤回 deprecated</li>
+        <li>Landing page Method section 改为 2 列：审查 + 创作</li>
+        <li>README tagline 改为 "设计审查与创作改进"</li>
+      </ul>
+
+      <div class="quote">
+        我砍过头了。"Slop 检测器" 是个 1 功能的工具标签，不是 1 个产品的 identity。monkren 的核心从来不是反 AI。monkren 的核心是<strong>设计品味</strong>。创作需要 taste 做决策。审查需要 taste 做判断。同一个 taste，两个时间点。
+        <span class="who">— v5.1 自我修正 · 同 persona</span>
+      </div>
+
+      <h3>10.1 v5.0 → v5.1 改动清单（6 处）</h3>
+      <table>
+        <thead><tr><th style="width: 12%">文件</th><th style="width: 44%">改动</th><th style="width: 44%">结果</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/SKILL.md">SKILL.md</a></td><td>§1 routing 从 3 段 → 2 大类（审查 + 创作）；§8 create skill 状态从 "8 个 DEPRECATED" → "3 撤回 + 5 DEPRECATED"</td><td>2 大类 routing · 3+5 拆分</td></tr>
+          <tr><td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/index.html">index.html</a></td><td>title / hero tagline / 3 queries / Method section 改 2 列 / footer</td><td>Tagline "设计审查与创作改进"</td></tr>
+          <tr><td><a href="https://github.com/monkren-ai/monkren-designer/blob/main/README.md">README.md</a></td><td>hero / 2 大类 routing / v4.0→v5.1 变更表 / 仓库结构</td><td>Dual identity 统一</td></tr>
+          <tr><td>skills/create/design-improve/SKILL.md</td><td>撤回 deprecated · 顶部加 ✅ 激活 banner</td><td>活跃 skill</td></tr>
+          <tr><td>skills/create/generate-variations/SKILL.md</td><td>撤回 deprecated · 顶部加 ✅ 激活 banner</td><td>活跃 skill</td></tr>
+          <tr><td>skills/create/make-a-prototype/SKILL.md</td><td>撤回 deprecated · 顶部加 ✅ 激活 banner</td><td>活跃 skill</td></tr>
+          <tr><td>skills/create/README.md</td><td>从 "全部 DEPRECATED" → "3 活跃 + 5 DEPRECATED"</td><td>3+5 拆分</td></tr>
+        </tbody>
+      </table>
+
+      <h3>10.2 v5.1 新身份 · 最终版</h3>
+      <div class="quote">
+        <strong>Monkren = 设计审查与创作改进。</strong><br>
+        同一段对话里既当审查员，也当创作教练。<br>
+        同一个设计品味，<em>applied forward and backward</em>。
+        <span class="who">— v5.1 tagline · 2026-07-15</span>
+      </div>
+    </section>
+
+    <!-- 10.3 v5.1.1 微调（同日 · framing 修正） -->
+    <section>
+      <h3>10.3 v5.1.1 framing 微调（2026-07-15 · 同日）</h3>
+      <p>v5.1 改回 "设计审查与创作改进" 双重身份后，**SKILL.md 的 description / 路由表 / §4 仍在 framing 上把 slop-check 放在与 5 维度评审并列的位置**——容易让用户把 monkren 误读为"反 slop 工具"。</p>
+
+      <h4>问题诊断：v5.1 framing 残留</h4>
+      <table>
+        <thead><tr><th style="width: 30%">位置</th><th style="width: 35%">v5.1 framing（误读风险）</th><th style="width: 35%">v5.1.1 修正</th></tr></thead>
+        <tbody>
+          <tr><td>SKILL.md description</td><td>"5 维度评审 + 反 AI slop 黑名单 + 硬编码值检测" 三个并列</td><td>5 维度评审 + 4 纪律 为主，反 AI 化信号 / 硬编码 显式标"辅助工具"</td></tr>
+          <tr><td>SKILL.md §1 路由表</td><td>"这个设计是不是 AI slop？" 排第一</td><td>5-dim-review 排第一（核心 · 默认），slop-check 移到底部并标"辅助"</td></tr>
+          <tr><td>SKILL.md §4</td><td>"反 AI slop 黑名单（9 类）" 独立大章节</td><td>改名为"辅助工具 A · 反 AI 化信号"，明确是 5 维度的补充</td></tr>
+          <tr><td>README hero</td><td>"5 维度评审 + 反 AI slop + 硬编码值检测" 三并列</td><td>"5 维度评审 + 4 条评分纪律" 为核心，明确"辅助"层级</td></tr>
+          <tr><td>index.html method section</td><td>"反 AI slop 黑名单 · 9 类" 与 5 维度平级</td><td>改名"反 AI 化信号 · 辅助 · 9 类"</td></tr>
+          <tr><td>index.html 顶部进度条</td><td>"SLOP · 0%" 视觉签名</td><td>改名为"DEPTH · 0%"（进度指示）</td></tr>
+        </tbody>
+      </table>
+
+      <h4>v5.1.1 改动清单（6 处）</h4>
+      <table>
+        <thead><tr><th style="width: 14%">文件</th><th style="width: 50%">改动</th><th style="width: 36%">结果</th></tr></thead>
+        <tbody>
+          <tr><td>SKILL.md</td><td>description 重写（5 维度 + 4 纪律为主）；§1 路由表 5-dim-review 排第一、slop-check 标"辅助"；§4 改名"辅助工具 A · 反 AI 化信号"；§5 改名"辅助工具 B"；§7/§9 同步；版本 v5.1 → v5.1.1</td><td>核心 = 5 维度评审；slop-check 显式降为辅助</td></tr>
+          <tr><td>README.md</td><td>hero 段落 reframe；变更表加 v5.1.1 列 + 新增"Slop-check 定位"行；"v5.1.1 关键纠正"段落</td><td>变更表记录 framing 修正</td></tr>
+          <tr><td>index.html</td><td>meta description 重写；method section 4 条纪律升到第二位，slop-check 标"辅助"；顶部"SLOP" 进度条改"DEPTH"；版本号</td><td>视觉层不再有"反 slop"信号</td></tr>
+        </tbody>
+      </table>
+
+      <div class="quote">
+        v5.1 把 tagline 改对了，但文件的 framing 还没改对。description / 路由表 / §4 / landing page 视觉签名——四处在反复告诉用户"我们主要是反 slop 的"。<strong>tagline 和 framing 必须同时改，否则 tagline 是谎言。</strong>
+        <span class="who">— v5.1.1 framing 修正 · 同 persona</span>
+      </div>
+    </section>
+
+    <!-- 11. v6.0 5 阶段设计生命周期重组（同日） -->
+    <section>
+      <h2>11. v6.0 5 阶段设计生命周期（2026-07-15 · 同日）</h2>
+      <p>v5.1.1 framing 修正后，用户给出新方向："调研定义优化整合为一个设计智能体，会使用设计阶段各种技能，创作定义、设计执行、设计审查、设计改进。"</p>
+
+      <h3>11.1 关键判断</h3>
+      <p>v5.x 的根本问题：<strong>把项目当"工具集合"</strong>（2 大类 / 3 段路由）——用户进来不知道 monkren 是什么、不知道下一步。v6.0 把它当 <strong>1 个完整的设计智能体</strong>——用户提交需求，monkren 走完 5 阶段，每阶段调用对应 skill。</p>
+
+      <p>5 阶段设计生命周期：</p>
+      <table>
+        <thead><tr><th style="width: 8%">#</th><th style="width: 20%">阶段</th><th style="width: 28%">问什么</th><th style="width: 44%">主要 skill</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td><strong>调研定义</strong></td><td>现状 / 约束 / 方向</td><td>design-research · design-brainstorm · quick-references · discovery-questions · frontend-aesthetic-direction · visual-taste-lab</td></tr>
+          <tr><td>02</td><td><strong>创作定义</strong></td><td>做什么 / 选哪个方向</td><td>wireframe · generate-variations</td></tr>
+          <tr><td>03</td><td><strong>设计执行</strong></td><td>怎么做出来</td><td>make-a-prototype</td></tr>
+          <tr><td>04</td><td><strong>设计审查</strong></td><td>做出来好不好</td><td>5-dim-review（核心） · ai-slop-check · accessibility-audit · hierarchy-rhythm-review · interaction-states-pass · polish-pass</td></tr>
+          <tr><td>05</td><td><strong>设计改进</strong></td><td>怎么修</td><td>design-improve</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>5 阶段可迭代</strong>：线性是默认，迭代是常态。审查不通过 → 回到创作定义。改进后产生新需求 → 回到调研定义。</p>
+
+      <h3>11.2 物理重组</h3>
+      <table>
+        <thead><tr><th style="width: 30%">v5.x（旧）</th><th style="width: 30%">v6.0（新）</th><th style="width: 40%">说明</th></tr></thead>
+        <tbody>
+          <tr><td><code>discover/</code> + <code>define/</code></td><td><code>01-research/</code></td><td>调研 + 定义 合并为第 1 阶段</td></tr>
+          <tr><td><code>create/</code>（部分）</td><td><code>02-create/</code></td><td>wireframe + generate-variations → 创作定义</td></tr>
+          <tr><td><code>create/</code>（部分）</td><td><code>03-execute/</code></td><td>make-a-prototype → 设计执行</td></tr>
+          <tr><td><code>create/</code>（部分）</td><td><code>05-improve/</code></td><td>design-improve → 设计改进</td></tr>
+          <tr><td><code>review/</code></td><td><code>04-review/</code></td><td>5 个 review skill（5-dim-review 是核心方法）</td></tr>
+          <tr><td><code>deliver/</code>（空）</td><td>（删除）</td><td>v5.0 砍空，v6.0 不再需要</td></tr>
+          <tr><td><code>create/</code>（4 个 DEPRECATED）</td><td><code>_deprecated/</code></td><td>移到下划线前缀目录，记录而非删除</td></tr>
+          <tr><td><code>tools/</code></td><td><code>tools/</code></td><td>不变</td></tr>
+        </tbody>
+      </table>
+
+      <h3>11.3 wireframe 复活</h3>
+      <p>v5.0 把 wireframe（lo-fi 探索）标 DEPRECATED 的理由是"打不过 Bolt / v0"。v6.0 重新评估：lo-fi 探索属于"创作定义"阶段的合理能力，monkren 的 lo-fi 不需要"打得过 Bolt"——它服务于"先用最便宜的方式探索方向"这个 workflow 目的。</p>
+      <p>v6.0 撤回 wireframe 的 DEPRECATED 标记，迁入 <code>02-create/</code>。</p>
+
+      <h3>11.4 改动清单（v5.1.1 → v6.0）</h3>
+      <table>
+        <thead><tr><th style="width: 14%">文件 / 目录</th><th style="width: 50%">改动</th><th style="width: 36%">结果</th></tr></thead>
+        <tbody>
+          <tr><td>skills/ 物理结构</td><td>discover/define/create/review/deliver 重组为 01-research/02-create/03-execute/04-review/05-improve/；4 个 DEPRECATED 移入 _deprecated/</td><td>5 阶段物理结构清晰</td></tr>
+          <tr><td>SKILL.md</td><td>重写：1 智能体 + 5 阶段生命周期；路由表按 5 阶段组织；5 维度贯穿全阶段；4 个 deprecated skill 移入 _deprecated/</td><td>入口反映 5 阶段</td></tr>
+          <tr><td>README.md</td><td>tagline → "1 个设计智能体 · 5 阶段设计生命周期"；5 阶段路由表；v5.x → v6.0 变更表</td><td>对外文档同步</td></tr>
+          <tr><td>index.html</td><td>title / meta / 进度指示 DEPTH / method section 5 阶段卡片 / 4 阶段 queries</td><td>landing page 反映 5 阶段</td></tr>
+          <tr><td>wireframe/SKILL.md</td><td>撤回 DEPRECATED 标记 · 迁入 02-create/</td><td>复活为活跃 skill</td></tr>
+        </tbody>
+      </table>
+
+      <div class="quote">
+        v5.x 是一组工具。v6.0 是一台机器。用户进来看到的是 1 个 monkren，不是 21 个 skill 各自飞。<strong>同一段对话里 monkren 走完 5 阶段，输出设计。</strong>工具集合是 component；设计智能体是 product。乔布斯说"product 让用户行动"——v6.0 才开始是 product。
+        <span class="who">— v6.0 5 阶段生命周期 · 同 persona</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <span>Project Strategy — Monkren Design v6.0 · 2026-07-15</span>
+      <span><a href="https://github.com/monkren-ai/monkren-designer">GitHub</a> · <a href="https://monkren-ai.github.io/monkren-designer/">Live Page</a></span>
+    </div>
+  </footer>
+</body>
+</html>
