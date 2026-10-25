@@ -91,6 +91,8 @@ monkren-designer/
 └── index.html                # GitHub Pages site
 ```
 
+Routing, permissions, review orchestration, and handoff are diagrammed in [Architecture](references/architecture.md).
+
 ## Operating principles
 
 - Honor requested counts, formats, and scope, including one wireframe or two variants.

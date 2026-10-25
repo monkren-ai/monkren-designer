@@ -91,6 +91,8 @@ monkren-designer/
 └── index.html               # GitHub Pages 展示页
 ```
 
+路由、权限、审查编排和交接见 [技能架构](references/architecture.md)。
+
 ## 使用原则
 
 - 数量、格式、范围以用户要求为准；一个线框或两个方案都可直接交付。

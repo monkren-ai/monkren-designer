@@ -16,6 +16,7 @@
 - **多视角审查** → [`perspectives.md`](./perspectives.md)
 - **平台专项** → [`platforms.md`](./platforms.md)
 - **集成与参考搜索** → [`integration.md`](./integration.md)
+- **技能架构** → [`architecture.md`](./architecture.md)
 
 ---
 
