@@ -85,7 +85,7 @@ flowchart TB
 | 入口 | [SKILL.md](../SKILL.md) | 识别阶段，选择一个主模块，声明读写边界 |
 | 阶段 | `skills/01-research` 至 `skills/05-improve` | 定义该任务的流程、证据和交付 |
 | 跨阶段 | `skills/advisors`、`skills/tools` | 第二意见，以及灵感源登记 |
-| 知识 | [references](./standards.md) 与模块内 `references/` | 标准、方法、平台和哲学；不一次全部加载 |
+| 知识 | `references/` 与模块内 `references/` | 标准、方法、平台和哲学；不一次全部加载 |
 | 展示 | [DESIGN.md](../DESIGN.md)、`index.html`、`case/` | 本仓库展示页和案例版式，不是客户产品的默认品牌 |
 | 治理 | `scripts/validate_repo.rb` | 元数据、路由、链接、图片索引和展示页资源 |
 
